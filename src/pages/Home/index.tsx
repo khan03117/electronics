@@ -21,12 +21,12 @@ const Home = () => {
         </div>
       </section>
       <section className="lg:block hidden">
-      <div className="w-full text-center mb-10">
-            <h2 className="sectiontitle">Shop By Category</h2>
-          </div>
-      <CategoriesSlider />
+        <div className="w-full text-center mb-10">
+          <h2 className="sectiontitle">Shop By Category</h2>
+        </div>
+        <CategoriesSlider />
       </section>
-    
+
       {
         ['Screen Guards', 'Mobile Covers', 'Accessories', 'Gadgets'].map((itm) => (
           <>
@@ -49,7 +49,7 @@ const Home = () => {
             <h2 className="sectiontitle">Shop By Brand</h2>
           </div>
           <div className="w-full">
-            <Banner/>
+            <Banner />
           </div>
         </div>
       </section>
@@ -71,15 +71,15 @@ const Home = () => {
       }
       <section className="py-10">
         <div className="container">
-        <div className="w-full text-center mb-10">
-                  <h2 className="sectiontitle">What our clients says</h2>
-                </div>
+          <div className="w-full text-center mb-10">
+            <h2 className="sectiontitle">What our clients says</h2>
+          </div>
           <div className="w-full">
-            <Testimonials/>
+            <Testimonials />
           </div>
         </div>
       </section>
-      
+
 
 
 

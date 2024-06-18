@@ -2,6 +2,8 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } 
 import './App.css'
 import WebLayout from './Layout/WebLayout'
 import Home from './pages/Home'
+import Shop from './pages/Shop'
+import SingleProduct from './pages/Shop/SingleProduct'
 
 function App() {
 
@@ -10,6 +12,8 @@ function App() {
       <>
         <Route path='/' element={<WebLayout />} >
           <Route index element={<Home />} />
+          <Route path='/shop' element={<Shop />} />
+          <Route path='/single-product' element={<SingleProduct />} />
         </Route>
       </>
     )

@@ -103,6 +103,13 @@ body {
   margin-bottom: 1rem;
   /* color: #ff6162; */
 }
+#shopbanner {
+  background-image: url("../src/assets/pagebanner.webp");
+  /* padding: 5rem 0; */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 @media (max-width: 992px) {
   .sectiontitle {
     font-size: 20px;
