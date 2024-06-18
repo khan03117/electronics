@@ -26,15 +26,12 @@ const ThemeNavbar = () => {
                         Shop
                     </Link>
                 </p>
-                <p
-
-
-                    color="black"
+                <p color="black"
                     className="p-1 text-black font-medium"
                 >
-                    <a href="#" className="flex items-center hover:text-blue-500 transition-colors">
+                    <Link to={'/login'} className="flex items-center hover:text-blue-500 transition-colors">
                         Account
-                    </a>
+                    </Link>
                 </p>
                 <p
 
