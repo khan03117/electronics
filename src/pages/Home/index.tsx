@@ -20,7 +20,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="lg:hidden hidden">
+      <section className="lg:block hidden">
       <div className="w-full text-center mb-10">
             <h2 className="sectiontitle">Shop By Category</h2>
           </div>
