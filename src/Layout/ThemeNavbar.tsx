@@ -1,10 +1,11 @@
-import { BarsOutlined, MenuOutlined } from "@ant-design/icons";
+import { BarsOutlined, MenuOutlined, ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import {
     Navbar,
     Collapse
 } from "@material-tailwind/react";
 // @ts-ignore
 import suportimg from '../assets/support.png';
+import logoimg from './../assets/logo.png';
 
 import React, { useState } from 'react'
 import { Link } from "react-router-dom";
@@ -60,17 +61,25 @@ const ThemeNavbar = () => {
     }
     return (
         <>
-            <Navbar className="mx-auto max-w-full w-full shadow-none" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                <div className="flex items-center justify-between text-blue-gray-900">
-                    <p className="lg:hidden block">Logo Here</p>
+            <Navbar className="mx-auto max-w-full w-full px-3  shadow-none" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                <div className="flex w-full items-center justify-between text-blue-gray-900">
+                    <div className="lg:hidden block">
+                        <Link to={'/'}>
+                            <img src={logoimg} className="w-20" alt="" />
+                        </Link>
+                    </div>
                     <div className="hidden lg:block">
                         <NavList />
                     </div>
-                    <div className="call_us">
-                        <Link className="inline-flex items-center gap-4" to={'tel:+91-9090909090'}>
+                    <div className="call_us ms-auto  ">
+                        <Link className="lg:inline-flex hidden items-center gap-4" to={'tel:+91-9090909090'}>
                             <img src={suportimg} alt="" className="size-6 object-contain" />
                             +91-909090090
                         </Link>
+                        <div className="lg:hidden inline-block">
+                            <Link to={'/'} className='text-[1.5rem] pl-4'> <ShoppingCartOutlined /></Link>
+                            <Link to={'/'} className='text-[1.5rem] pl-4'> <UserOutlined /></Link>
+                        </div>
                     </div>
                     <button
 

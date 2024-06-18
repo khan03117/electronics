@@ -36,7 +36,7 @@ const images = [
 const Banner = () => {
     var settings = {
         dots: false,
-        arrows : true,
+        arrows : false,
         navs : true,
         autoplay:true,
         autoplaySpeed: 1000,

@@ -9,7 +9,6 @@ export default withMt({
     extend: {
       container: {
         center: true,
-        padding: '2rem'
       },
       colors: {
         primary: "#ff6162",

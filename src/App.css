@@ -1,15 +1,126 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
-*{
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
 }
 
-body{
+body {
   font-family: "Lato", sans-serif !important;
 }
-.container{
+.container {
   max-width: 100% !important;
   margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.slick-prev,
+.slick-next {
+  z-index: 5;
+  top: -20px !important;
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50% !important;
+  background-color: #fff !important;
+  border: 1px solid #707070 !important;
+}
+
+.slick-prev {
+  left: auto !important;
+  right: 100px;
+}
+
+.slick-next {
+  left: auto !important;
+  right: 1rem !important;
+}
+
+.slick-prev::before,
+.slick-next::before {
+  content: "" !important;
+}
+
+.slick-next svg,
+.slick-prev svg {
+  color: #707070;
+  width: 16px;
+  height: 16px;
+}
+.shopincon .quicklink {
+  font-size: 20px;
+  font-weight: 100;
+  color: #707070;
+  transition: all 0.5s;
+  transform: translateY(50px);
+  opacity: 0;
+}
+.productbox:hover .shopincon .quicklink {
+  transform: translateY(0px);
+  opacity: 1;
+}
+
+.productbox:hover .shopincon .quicklink:nth-child(1) {
+  transition-delay: 0.5s;
+  
+}
+.productbox:hover .quicklink:nth-child(2) {
+  transition-delay: 0.4s;
+}
+.productbox:hover .quicklink:nth-child(3) {
+  transition-delay: 0.3s;
+}
+.sectiontitle{
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  margin: 0 auto;
+  padding-bottom: 0.5rem;
+}
+.sectiontitle::before{
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  width:  100%;
+  height: 1px;
+  border-top: 1px solid red;
+}
+.sectiontitle::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  transform: translateX(-50%);
+  width:  10px;
+  height: 10px;
+  background-color: red;
+}
+.footersection h4{
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  /* color: #ff6162; */
+}
+@media (max-width: 992px) {
+  .sectiontitle {
+    font-size: 20px;
+    margin-bottom: 1rem;
+  }
+  .slick-prev,
+  .slick-next {
+    z-index: 5;
+    top: -20px !important;
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 50% !important;
+    background-color: #fff !important;
+    border: 1px solid #707070 !important;
+  }
+  .container {
+    max-width: 100% !important;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
 }
