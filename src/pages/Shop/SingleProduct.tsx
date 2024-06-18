@@ -75,7 +75,7 @@ const SingleProduct = () => {
                open && (
                     <>
                         <div className="fixed top-0 end-0 w-full backdrop-blur-sm h-full bg-black/30 z-[9999]">
-                            <div className="absolute p-4 w-96 h-full end-0 top-0 bg-white">
+                            <div className="absolute p-4 lg:w-96 w-full h-full end-0 top-0 bg-white">
                                 <div className="w-full *:shadow-sm *:shadow-blue-gray-600 *:rounded-md ">
                                     {
                                         [...images].map(cr => (
@@ -225,7 +225,7 @@ const SingleProduct = () => {
                         <button className={`${s_section == 'specifications' ? 'bg-primary text-white' : ''}`} onClick={() => setSection('specifications')}>
                             Specifications
                         </button>
-                        <button className={`${s_section == 'specifications' ? 'bg-primary text-white' : ''}`} onClick={() => setSection('reviews')}>
+                        <button className={`${s_section == 'reviews' ? 'bg-primary text-white' : ''}`} onClick={() => setSection('reviews')}>
                             Reviews
                         </button>
                         <button className={`${s_section == 'similar' ? 'bg-primary text-white' : ''}`} onClick={() => setSection('similar')}>
