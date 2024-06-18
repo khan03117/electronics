@@ -5,8 +5,8 @@ import {
 } from "@material-tailwind/react";
 // @ts-ignore
 import suportimg from '../assets/support.png';
+// @ts-ignore
 import logoimg from './../assets/logo.png';
-
 import React, { useState } from 'react'
 import { Link } from "react-router-dom";
 
@@ -61,7 +61,7 @@ const ThemeNavbar = () => {
     }
     return (
         <>
-            <Navbar className="mx-auto max-w-full w-full px-3  shadow-none" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+            <Navbar className="mx-auto rounded-none max-w-full w-full px-3  shadow-none" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                 <div className="flex w-full items-center justify-between text-blue-gray-900">
                     <div className="lg:hidden block">
                         <Link to={'/'}>
