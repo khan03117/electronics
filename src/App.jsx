@@ -6,6 +6,9 @@ import Shop from './pages/Shop'
 import SingleProduct from './pages/Shop/SingleProduct'
 import Checkout from './pages/Shop/Checkout'
 import Cart from './pages/Shop/Cart'
+import Contact from './pages/contact'
+import Orders from './pages/Shop/Orders'
+import Login from './pages/auth/Login'
 
 function App() {
 
@@ -18,6 +21,10 @@ function App() {
           <Route path='/single-product' element={<SingleProduct />} />
           <Route path='/checkout' element={<Checkout />} />
           <Route path='/cart' element={<Cart/>}/>
+          <Route path='/wishlist' element={<Cart/>}/>
+          <Route path='/contact' element={<Contact/>}/>
+          <Route path='/orders' element={<Orders/>}/>
+          <Route path='/login' element={<Login/>}/>
         </Route>
       </>
     )

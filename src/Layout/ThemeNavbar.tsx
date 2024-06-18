@@ -1,4 +1,4 @@
-import { BarsOutlined, MenuOutlined, ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
+import { CloseOutlined, MenuOutlined, ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import {
     Navbar,
     Collapse
@@ -19,18 +19,18 @@ const ThemeNavbar = () => {
                 <p
 
 
-                    color="blue-gray"
-                    className="p-1 font-medium"
+                    color="black"
+                    className="p-1 text-black font-medium"
                 >
-                    <a href="#" className="flex items-center hover:text-blue-500 transition-colors">
-                        Pages
-                    </a>
+                    <Link to={'/shop'} className="flex items-center hover:text-blue-500 transition-colors">
+                        Shop
+                    </Link>
                 </p>
                 <p
 
 
-                    color="blue-gray"
-                    className="p-1 font-medium"
+                    color="black"
+                    className="p-1 text-black font-medium"
                 >
                     <a href="#" className="flex items-center hover:text-blue-500 transition-colors">
                         Account
@@ -39,22 +39,22 @@ const ThemeNavbar = () => {
                 <p
 
 
-                    color="blue-gray"
-                    className="p-1 font-medium"
+                    color="black"
+                    className="p-1 text-black font-medium"
                 >
-                    <a href="#" className="flex items-center hover:text-blue-500 transition-colors">
-                        Blocks
-                    </a>
+                    <Link to={'/contact'} className="flex items-center hover:text-blue-500 transition-colors">
+                        Contact us
+                    </Link>
                 </p>
                 <p
 
 
-                    color="blue-gray"
-                    className="p-1 font-medium"
+                    color="black"
+                    className="p-1 text-black font-medium"
                 >
-                    <a href="#" className="flex items-center hover:text-blue-500 transition-colors">
-                        Docs
-                    </a>
+                    <Link to={'/'} className="flex items-center hover:text-blue-500 transition-colors">
+                        Faq's
+                    </Link>
                 </p>
             </ul>
         );
@@ -62,7 +62,7 @@ const ThemeNavbar = () => {
     return (
         <>
             <Navbar className="mx-auto rounded-none max-w-full w-full px-3  shadow-none" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                <div className="flex w-full items-center justify-between text-blue-gray-900">
+                <div className="flex w-full items-center justify-between text-black">
                     <div className="lg:hidden block">
                         <Link to={'/'}>
                             <img src={logoimg} className="w-20" alt="" />
@@ -88,9 +88,9 @@ const ThemeNavbar = () => {
                         onClick={() => setOpenNav(!openNav)}
                     >
                         {openNav ? (
-                            <MenuOutlined />
+                            <CloseOutlined />
                         ) : (
-                            <BarsOutlined />
+                            <MenuOutlined />
                         )}
                     </button>
                 </div>
