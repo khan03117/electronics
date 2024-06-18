@@ -1,12 +1,13 @@
 import { EyeOutlined, HeartOutlined, ShoppingOutlined } from '@ant-design/icons'
 import React from 'react'
+import { Link } from 'react-router-dom'
 interface Prop {
   image: string
 }
 const ProductSlider = (props: Prop) => {
   return (
     <>
-      <div className="w-full productbox relative pt-5 shadow-lg shadow-blue-gray-800  rounded-xl ">
+      <Link to={'/single-product'} className="w-full block productbox relative pt-5 shadow-lg shadow-blue-gray-800  rounded-xl ">
         <div className="absolute shopincon z-10 *:size-10 *:shadow-md *:shadow-blue-gray-400 *:bg-white *:text-center *:rounded-full *:leading-10 flex w-10 flex-col gap-5 top-20 end-3">
           <a className='quicklink'>
             <HeartOutlined />
@@ -39,7 +40,7 @@ const ProductSlider = (props: Prop) => {
             </p>
           </div>
         </div>
-      </div>
+      </Link>
     </>
   )
 }

@@ -123,10 +123,10 @@ const SingleProduct = () => {
             }
             <section className="py-10">
                 <div className="container mx-auto">
-                    <div className="grid lg:grid-cols-8 grid-cols-1 gap-0">
+                    <div className="grid lg:grid-cols-8 grid-cols-1 lg:gap-0 gap-6">
                         <div className="col-span-5">
                             <div className="w-full">
-                                <div className="grid grid-cols-6 gap-3">
+                                <div className="grid lg:grid-cols-6 grid-cols-5 gap-3">
                                     <div className="col-span-1 max-h-[500px] overflow-hidden">
 
                                         <Slider ref={sliderNavRef} {...settingsNav} className='slider-nav'>
@@ -141,7 +141,7 @@ const SingleProduct = () => {
                                             }
                                         </Slider>
                                     </div>
-                                    <div className="col-span-4">
+                                    <div className="lg:col-span-5 col-span-4">
                                         <Slider ref={sliderForRef} {...settingsFor} className='slider-for'>
                                             {
                                                 images.map((itm) => (
