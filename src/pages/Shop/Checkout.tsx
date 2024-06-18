@@ -75,13 +75,13 @@ const Checkout = () => {
                             </div>
                             <div className="w-full">
                                 <div className="grid lg:grid-cols-3 grid-cols-1 gap-3">
-                                    <div className="col-span-1 mb-5">
+                                    <div className="lg:col-span-1 col-span-12 mb-5">
                                         <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block' >Enter Pincode</label>
-                                        <div className="flex">
-                                            <input type="tel" maxLength={6} value={pincode} onChange={handlePincodeChange} name="pincode" id="pincode" className="p-3 border border-blue-gray-300" />
+                                        <div className="flex w-full">
+                                            <input type="tel" maxLength={6} value={pincode} onChange={handlePincodeChange} name="pincode" id="pincode" className="p-2 w-full border border-blue-gray-300" />
                                         </div>
                                     </div>
-                                    <div className="col-span-3 mb-5">
+                                    <div className="lg:col-span-3 col-span-12 mb-5">
                                         <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Enter Address</label>
                                         <input type="text" name="address" onChange={handlefdata} className="px-4 py-2 w-full border border-blue-gray-300" />
                                         <span className="text-deep-orange-500">
@@ -90,14 +90,14 @@ const Checkout = () => {
                                     </div>
 
 
-                                    <div className="col-span-1 mb-5">
+                                    <div className="lg:col-span-1 col-span-12 mb-5">
                                         <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Enter city </label>
                                         <input type="text" name="city" onChange={handlefdata} className="px-4 py-2 w-full border border-blue-gray-300" />
                                         <span className="text-deep-orange-500">
                                             {errors.find(obj => obj.path == "city")?.msg}
                                         </span>
                                     </div>
-                                    <div className="col-span-1 mb-5">
+                                    <div className="lg:col-span-1 col-span-12 mb-5">
                                         <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Enter State </label>
                                         <select name="state_id" onChange={handlefdata} className="px-4 py-2 w-full border border-blue-gray-300" >
                                             <option value="">---Select---</option>
@@ -113,7 +113,7 @@ const Checkout = () => {
                                             {errors.find(obj => obj.path == "state_id")?.msg}
                                         </span>
                                     </div>
-                                    <div className="col-span-1 mb-5">
+                                    <div className="lg:col-span-1 col-span-12 mb-5">
                                         <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Select Mode</label>
                                         <select name="" id="" className="py-2 px-2 w-full outline-none border border-blue-gray-500">
                                             <option value="">---Select---</option>
@@ -121,7 +121,7 @@ const Checkout = () => {
                                             <option value="COD">COD</option>
                                         </select>
                                     </div>
-                                    <div className="col-span-1 mb-5">
+                                    <div className="lg:col-span-1 col-span-12 mb-5">
                                         <div className="w-full">
                                             <button onClick={() => checkoutnow('online')} className="px-3 py-2 w-full   bg-primary rounded-lg text-white shadow-md shadow-blue-gray-400">Place Order</button>
 

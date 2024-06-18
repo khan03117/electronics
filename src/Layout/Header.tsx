@@ -9,7 +9,7 @@ import ThemeNavbar from './ThemeNavbar';
 const Header = () => {
     return (
         <>
-            <section className="lg:py-5 pt-5">
+            <section className="lg:py-5 pt-5 lg:mb-0 mb-5">
                 <div className="container">
                     <div className="grid lg:grid-cols-12 md:grid-cols-1 grid-cols-1 gap-4">
                         <div className="lg:col-span-2 col-span-6 lg:order-1 order-1 lg:block hidden">
@@ -29,8 +29,8 @@ const Header = () => {
                         </div>
                         <div className="lg:col-span-2 col-span-6 lg:order-3 order-2 lg:block hidden">
                             <div className="w-full text-end">
-                                <Link to={'/'} className='text-[1.5rem] pl-4'> <ShoppingCartOutlined /></Link>
-                                <Link to={'/'} className='text-[1.5rem] pl-4'> <UserOutlined /></Link>
+                                <Link to={'/cart'} className='text-[1.5rem] pl-4'> <ShoppingCartOutlined /></Link>
+                                <Link to={'/orders'} className='text-[1.5rem] pl-4'> <UserOutlined /></Link>
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,5 @@
 import { FacebookFilled, HeartOutlined, HomeFilled, HomeOutlined, InstagramFilled, PhoneFilled, RedEnvelopeFilled, ShopOutlined, ShoppingCartOutlined, TwitterSquareFilled, WhatsAppOutlined } from '@ant-design/icons'
+//@ts-ignore
 import logo from '../assets/logo.png'
 import { Link } from 'react-router-dom'
 import React from 'react'
@@ -13,14 +14,14 @@ const Footer = () => {
           <p>Home</p>
 
         </Link>
-        <Link to={'/'}>
+        <Link to={'/shop'}>
           <p>
             <ShopOutlined />
           </p>
           <p>Shop</p>
 
         </Link>
-        <Link to={'/'}>
+        <Link to={'/wishlist'}>
           <div className="absolute size-5 rounded-full bg-primary text-white text-xs -end-0 -top-3">1</div>
           <p>
             <HeartOutlined />
@@ -29,7 +30,7 @@ const Footer = () => {
           <p>Wishlist</p>
 
         </Link>
-        <Link to={'/'}>
+        <Link to={'/cart'}>
         <div className="absolute size-5 rounded-full bg-primary text-white text-xs -end-1 -top-3">1</div>
 
           <p>

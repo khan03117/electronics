@@ -77,8 +77,8 @@ const ThemeNavbar = () => {
                             +91-909090090
                         </Link>
                         <div className="lg:hidden inline-block">
-                            <Link to={'/'} className='text-[1.5rem] pl-4'> <ShoppingCartOutlined /></Link>
-                            <Link to={'/'} className='text-[1.5rem] pl-4'> <UserOutlined /></Link>
+                            <Link to={'/cart'} className='text-[1.5rem] pl-4'> <ShoppingCartOutlined /></Link>
+                            <Link to={'/orders'} className='text-[1.5rem] pl-4'> <UserOutlined /></Link>
                         </div>
                     </div>
                     <button
