@@ -4,6 +4,7 @@ import Banner from './Banner'
 import CategoriesSlider from './CategoriesSlider'
 import SliderComponent from '../../component/SliderComponent'
 import Testimonials from './Testimonials'
+import { RightOutlined } from '@ant-design/icons'
 
 const Home = () => {
   return (
@@ -35,6 +36,13 @@ const Home = () => {
                 <div className="w-full text-center mb-10">
                   <h2 className="sectiontitle">{itm}</h2>
                 </div>
+                <div className="w-full flex justify-between my-4">
+                  <h4 className="md:text-xl text-md text-primary font-bold">Start from just 99.99 only</h4>
+                  <button type='button' className=" rounded-full md:px-5 px-2 text-xs uppercase font-bold tracking-widest py-2 bg-primary/20 shadow-md shadow-primary">
+                    View All
+                    <RightOutlined className='md:ms-3 ms-1' />
+                  </button>
+                </div>
                 <div className="w-full">
                   <SliderComponent />
                 </div>
@@ -54,13 +62,14 @@ const Home = () => {
         </div>
       </section>
       {
-        ['Most Viewd', 'Recently Viewed'].map((itm) => (
+        ['Recently Viewed'].map((itm) => (
           <>
             <section className="md:py-10 py-3">
               <div className="container">
                 <div className="w-full text-center mb-10">
                   <h2 className="sectiontitle">{itm}</h2>
                 </div>
+
                 <div className="w-full">
                   <SliderComponent />
                 </div>

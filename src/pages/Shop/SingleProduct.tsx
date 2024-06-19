@@ -1,13 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { CloseOutlined, MinusOutlined, PlusOutlined, StarFilled } from '@ant-design/icons';
-// import { Collapse } from '@material-tailwind/react';
-import React from 'react';
 import Specification from './Specification';
 import Reviews from './Reviews';
+
 
 
 
@@ -19,16 +18,16 @@ const SingleProduct = () => {
         'https://m.media-amazon.com/images/I/61VJpLpweHL._SX679_.jpg',
         'https://m.media-amazon.com/images/I/51jLrGrPBpL._SX679_.jpg',
         'https://m.media-amazon.com/images/I/51EwFkHeO8L._SX679_.jpg',
-        // 'https://m.media-amazon.com/images/I/71xMd0d6xcL._SX679_.jpg',
-        // 'https://m.media-amazon.com/images/I/61RofAW9BML._SX679_.jpg',
+        'https://m.media-amazon.com/images/I/71xMd0d6xcL._SX679_.jpg',
+        'https://m.media-amazon.com/images/I/61RofAW9BML._SX679_.jpg',
         // 'https://m.media-amazon.com/images/I/61hnO6ktjiL._SX679_.jpg',
         // 'https://m.media-amazon.com/images/I/71GKVUMzSCL._SX679_.jpg',
         // 'https://m.media-amazon.com/images/I/51RYO482znL._SX679_.jpg',
         // 'https://m.media-amazon.com/images/I/71Al63qjPxL._SX679_.jpg',
         // 'https://m.media-amazon.com/images/I/61s1Ro7VONL._SX679_.jpg'
     ];
-    const sliderForRef = useRef(null);
-    const sliderNavRef = useRef(null);
+    // const sliderForRef = useRef(null);
+    // const sliderNavRef = useRef(null);
     const [qty, setQty] = useState(1);
     const [s_section, setSection] = useState('specifications');
     const [open, setOpen] = useState(false);
@@ -36,25 +35,57 @@ const SingleProduct = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
-        dots: false,
+        dots: true,
         navs: false,
         fade: true,
-        asNavFor: sliderNavRef.current ?? undefined
+        // asNavFor: sliderNavRef.current,
+        customPaging: (index: number) => (
+            <img src={images[index]} alt="" className="w-[50px] h-[50px] object-contain border rounded-lg border-blue-gray-400 shadow-lg shadow-blue-gray-300 inline-block " />
+        ),
     };
 
-    const settingsNav = {
-        vertical: true,
-        slidesToShow: 6,
-        slidesToScroll: 1,
-        asNavFor: sliderForRef.current ?? undefined,
-        dots: false,
-        arrows: false,
-        navs: false,
-        infinite: true,
-        loop: true,
-        centerMode: true,
-        focusOnSelect: true
-    };
+    // const settingsNav = {
+    //     asNavFor: sliderForRef.current,
+    //     navs: false,
+    //     infinite: true,
+    //     focusOnSelect: true,
+    //     vertical: true,
+    //     responsive: [
+    //         {
+    //             breakpoint: 1200, // At or below 1200px
+    //             settings: {
+    //                 vertical: true,
+    //                 slidesToShow: 4,
+    //                 slidesToScroll: 1,
+    //                 infinite: false,
+    //                 dots: false,
+    //                 navs: false,
+    //             }
+    //         },
+    //         {
+    //             breakpoint: 992, // At or below 992px
+    //             settings: {
+    //                 vertical: true,
+    //                 slidesToShow: 2,
+    //                 slidesToScroll: 1,
+    //                 infinite: false,
+    //                 dots: false,
+    //                 navs: false,
+    //             }
+    //         },
+    //         {
+    //             breakpoint: 768, // At or below 768px
+    //             settings: {
+    //                 slidesToShow: 5,
+    //                 slidesToScroll: 1,
+    //                 infinite: false,
+    //                 dots: false,
+    //                 navs: true,
+    //                 arrows: true,
+    //             }
+    //         }
+    //     ]
+    // };
     const handleqty = (action: string) => {
         if (action == 'minus') {
             if (qty > 1) {
@@ -66,13 +97,13 @@ const SingleProduct = () => {
         }
     }
     const addtocart = () => {
-      setOpen(true)
+        setOpen(true)
     }
     return (
         <>
 
             {
-               open && (
+                open && (
                     <>
                         <div className="fixed top-0 end-0 w-full backdrop-blur-sm h-full bg-black/30 z-[9999]">
                             <div className="absolute p-4 lg:w-96 w-full h-full end-0 top-0 bg-white">
@@ -82,7 +113,7 @@ const SingleProduct = () => {
                                             <>
                                                 <div className="w-full mb-4">
                                                     <div className="w-full flex relative ">
-                                                        <button  className="size-4 bg-black/50 leading-2   text-white text-xs absolute -top-2 -end-2 rounded-full">
+                                                        <button title='Close button' type='button' className="size-4 bg-black/50 leading-2   text-white text-xs absolute -top-2 -end-2 rounded-full">
                                                             <CloseOutlined />
                                                         </button>
                                                         <div className="size-16">
@@ -107,15 +138,15 @@ const SingleProduct = () => {
                                             </>
                                         ))
                                     }
-                                    
+
                                 </div>
                                 <div className="w-full absolute bottom-0 start-0 bg-gray-200 mt-4 pt-4 pb-3 shadow-lg shadow-blue-gray-500 px-4">
-                                        <h4 className="text-lg">Subtotal : ₹ 2999.99</h4>
-                                        <div className="flex gap-4">
-                                            <Link to={'/checkout'} className="w-full bg-orange-500 text-white py-2 rounded px-3 text-center uppercase tracking-widest text-sm">Checkout</Link>
-                                            <button onClick={() => setOpen(false)} className='w-full bg-blue-gray-900 rounded text-white py-2 uppercase tracking-widest text-sm'>Continue</button>
-                                        </div>
+                                    <h4 className="text-lg">Subtotal : ₹ 2999.99</h4>
+                                    <div className="flex gap-4">
+                                        <Link to={'/checkout'} className="w-full bg-orange-500 text-white py-2 rounded px-3 text-center uppercase tracking-widest text-sm">Checkout</Link>
+                                        <button type='button' onClick={() => setOpen(false)} className='w-full bg-blue-gray-900 rounded text-white py-2 uppercase tracking-widest text-sm'>Continue</button>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </>
@@ -123,26 +154,28 @@ const SingleProduct = () => {
             }
             <section className="py-10">
                 <div className="container mx-auto">
-                    <div className="grid lg:grid-cols-8 grid-cols-1 lg:gap-0 gap-6">
-                        <div className="col-span-5">
+                    <div className="grid lg:grid-cols-8 grid-cols-1 lg:gap-5 gap-6">
+                        <div className="md:col-span-5 col-span-5">
                             <div className="w-full">
-                                <div className="grid lg:grid-cols-6 grid-cols-5 gap-3">
-                                    <div className="col-span-1 max-h-[500px] overflow-hidden">
-
+                                <div className="grid lg:grid-cols-6 grid-cols-6 gap-6">
+                                    {/* <div className="md:col-span-1 col-span-6 md:order-1 order-2 max-h-[500px] overflow-hidden">
                                         <Slider ref={sliderNavRef} {...settingsNav} className='slider-nav'>
                                             {
                                                 images.map((itm) => (
                                                     <>
-                                                        <figure className="size-24 my-2 border border-blue-gray-200 shadow-lg shadow-gray-900">
-                                                            <img src={itm} alt="" className="w-full h-full object-cover" />
-                                                        </figure>
+                                                        <div className="p-2">
+                                                            <figure className="md:size-24 w-full  h-20 object-contain my-2 border border-blue-gray-200 md:shadow-lg shadow-gray-900">
+                                                                <img src={itm} alt="" className="w-full h-full object-contain" />
+                                                            </figure>
+                                                        </div>
+
                                                     </>
                                                 ))
                                             }
                                         </Slider>
-                                    </div>
-                                    <div className="lg:col-span-5 col-span-4">
-                                        <Slider ref={sliderForRef} {...settingsFor} className='slider-for'>
+                                    </div> */}
+                                    <div className="lg:col-span-5 md:order-2 order-1 col-span-6">
+                                        <Slider  {...settingsFor} className='slider-for'>
                                             {
                                                 images.map((itm) => (
                                                     <>
@@ -159,8 +192,8 @@ const SingleProduct = () => {
 
                             </div>
                         </div>
-                        <div className="col-span-3">
-                            <div className="w-full">
+                        <div className="md:col-span-3 col-span-5">
+                            <div className="w-full md:mt-0 mt-20">
                                 <h1 className="productname lg:text-[2rem] font-bold text-[18px] mb-4">Redmi 12 Pro Mobile Cover</h1>
                                 <div className="pricebox">
 
@@ -187,11 +220,11 @@ const SingleProduct = () => {
                                 </div>
                                 <div className="w-full my-4">
                                     <div className="inline-flex">
-                                        <button onClick={() => handleqty('minus')} className="size-12  border border-blue-gray-600">
+                                        <button type="button" aria-label="Click Me" title='Click Me' onClick={() => handleqty('minus')} className="size-12  border border-blue-gray-600">
                                             <MinusOutlined />
                                         </button>
                                         <input type="text" value={qty} readOnly name="" id="" className="size-12 text-center leading-12 border-t border-b border-blue-gray-600" />
-                                        <button onClick={() => handleqty('plus')} className="size-12 border border-blue-gray-600">
+                                        <button type='button' title='Increase button' onClick={() => handleqty('plus')} className="size-12 border border-blue-gray-600">
                                             <PlusOutlined />
                                         </button>
                                     </div>
@@ -210,8 +243,8 @@ const SingleProduct = () => {
                                     </div>
                                 </div>
                                 <div className="w-full my-4">
-                                    <button onClick={addtocart} className="w-full uppercase shadow-md shadow-deep-orange-700  font-light mb-4 text-md px-4 py-3 rounded-sm text-white bg-orange-700 ">Add to cart</button>
-                                    <button className="w-full uppercase shadow-md shadow-blue-gray-700  font-light text-md px-4 py-3 rounded-sm text-white bg-blue-gray-900 ">Buy it now</button>
+                                    <button type='button' onClick={addtocart} className="w-full uppercase shadow-md shadow-deep-orange-700  font-light mb-4 text-md px-4 py-3 rounded-sm text-white bg-orange-700 ">Add to cart</button>
+                                    <button type='button' className="w-full uppercase shadow-md shadow-blue-gray-700  font-light text-md px-4 py-3 rounded-sm text-white bg-blue-gray-900 ">Buy it now</button>
                                 </div>
 
                             </div>
@@ -222,13 +255,13 @@ const SingleProduct = () => {
             <section className="py-10">
                 <div className="container">
                     <div className="flex *:p-2 *:border *:border-blue-gray-400 *:w-[120px] *:text-xs *:font-bold gap-2 items-center">
-                        <button className={`${s_section == 'specifications' ? 'bg-primary text-white' : ''}`} onClick={() => setSection('specifications')}>
+                        <button type='button' className={`${s_section == 'specifications' ? 'bg-primary text-white' : ''}`} onClick={() => setSection('specifications')}>
                             Specifications
                         </button>
-                        <button className={`${s_section == 'reviews' ? 'bg-primary text-white' : ''}`} onClick={() => setSection('reviews')}>
+                        <button type='button' className={`${s_section == 'reviews' ? 'bg-primary text-white' : ''}`} onClick={() => setSection('reviews')}>
                             Reviews
                         </button>
-                        <button className={`${s_section == 'similar' ? 'bg-primary text-white' : ''}`} onClick={() => setSection('similar')}>
+                        <button type='button' className={`${s_section == 'similar' ? 'bg-primary text-white' : ''}`} onClick={() => setSection('similar')}>
                             Similar Product
                         </button>
                     </div>

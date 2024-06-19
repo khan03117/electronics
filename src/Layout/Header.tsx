@@ -9,7 +9,7 @@ import ThemeNavbar from './ThemeNavbar';
 const Header = () => {
     return (
         <>
-            <section className='bg-blue-gray-200 mb-3'>
+            <section className='bg-primary  mb-3'>
                 <ThemeNavbar />
             </section>
             <section className="lg:py-5 pt-5 lg:mb-0 mb-5">

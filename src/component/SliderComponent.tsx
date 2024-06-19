@@ -45,8 +45,6 @@ const SliderComponent: React.FC = () => {
             {
                 breakpoint: 768, // At or below 768px
                 settings: {
-                    centerMode: true,
-                    centerPadding: '5px',
                     slidesToShow: 2,
                     slidesToScroll: 1,
                     infinite: false,

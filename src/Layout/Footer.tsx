@@ -6,7 +6,7 @@ import React from 'react'
 const Footer = () => {
   return (
     <>
-      <section className="fixed w-full bg-gray-200 *:relative *:text-sm *:text-center shadow-lg rounded-t-3xl shadow-blue-gray-300 z-50 bottom-0 start-0 lg:hidden flex py-2 *:mt-1 px-4 justify-between">
+      <section className="fixed fixednavbar w-full pe-5  bg-gray-200 *:relative *:text-sm *:text-center shadow-lg rounded-t-3xl shadow-blue-gray-300 z-50 bottom-0 start-0 lg:hidden flex py-2 pt-5 *:mt-1 px-4 justify-between">
         <Link to={'/'}>
           <p>
             <HomeOutlined />
@@ -31,7 +31,7 @@ const Footer = () => {
 
         </Link>
         <Link to={'/cart'}>
-        <div className="absolute size-5 rounded-full bg-primary text-white text-xs -end-1 -top-3">1</div>
+          <div className="absolute size-5 rounded-full bg-primary text-white text-xs -end-1 -top-3">1</div>
 
           <p>
             <ShoppingCartOutlined />
