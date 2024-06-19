@@ -8,36 +8,36 @@ import smtv from '../../assets/smart-tv.png'
 //@ts-ignore
 import comp from '../../assets/computer.png'
 
-
+export const content = [
+    {
+        title: "Mobile",
+        sub_title: "Best Collection",
+        Image: mobileimg
+    },
+    {
+        title: "Smart TV",
+        sub_title: "Best Collection",
+        Image: smtv
+    },
+    {
+        title: "Computer",
+        sub_title: "Best Collection",
+        Image: comp
+    },
+    {
+        title: "Smart Watch",
+        sub_title: "Best Collection",
+        Image: comp
+    },
+    {
+        title: "Mobitar",
+        sub_title: "Best Collection",
+        Image: comp
+    }
+]
 
 const CategoriesSlider = () => {
-    const content = [
-        {
-            title: "MOBILE",
-            sub_title: "Best Collection",
-            Image: mobileimg
-        },
-        {
-            title: "SMART TV",
-            sub_title: "Best Collection",
-            Image: smtv
-        },
-        {
-            title: "COMPUTER",
-            sub_title: "Best Collection",
-            Image: comp
-        },
-        {
-            title: "SMART WATCH",
-            sub_title: "Best Collection",
-            Image:comp
-        },
-        {
-            title: "MONITOR",
-            sub_title: "Best Collection",
-            Image:comp
-        }
-    ]
+
 
     return (
         <>
@@ -63,8 +63,8 @@ const CategoriesSlider = () => {
 
                     </div>
                 </div>
-            
-        </section >
+
+            </section >
         </>
     )
 }

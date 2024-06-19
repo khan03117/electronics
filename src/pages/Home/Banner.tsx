@@ -2,22 +2,28 @@ import React from 'react'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// @ts-ignore
-import banner1 from '../../assets/banner1.webp';
+
 // @ts-ignore
 import banner2 from '../../assets/banner2.webp';
 // @ts-ignore
 import banner3 from '../../assets/banner3.jpg';
 const images = [
     {
-        image: banner1,
+        image: 'https://www.shutterstock.com/image-illustration/smart-watch-red-strap-over-260nw-1476559310.jpg',
         text: "Best Smart Watch",
         para: "Lorem Ipsum is simply dummy text of the  printing and typesetting industry.",
         btn_text: "SHOP NOW",
 
     },
     {
-        image: banner2,
+        image: 'https://www.shutterstock.com/image-photo/white-wireless-headphones-on-red-260nw-2122728104.jpg',
+        text: "Best Smart Watch",
+        para: "Lorem Ipsum is simply dummy text of the  printing and typesetting industry.",
+        btn_text: "SHOP NOW",
+
+    },
+    {
+        image: 'https://media.wired.com/photos/5f2b2e792f0075bf6e0a1de6/2:1/w_2399,h_1199,c_limit/Gear-Sony-WH-1000XM4-1-SOURCE-Sony.jpg',
         text: "Best Smart Watch",
         para: "Lorem Ipsum is simply dummy text of the  printing and typesetting industry.",
         btn_text: "SHOP NOW",

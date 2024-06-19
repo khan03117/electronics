@@ -3,44 +3,85 @@ import { FacebookFilled, HeartOutlined, HomeFilled, HomeOutlined, InstagramFille
 import logo from '../assets/logo.png'
 import { Link } from 'react-router-dom'
 import React from 'react'
+import { content } from '../pages/Home/CategoriesSlider'
 const Footer = () => {
   return (
     <>
-      <section className="fixed fixednavbar w-full pe-5  bg-gray-200 *:relative *:text-sm *:text-center shadow-lg rounded-t-3xl shadow-blue-gray-300 z-50 bottom-0 start-0 lg:hidden flex py-2 pt-5 *:mt-1 px-4 justify-between">
-        <Link to={'/'}>
-          <p>
-            <HomeOutlined />
-          </p>
-          <p>Home</p>
-
-        </Link>
-        <Link to={'/shop'}>
-          <p>
-            <ShopOutlined />
-          </p>
-          <p>Shop</p>
-
-        </Link>
-        <Link to={'/wishlist'}>
-          <div className="absolute size-5 rounded-full bg-primary text-white text-xs -end-0 -top-3">1</div>
-          <p>
-            <HeartOutlined />
-          </p>
-
-          <p>Wishlist</p>
-
-        </Link>
-        <Link to={'/cart'}>
-          <div className="absolute size-5 rounded-full bg-primary text-white text-xs -end-1 -top-3">1</div>
-
-          <p>
-            <ShoppingCartOutlined />
-          </p>
-          <p>Cart</p>
-
-        </Link>
+      <section className="fixed fixednavbar w-full pe-5 *:relative *:text-sm *:text-center shadow-lg  shadow-blue-gray-300 z-50 bottom-14 bg-white start-0 lg:hidden block py-2 pt-5 *:mt-1 px-4 ">
+        <div className="flex max-w-full gap-9 pb-2 overflow-x-auto mb-3 w-full relative">
+          {
+            content.map((itm) => (
+              <>
+                <div className="text-nowrap text-center">
+                  <figure className="w-full mb-2">
+                    <img src={itm.Image} alt="" className="size-8 mx-auto" />
+                  </figure>
+                  <div className="w-full">
+                    <h4 className="text-sm">
+                      {itm.title}
+                    </h4>
+                  </div>
+                </div>
+              </>
+            ))
+          }
+        </div>
       </section>
-      <section className="footersection py-20 bg-indigo-900 text-white">
+      <section className="fixed fixednavbar w-full pe-5  bg-gray-200 *:relative *:text-sm *:text-center shadow-lg rounded-t-3xl shadow-blue-gray-300 z-50 bottom-0 start-0 lg:hidden block py-2 pt-5 *:mt-1 px-4 ">
+        {/* <div className="flex max-w-full gap-5 pb-2 overflow-x-auto mb-3 w-full relative">
+          {
+            content.map((itm) => (
+              <>
+                <div className="text-nowrap">
+                  <figure className="w-full mb-2">
+                    <img src={itm.Image} alt="" className="size-12" />
+                  </figure>
+                  <div className="w-full">
+                    <h4 className="text-sm">
+                      {itm.title}
+                    </h4>
+                  </div>
+                </div>
+              </>
+            ))
+          }
+        </div> */}
+        <div className="flex justify-between w-full relative">
+          <Link to={'/'}>
+            <p>
+              <HomeOutlined />
+            </p>
+            <p>Home</p>
+
+          </Link>
+          <Link to={'/shop'}>
+            <p>
+              <ShopOutlined />
+            </p>
+            <p>Shop</p>
+
+          </Link>
+          <Link to={'/wishlist'}>
+            <div className="absolute size-5 rounded-full bg-primary text-white text-xs -end-0 -top-3">1</div>
+            <p>
+              <HeartOutlined />
+            </p>
+
+            <p>Wishlist</p>
+
+          </Link>
+          <Link to={'/cart'}>
+            <div className="absolute size-5 rounded-full bg-primary text-white text-xs -end-1 -top-3">1</div>
+
+            <p>
+              <ShoppingCartOutlined />
+            </p>
+            <p>Cart</p>
+
+          </Link>
+        </div>
+      </section>
+      <section className="footersection py-20 bg-primary text-white">
         <div className="container">
           <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1">
             <div className="col-span-1">
