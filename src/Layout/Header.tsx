@@ -9,6 +9,9 @@ import ThemeNavbar from './ThemeNavbar';
 const Header = () => {
     return (
         <>
+            <section className='bg-blue-gray-200 mb-3'>
+                <ThemeNavbar />
+            </section>
             <section className="lg:py-5 pt-5 lg:mb-0 mb-5">
                 <div className="container">
                     <div className="grid lg:grid-cols-12 md:grid-cols-1 grid-cols-1 gap-4">
@@ -22,7 +25,7 @@ const Header = () => {
                         <div className="lg:col-span-8 col-span-12 lg:order-2 order-3">
                             <div className="w-full">
                                 <div className='flex'>
-                                    <input type='text' placeholder='Search our store' className='border border-blue-gray-200 w-full py-2 px-4'></input>
+                                    <input type='text' placeholder='Search our store' className='border outline-none border-blue-gray-200 w-full py-2 px-4'></input>
                                     <button className='bg-primary py-2 lg:px-7 px-2 text-white border border-1 border-primary lg:text-lg text-xs uppercase tracking-widest font-dark'>Search</button>
                                 </div>
                             </div>
@@ -36,9 +39,7 @@ const Header = () => {
                     </div>
                 </div>
             </section>
-            <section className='bg-blue-gray-200 mb-3'>
-                <ThemeNavbar />
-            </section>
+
         </>
     )
 }

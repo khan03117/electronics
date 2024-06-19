@@ -35,33 +35,41 @@ const images = [
 
 const Banner = () => {
     var settings = {
-        dots: false,
-        arrows : false,
-        navs : true,
-        autoplay:true,
-        autoplaySpeed: 1000,
+        dots: true,
+
+
+        arrows: false,
+        navs: true,
+        customPaging: (index: number) => (
+            <span className='inline-block border border-blue-gray-600 bannerdot size-4 bg-blue-gray-300 rounded-full  '></span>
+        ),
+        // autoplay: true,
+        // autoplaySpeed: 1000,
         infinite: true,
         speed: 500,
-        loop:true,
-        
+        loop: true,
+
         slidesToShow: 1,
         slidesToScroll: 1,
     };
     return (
         <>
             <div className='w-full'>
-                <Slider {...settings} className="rounded-lg">
-
+                <Slider {...settings} className="" >
                     {
                         images.map((bnnr) => (
-                            <div className='rounded-lg px-3  w-full overflow-hidden'>
-                                <div className="w-full h-[375px] rounded-lg overflow-hidden " style={{ backgroundImage: `url(${bnnr.image})` }}>
-                                    <div className="grid lg:grid-cols-2 gap-4">
-                                        <div className="col-span-1">
-                                            <h1 className='text-white text-[3.2rem] font-bold pt-20 pl-10'>Best Smart Watch</h1>
-                                            <p className='text-white text-[1.2rem] pl-10'>Lorem Ipsum is simply dummy text of the  printing and typesetting industry.</p>
+                            <div className='lg:rounded-lg rounded-none lg:px-3 p-0  w-full '>
+                                <div className="w-full max-h-[375px] relative lg:rounded-lg rounded-none overflow-hidden ">
+                                    <img src={bnnr.image} alt="" className="w-full h-full" />
+                                    <div className="absolute top-[50%] translate-y-[-50%] start-5 z-10 lg:w-1/2 w-3/4 ">
+
+                                        <div className="w-full">
+                                            <h1 className='text-white lg:text-[3.2rem] text-3xl lg:mb-10 mb-6 font-bold '>Best Smart Watch</h1>
+                                            <p className='text-white lg:text-[1.2rem] text-sm tracking-widest '>Lorem Ipsum is simply dummy text of the  printing and typesetting industry.</p>
                                         </div>
+
                                     </div>
+
                                 </div>
                             </div>
                         ))

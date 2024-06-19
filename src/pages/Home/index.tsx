@@ -9,12 +9,12 @@ const Home = () => {
   return (
     <>
       <section className='pb-5'>
-        <div className="container">
+        <div className="container lg:p-2 p-0">
           <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-3 gap-0">
             <div className="col-span-2 lg:block hidden">
               <Categories />
             </div>
-            <div className="lg:col-span-10 col-span-12">
+            <div className="lg:col-span-10  col-span-12">
               <Banner />
             </div>
           </div>
@@ -30,7 +30,7 @@ const Home = () => {
       {
         ['Screen Guards', 'Mobile Covers', 'Accessories', 'Gadgets'].map((itm) => (
           <>
-            <section className="py-10">
+            <section className="md:py-10 py-3">
               <div className="container">
                 <div className="w-full text-center mb-10">
                   <h2 className="sectiontitle">{itm}</h2>
@@ -43,7 +43,7 @@ const Home = () => {
           </>
         ))
       }
-      <section className="py-10">
+      <section className="md:py-10 py-3">
         <div className="container">
           <div className="w-full text-center mb-10">
             <h2 className="sectiontitle">Shop By Brand</h2>
@@ -56,7 +56,7 @@ const Home = () => {
       {
         ['Most Viewd', 'Recently Viewed'].map((itm) => (
           <>
-            <section className="py-10">
+            <section className="md:py-10 py-3">
               <div className="container">
                 <div className="w-full text-center mb-10">
                   <h2 className="sectiontitle">{itm}</h2>
@@ -69,7 +69,7 @@ const Home = () => {
           </>
         ))
       }
-      <section className="py-10">
+      <section className="md:py-10 py-3">
         <div className="container">
           <div className="w-full text-center mb-10">
             <h2 className="sectiontitle">What our clients says</h2>

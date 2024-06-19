@@ -36,7 +36,7 @@ const SliderComponent: React.FC = () => {
                 breakpoint: 992, // At or below 992px
                 settings: {
                     slidesToShow: 2,
-                    slidesToScroll: 2,
+                    slidesToScroll: 1,
                     infinite: false,
                     dots: false,
                     navs: true,
@@ -45,7 +45,9 @@ const SliderComponent: React.FC = () => {
             {
                 breakpoint: 768, // At or below 768px
                 settings: {
-                    slidesToShow: 1,
+                    centerMode: true,
+                    centerPadding: '5px',
+                    slidesToShow: 2,
                     slidesToScroll: 1,
                     infinite: false,
                     dots: false,
@@ -61,10 +63,10 @@ const SliderComponent: React.FC = () => {
                 {
                     [...items].map((itm) => (
                         <>
-                        <div className="p-4">
-                        <ProductSlider image={itm} />
-                        </div>
-                           
+                            <div className="lg:p-4 p-1">
+                                <ProductSlider image={itm} />
+                            </div>
+
                         </>
                     ))
                 }
