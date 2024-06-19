@@ -7,7 +7,7 @@ interface Prop {
 const ProductSlider = (props: Prop) => {
   return (
     <>
-      <Link to={'/single-product'} className="w-full block productbox relative lg:pt-5  lg:shadow-lg shadow-md border-t border-blue-gray-200 pt-4 shadow-blue-gray-800  rounded-xl ">
+      <Link to={'/single-product'} className="w-full block productbox relative lg:pt-5  lg:shadow-lg shadow-md border border-primary/20 pt-4 shadow-blue-gray-800  rounded-xl ">
         <div className="absolute shopincon z-10 *:size-10 *:shadow-md *:shadow-blue-gray-400 *:bg-white *:text-center *:rounded-full *:leading-10 flex w-10 flex-col gap-5 top-20 end-3">
           <a className='quicklink'>
             <HeartOutlined />
