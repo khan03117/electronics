@@ -23,7 +23,7 @@ const ProductSlider = (props: Prop) => {
           <img src={props.image} alt="" className="w-full lg:h-48 h-20 object-contain" />
         </figure>
         <div className="w-full px-5 py-4 text-center">
-          <h4 className="md:text-[1.6rem] text-md md:mb-4 mb-1 font-bold truncate">Wireless Buds LeadFold - Lead Generation HTML Landing Page Template</h4>
+          <h4 className="md:text-[1.2rem] text-md md:mb-4 mb-1 font-bold truncate">Wireless Buds LeadFold - Lead Generation HTML Landing Page Template</h4>
 
           <p className="text-primary lg:text-lg text-sm md:mb-5 mb-2  productPrice">
             <span className="text-gray-600 me-3 lg:text-sm text-xs line-through">₹ 599.99</span>  <span >₹ 399.99</span>
