@@ -40,7 +40,7 @@ const Shop = () => {
         <>
             <div className="w-full ">
                 <div onClick={() => handleOpen('category')} className="flex cursor-pointer items-center justify-between">
-                    <h3 className="text-[1.2rem] my-5 border-l-2 relative filtertitle border-black px-2">CATEGORIES</h3>
+                    <h3 className="md:text-[1.2rem] text-md my-5 border-l-2 relative filtertitle border-black px-2">Categories</h3>
                     <span>
                         <PlusOutlined />
                     </span>
@@ -51,7 +51,7 @@ const Shop = () => {
                             ['Mobile Cover', 'Covers', 'Screen Guard', 'Accessories'].map((elm) => (
                                 <>
                                     <li>
-                                        <button className="flex items-center">
+                                        <button type="button" className="flex md:text-lg text-sm items-center">
                                             <Checkbox onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} crossOrigin={undefined} />     {elm}
                                         </button>
                                     </li>
@@ -64,7 +64,7 @@ const Shop = () => {
             </div>
             <div className="w-full">
                 <div onClick={() => handleOpen('brand')} className="flex cursor-pointer items-center justify-between">
-                    <h3 className="text-[1.2rem] my-5 border-l-2 relative filtertitle border-black px-2">Brand</h3>
+                    <h3 className="md:text-[1.2rem] text-md my-5 border-l-2 relative filtertitle border-black px-2">Brand</h3>
                     <span>
                         <PlusOutlined />
                     </span>
@@ -91,8 +91,8 @@ const Shop = () => {
 
             </div>
             <div className="w-full">
-                <h3 className="text-[1.2rem] my-5 border-l-2 relative filtertitle border-black px-2">Types</h3>
-                <div className="flex flex-wrap gap-3 *:border *:border-blue-gray-900 *:text-center *:px-3 *:py-2">
+                <h3 className="md:text-[1.2rem] text-md my-5 border-l-2 relative filtertitle border-black px-2">Types</h3>
+                <div className="flex flex-wrap gap-3 *:border *:border-blue-gray-900 *:text-center *:md:px-3 *:md:py-2  *:p-1 text-sm">
                     <button type="button" title="brand button">Vivo</button>
                     <button type="button" title="brand button">Redmi</button>
                     <button type="button" title="brand button">Iphone</button>
@@ -101,24 +101,24 @@ const Shop = () => {
                 </div>
             </div>
             <div className="w-full">
-                <h3 className="text-[1.2rem] my-5 border-l-2 relative filtertitle border-black px-2">TAGS</h3>
-                <div className="flex flex-wrap gap-3 *:border *:border-blue-gray-900 *:px-3 *:py-2 ">
+                <h3 className="md:text-[1.2rem] text-md my-5 border-l-2 relative filtertitle border-black px-2">Tags</h3>
+                <div className="flex flex-wrap gap-3 *:border *:border-blue-gray-500 *:md:px-3 *:md:py-2  *:p-1 text-sm">
                     {
                         ['Maroon', 'Fashion', 'Popular', 'Shoes', 'Gold', 'Men', 'Boys'].map((itm) => (
                             <>
-                                <button className="">{itm}</button>
+                                <button type="button" className="">{itm}</button>
                             </>
                         ))
                     }
                 </div>
             </div>
             <div className="w-full">
-                <h3 className="text-[1.2rem] my-5 border-l-2 relative filtertitle border-black px-2">Colors</h3>
+                <h3 className="md:text-[1.2rem] text-md my-5 border-l-2 relative filtertitle border-black px-2">Colors</h3>
                 <div className="flex flex-wrap gap-3 *:border *:border-blue-gray-900  ">
                     {
                         colors.map((itm) => (
                             <>
-                                <button title="color button" type="button" style={{ background: `${itm}` }} className={`size-9 rounded-full`}></button>
+                                <button title="color button" type="button" style={{ background: `${itm}` }} className={`md:size-9 size-5 rounded-full`}></button>
                             </>
                         ))
                     }
@@ -132,7 +132,7 @@ const Shop = () => {
                 filo && (
                     <>
                         <div className="fixed z-[999] top-0 start-0 w-full h-full  bg-black/30">
-                            <div className="w-3/4 relative p-4 bg-white">
+                            <div className="w-3/4 relative p-4 h-screen bg-white">
                                 <button type="button" title="off button" onClick={handlefilter} className="absolute -end-8 top-0 size-8 bg-blue-gray-100 text-black">
                                     <CloseOutlined />
                                 </button>
