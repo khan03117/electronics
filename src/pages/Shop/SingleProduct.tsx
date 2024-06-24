@@ -158,29 +158,14 @@ const SingleProduct = () => {
                         <div className="md:col-span-5 col-span-5">
                             <div className="w-full">
                                 <div className="grid lg:grid-cols-6 grid-cols-6 gap-6">
-                                    {/* <div className="md:col-span-1 col-span-6 md:order-1 order-2 max-h-[500px] overflow-hidden">
-                                        <Slider ref={sliderNavRef} {...settingsNav} className='slider-nav'>
-                                            {
-                                                images.map((itm) => (
-                                                    <>
-                                                        <div className="p-2">
-                                                            <figure className="md:size-24 w-full  h-20 object-contain my-2 border border-blue-gray-200 md:shadow-lg shadow-gray-900">
-                                                                <img src={itm} alt="" className="w-full h-full object-contain" />
-                                                            </figure>
-                                                        </div>
 
-                                                    </>
-                                                ))
-                                            }
-                                        </Slider>
-                                    </div> */}
                                     <div className="lg:col-span-5 md:order-2 order-1 col-span-6">
                                         <Slider  {...settingsFor} className='slider-for'>
                                             {
                                                 images.map((itm) => (
                                                     <>
                                                         <figure className="w-full border border-blue-gray-200 shadow-lg rounded-2xl overflow-hidden shadow-blue-gray-800">
-                                                            <img src={itm} alt="" className="w-full h-[500px] object-contain" />
+                                                            <img src={itm} alt="" className="w-full lg:h-[500px] h-[300px] object-contain" />
                                                         </figure>
                                                     </>
                                                 ))
