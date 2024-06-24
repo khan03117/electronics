@@ -21,9 +21,13 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="lg:block hidden">
-        <div className="w-full  mb-3 sectiontitle_parent">
-          <h2 className="sectiontitle">Shop By Category</h2>
+      <section className="">
+        <div className="container">
+          <div className="w-full">
+            <div className="w-full  mb-3 sectiontitle_parent">
+              <h2 className="sectiontitle">Shop By Category</h2>
+            </div>
+          </div>
         </div>
         <CategoriesSlider />
       </section>

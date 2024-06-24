@@ -15,7 +15,7 @@ const SliderComponent: React.FC = () => {
     const settings = {
         dots: false,
         navs: true,
-        infinite: false,
+        infinite: true,
         speed: 500,
         slidesToShow: 4,
         slidesToScroll: 2,
@@ -27,7 +27,7 @@ const SliderComponent: React.FC = () => {
                 settings: {
                     slidesToShow: 4,
                     slidesToScroll: 2,
-                    infinite: false,
+                    infinite: true,
                     dots: false,
                     navs: true,
                 }
@@ -37,7 +37,7 @@ const SliderComponent: React.FC = () => {
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 1,
-                    infinite: false,
+                    infinite: true,
                     dots: false,
                     navs: true,
                 }
@@ -47,7 +47,7 @@ const SliderComponent: React.FC = () => {
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 4,
-                    infinite: false,
+                    infinite: true,
                     dots: false,
                     navs: true,
                 }

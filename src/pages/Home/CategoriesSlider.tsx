@@ -1,4 +1,3 @@
-import { MobileOutlined } from '@ant-design/icons'
 import React from 'react'
 import { Link } from 'react-router-dom'
 //@ts-ignore
@@ -7,6 +6,10 @@ import mobileimg from '../../assets/mobileimg.png'
 import smtv from '../../assets/smart-tv.png'
 //@ts-ignore
 import comp from '../../assets/computer.png'
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { NextArrow, PrevArrow } from "../../component/Arrows";
 
 export const content = [
     {
@@ -37,30 +40,75 @@ export const content = [
 ]
 
 const CategoriesSlider = () => {
+    const settings = {
+        dots: false,
+        navs: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 8,
+        slidesToScroll: 2,
 
+        nextArrow: <NextArrow className={'btn'} />, // Use custom next arrow
+        prevArrow: <PrevArrow className={'btn'} />,  // Use custom prev arrow,
+        responsive: [
+            {
+                breakpoint: 1200, // At or below 1200px
+                settings: {
+                    slidesToShow: 8,
+                    slidesToScroll: 2,
+                    infinite: false,
+                    dots: false,
+                    navs: true,
+                }
+            },
+            {
+                breakpoint: 992, // At or below 992px
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    infinite: false,
+                    dots: false,
+                    navs: true,
+                }
+            },
+            {
+                breakpoint: 768, // At or below 768px
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 4,
+                    infinite: true,
+                    dots: false,
+                    navs: false,
+                    arrows: false
+                }
+            }
+        ]
+
+    };
 
     return (
         <>
 
-            <section className='p-5'>
+            <section className='py-4'>
                 <div className="container">
-                    <div className="grid lg:grid-cols-5 gap-4">
-                        {
-                            content.map((crr) => (
-                                <div className="col-span-1">
-                                    <div className="w-full bg-[#faf1ff] rounded-[0.5rem] p-10 shadow-lg border border-[#eeeeee]">
-                                        <figure className='w-full'>
-                                            <img src={crr.Image} alt='image' className='h-[80px]' />
-                                        </figure>
-                                        <div className="w-full">
-                                            <h2 className='text-black font-bold pt-7'>{crr.title}</h2>
-                                            <p className='pt-1'>{crr.sub_title}</p>
+                    <div className="w-full">
+                        <Slider {...settings}>
+                            {
+                                content.map((crr) => (
+                                    <div className="">
+                                        <div className="w-full text-center lg:p-10 p-0">
+                                            <figure className='lg:size-16 block lg:mb-5 mb-1 text-center mx-auto size-10 overflow-hidden rounded-full'>
+                                                <img src={crr.Image} alt='image' className='  object-contain' />
+                                            </figure>
+                                            <div className="w-full">
+                                                <h2 className='text-black font-bold  lg:text-md text-xs'>{crr.title}</h2>
+
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))
-                        }
-
+                                ))
+                            }
+                        </Slider>
                     </div>
                 </div>
 

@@ -12,7 +12,7 @@ const Testimonials = () => {
         slidesToShow: 3,
         slidesToScroll: 3,
         nextArrow: <NextArrow className={'btn'} />, // Use custom next arrow
-        prevArrow: <PrevArrow className={'btn'} /> ,
+        prevArrow: <PrevArrow className={'btn'} />,
         responsive: [
             {
                 breakpoint: 1024,  // Example breakpoint for tablets
@@ -34,7 +34,7 @@ const Testimonials = () => {
             {
                 breakpoint: 480,  // Example breakpoint for smaller devices
                 settings: {
-                    slidesToShow: 1,
+                    slidesToShow: 2,
                     slidesToScroll: 1
                 }
             }
@@ -45,13 +45,13 @@ const Testimonials = () => {
         <>
 
             <Slider {...settings}>
-                <div className='p-4'>
+                <div className='p-1'>
                     <Testimonialbox name={'John doe'} post={'Ghaziabad UP'} image={'https://foesta-demo.myshopify.com/cdn/shop/files/testimonial-3.png?v=1711252165'} description={'"I absolutely love shopping here! The selection is fantastic, the prices are competitive, Highly recommend."'} subject={'Product Quality'} />
                 </div>
-                <div className='p-4'>
+                <div className='p-1'>
                     <Testimonialbox name={'Abhmram James'} post={'Kerala'} image={'https://foesta-demo.myshopify.com/cdn/shop/files/testimonial-3.png?v=1711252165'} description={'"I absolutely love shopping here! The selection is fantastic, the prices are competitive, Highly recommend."'} subject={'Product Delivery'} />
                 </div>
-                <div className='p-4'>
+                <div className='p-1'>
                     <Testimonialbox name={'Shkte James'} post={'Andhara Pradesh'} image={'https://foesta-demo.myshopify.com/cdn/shop/files/testimonial-3.png?v=1711252165'} description={'"I absolutely love shopping here! The selection is fantastic, the prices are competitive, Highly recommend."'} subject={'Product Price'} />
                 </div>
             </Slider>
