@@ -152,7 +152,7 @@ const SingleProduct = () => {
                     </>
                 )
             }
-            <section className="py-10">
+            <section className="lg:py-10 py-4" id="singleproduct">
                 <div className="container mx-auto">
                     <div className="grid lg:grid-cols-8 grid-cols-1 lg:gap-5 gap-6">
                         <div className="md:col-span-5 col-span-5">

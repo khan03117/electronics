@@ -206,4 +206,8 @@ body {
   .fixednavbar {
     box-shadow: 0px -1px 7px 0px #e2e2e2;
   }
+
+  #singleproduct .slick-dots {
+    bottom: -103px;
+  }
 }
