@@ -26,10 +26,10 @@ const Header = () => {
                             <div className="w-full">
                                 <div className='flex'>
                                     <div className="flex w-full rounded-lg overflow-hidden border border-blue-gray-300">
-                                        <span className="icon p-2">
+                                        <span className="icon p-2 text-gray-600">
                                             <SearchOutlined />
                                         </span>
-                                        <input type='text' placeholder='Search our store' className=' outline-none rounded-none  border-none w-full py-2 px-4'></input>
+                                        <input type='text' placeholder='Search our store' className=' outline-none rounded-none  border-none w-full py-2 px-4 lg:text-sm text-xs'></input>
                                     </div>
                                     {/* <button className='bg-primary py-2 lg:px-7 px-2  rounded-e-lg text-white border border-1 border-primary lg:text-lg text-xs uppercase tracking-widest font-dark'>Search</button> */}
                                 </div>
