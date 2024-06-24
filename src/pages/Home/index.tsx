@@ -5,6 +5,7 @@ import CategoriesSlider from './CategoriesSlider'
 import SliderComponent from '../../component/SliderComponent'
 import Testimonials from './Testimonials'
 import { RightOutlined } from '@ant-design/icons'
+import SectionDevider from '../../component/SectionDevider'
 
 const Home = () => {
   return (
@@ -21,6 +22,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+
       <section className="">
         <div className="container">
           <div className="w-full">
@@ -31,7 +33,7 @@ const Home = () => {
         </div>
         <CategoriesSlider />
       </section>
-
+      <SectionDevider />
       {
         ['Screen Guards', 'Mobile Covers', 'Accessories', 'Gadgets'].map((itm) => (
           <>
@@ -52,6 +54,7 @@ const Home = () => {
                 </div>
               </div>
             </section>
+            <SectionDevider />
           </>
         ))
       }
@@ -65,6 +68,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <SectionDevider />
       {
         ['Recently Viewed'].map((itm) => (
           <>
@@ -82,6 +86,7 @@ const Home = () => {
           </>
         ))
       }
+      <SectionDevider />
       <section className="md:py-10 py-3">
         <div className="container">
           <div className="w-full  mb-3 sectiontitle_parent">
