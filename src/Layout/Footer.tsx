@@ -7,47 +7,11 @@ import { content } from '../pages/Home/CategoriesSlider'
 const Footer = () => {
   return (
     <>
-      <section className="fixed fixednavbar w-full pe-5 *:relative *:text-sm *:text-center shadow-lg  shadow-blue-gray-300 z-50 bottom-14 bg-white start-0 lg:hidden block py-2 pt-5 *:mt-1 px-4 ">
-        <div className="flex max-w-full gap-9 pb-2 overflow-x-auto mb-3 w-full relative">
-          {
-            content.map((itm) => (
-              <>
-                <div className="text-nowrap text-center">
-                  <figure className="w-full mb-2">
-                    <img src={itm.Image} alt="" className="size-8 mx-auto" />
-                  </figure>
-                  <div className="w-full">
-                    <h4 className="text-sm">
-                      {itm.title}
-                    </h4>
-                  </div>
-                </div>
-              </>
-            ))
-          }
-        </div>
-      </section>
-      <section className="fixed fixednavbar w-full pe-5  bg-gray-200 *:relative *:text-sm *:text-center shadow-lg rounded-t-3xl shadow-blue-gray-300 z-50 bottom-0 start-0 lg:hidden block py-2 pt-5 *:mt-1 px-4 ">
-        {/* <div className="flex max-w-full gap-5 pb-2 overflow-x-auto mb-3 w-full relative">
-          {
-            content.map((itm) => (
-              <>
-                <div className="text-nowrap">
-                  <figure className="w-full mb-2">
-                    <img src={itm.Image} alt="" className="size-12" />
-                  </figure>
-                  <div className="w-full">
-                    <h4 className="text-sm">
-                      {itm.title}
-                    </h4>
-                  </div>
-                </div>
-              </>
-            ))
-          }
-        </div> */}
+
+      <section className="fixed fixednavbar w-full pe-5  bg-gray-100 *:relative *:text-sm *:text-center  z-50 bottom-0 start-0 lg:hidden block py-2 pt-5 *:mt-1 px-4 ">
+
         <div className="flex justify-between w-full relative">
-          <Link to={'/'}>
+          <Link to={'/'} className='active'>
             <p>
               <HomeOutlined />
             </p>

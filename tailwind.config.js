@@ -11,7 +11,7 @@ export default withMt({
         center: true,
       },
       colors: {
-        primary: "#ff6162",
+        primary: "#ff0000",
         secondary: "#111",
       }
     },

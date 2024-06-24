@@ -31,7 +31,7 @@ const ProductSlider = (props: Prop) => {
           <div className="w-full md:mb-5 mb-0 text-center flex items-center justify-center">
             <button type='button' className="md:px-4 md:py-2 px-2 py-1 uppercase text-xs tracking-widest font-light rounded-full bg-primary text-white shadow-sm shadow-deep-orange-600">Add to Cart</button>
           </div>
-          <div className="w-full text-center md:px-5 px-1 mt-5">
+          <div className="w-full lg:block hidden text-center md:px-5 px-1 mt-5">
             <p className='inline-flex px-2 border border-blue-gray-200 rounded-full justify-center  text-sm items-center gap-2'>
               <span className="inline-block md:size-4 size-2 rounded-full bg-green-400 border border-blue-gray-200"></span>
               <span className="md:text-sm text-xs md:font-light text-nowrap ">

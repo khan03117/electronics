@@ -1,4 +1,4 @@
-import { CloseOutlined, MenuOutlined, ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
+import { CloseOutlined, HeartFilled, MenuOutlined, ShoppingCartOutlined, ShoppingFilled, ShoppingOutlined, UserOutlined } from "@ant-design/icons";
 import {
     Navbar,
     Collapse
@@ -16,7 +16,7 @@ const ThemeNavbar = () => {
     function NavList() {
         return (
             <ul className="my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-                <p
+                <li
 
 
                     color="black"
@@ -25,15 +25,15 @@ const ThemeNavbar = () => {
                     <Link to={'/shop'} className="flex items-center hover:text-blue-500 transition-colors">
                         Shop
                     </Link>
-                </p>
-                <p color="black"
+                </li>
+                <li color="black"
                     className="p-1 text-black font-medium"
                 >
                     <Link to={'/login'} className="flex items-center hover:text-blue-500 transition-colors">
                         Account
                     </Link>
-                </p>
-                <p
+                </li>
+                <li
 
 
                     color="black"
@@ -42,8 +42,8 @@ const ThemeNavbar = () => {
                     <Link to={'/contact'} className="flex items-center hover:text-blue-500 transition-colors">
                         Contact us
                     </Link>
-                </p>
-                <p
+                </li>
+                <li
 
 
                     color="black"
@@ -52,16 +52,28 @@ const ThemeNavbar = () => {
                     <Link to={'/'} className="flex items-center hover:text-blue-500 transition-colors">
                         Faq's
                     </Link>
-                </p>
+                </li>
             </ul>
         );
     }
     return (
         <>
-            <Navbar className="mx-auto rounded-none max-w-full w-full px-3  shadow-none" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+            <Navbar className="mx-auto rounded-none max-w-full w-full px-3 py-0  shadow-none" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                 <div className="flex w-full items-center justify-between text-black">
                     <div className="lg:hidden block">
-                        <Link to={'/'}>
+                        <button
+
+                            className="  inline-block h-6 w-6 relative -top-1 me-2 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+
+                            onClick={() => setOpenNav(!openNav)}
+                        >
+                            {openNav ? (
+                                <CloseOutlined />
+                            ) : (
+                                <MenuOutlined />
+                            )}
+                        </button>
+                        <Link className="inline-block" to={'/'}>
                             <img src={logoimg} className="w-20" alt="" />
                         </Link>
                     </div>
@@ -74,22 +86,12 @@ const ThemeNavbar = () => {
                             +91-909090090
                         </Link>
                         <div className="lg:hidden inline-block">
-                            <Link to={'/cart'} className='text-[1.5rem] pl-4'> <ShoppingCartOutlined /></Link>
-                            <Link to={'/orders'} className='text-[1.5rem] pl-4'> <UserOutlined /></Link>
+                            <Link to={'/cart'} className='text-[1.2rem] text-primary'> <HeartFilled /></Link>
+                            <Link to={'/cart'} className='text-[1.2rem] ps-1'> <ShoppingCartOutlined /></Link>
+                            <Link to={'/orders'} className='text-[1.2rem] ps-1'> <UserOutlined /></Link>
                         </div>
                     </div>
-                    <button
 
-                        className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-
-                        onClick={() => setOpenNav(!openNav)}
-                    >
-                        {openNav ? (
-                            <CloseOutlined />
-                        ) : (
-                            <MenuOutlined />
-                        )}
-                    </button>
                 </div>
                 <Collapse open={openNav}>
                     <NavList />

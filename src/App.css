@@ -85,6 +85,7 @@ body {
   display: inline-block;
   margin: 0 auto;
   padding-bottom: 0.5rem;
+  margin-bottom: 0.7rem;
 }
 
 .sectiontitle::before {
@@ -140,8 +141,8 @@ body {
   border: 3px solid red;
 }
 
-.slider-for .slick-dots {
-  bottom: -60px;
+#banner .slick-dots {
+  bottom: 25px !important;
   max-width: 100%;
   overflow-x: auto;
   text-wrap: nowrap;
@@ -149,8 +150,27 @@ body {
 
 @media (max-width: 992px) {
   .sectiontitle {
-    font-size: 20px;
-    margin-bottom: 1rem;
+    font-size: 16px;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.3rem;
+  }
+
+  .sectiontitle::before {
+
+    bottom: 0px;
+    width: 100%;
+    height: 1px;
+
+  }
+
+  .sectiontitle::after {
+
+
+    bottom: -2px;
+
+    width: 5px;
+    height: 5px;
+
   }
 
   .slick-prev,
@@ -171,8 +191,16 @@ body {
 
   .fixednavbar p span svg {
 
-    height: 30px;
-    width: 30px;
-    color: rgba(255, 0, 0, 0.342);
+    height: 18px;
+    width: 18px;
+    color: #000;
+  }
+
+  .fixednavbar a.active p span svg {
+    color: red;
+  }
+
+  .fixednavbar {
+    box-shadow: 0px -1px 7px 0px #e2e2e2;
   }
 }

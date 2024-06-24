@@ -22,7 +22,7 @@ const Home = () => {
         </div>
       </section>
       <section className="lg:block hidden">
-        <div className="w-full text-center mb-10">
+        <div className="w-full  mb-3 sectiontitle_parent">
           <h2 className="sectiontitle">Shop By Category</h2>
         </div>
         <CategoriesSlider />
@@ -33,12 +33,12 @@ const Home = () => {
           <>
             <section className="md:py-10 py-3">
               <div className="container">
-                <div className="w-full text-center mb-10">
+                <div className="w-full   sectiontitle_parent">
                   <h2 className="sectiontitle">{itm}</h2>
                 </div>
-                <div className="w-full flex justify-between my-4">
-                  <h4 className="md:text-xl text-md text-primary font-bold">Start from just 99.99 only</h4>
-                  <button type='button' className=" rounded-full md:px-5 px-2 text-xs uppercase font-bold tracking-widest py-2 bg-primary/20 shadow-md shadow-primary">
+                <div className="w-full flex justify-between items-center mb-2">
+                  <h4 className="md:text-xl text-sm text-primary font-bold">Start from just 99.99 only</h4>
+                  <button type='button' className="  md:px-5 px-2 text-xs uppercase font-bold  py-2  text-primary">
                     View All
                     <RightOutlined className='md:ms-3 ms-1' />
                   </button>
@@ -51,9 +51,9 @@ const Home = () => {
           </>
         ))
       }
-      <section className="md:py-10 py-3">
+      <section className="md:py-10 py-1">
         <div className="container">
-          <div className="w-full text-center mb-10">
+          <div className="w-full  mb-3 sectiontitle_parent">
             <h2 className="sectiontitle">Shop By Brand</h2>
           </div>
           <div className="w-full">
@@ -66,7 +66,7 @@ const Home = () => {
           <>
             <section className="md:py-10 py-3">
               <div className="container">
-                <div className="w-full text-center mb-10">
+                <div className="w-full  mb-3 sectiontitle_parent">
                   <h2 className="sectiontitle">{itm}</h2>
                 </div>
 
@@ -80,7 +80,7 @@ const Home = () => {
       }
       <section className="md:py-10 py-3">
         <div className="container">
-          <div className="w-full text-center mb-10">
+          <div className="w-full  mb-3 sectiontitle_parent">
             <h2 className="sectiontitle">What our clients says</h2>
           </div>
           <div className="w-full">

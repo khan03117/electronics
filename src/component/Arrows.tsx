@@ -9,12 +9,12 @@ interface props {
 const NextArrow = (props: props) => {
     const { className, style, onClick } = props;
     return (
-        <button
+        <button type='button' title='arrow button'
             className={className}
             style={{ ...style, display: 'block' }} // Customize arrow style here
             onClick={onClick}
         >
-            <RightOutlined/>
+            <RightOutlined />
         </button>
     );
 };
@@ -22,13 +22,13 @@ const NextArrow = (props: props) => {
 const PrevArrow = (props: props) => {
     const { className, style, onClick } = props;
     return (
-        <button
+        <button type='button' title='arrow button'
             className={className}
             style={{ ...style, display: 'block' }} // Customize arrow style here
             onClick={onClick}
         >
-              <LeftOutlined className='text-dark '/>
-          
+            <LeftOutlined className='text-dark ' />
+
         </button>
     );
 };
