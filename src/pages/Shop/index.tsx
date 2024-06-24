@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import ProductSlider from "../../component/ProductSlider"
 import { Checkbox, Collapse } from "@material-tailwind/react";
-import { CloseOutlined, FilterOutlined, PlusOutlined } from "@ant-design/icons";
+import { ArrowDownOutlined, ArrowUpOutlined, CloseOutlined, DownOutlined, FilterOutlined, PlusOutlined } from "@ant-design/icons";
 
 const Shop = () => {
     const [open, setOpen] = useState('');
@@ -163,20 +163,27 @@ const Shop = () => {
                                 {filterdiv}
                             </div>
                             <div className="md:hidden block mb-5">
-                                <div className="flex justify-between">
-                                    <button onClick={handlefilter} type="button" title="filter button" className="text-primary">
-                                        <FilterOutlined /> <span className="text-gray-800">Filter</span>
-                                    </button>
-                                    <div className="inline-block text-end">
-                                        <label htmlFor="">Sort By</label>
-                                        <select title="sort by" name="" id="" className="outline-none pe-2 border-e border-blue-gray-600  me-2">
-                                            <option value="">Price</option>
-                                            <option value="">Stock</option>
-                                        </select>
-                                        <select title="sort type" name="" id="" className="outline-none text-xs">
-                                            <option value="">ASC</option>
-                                            <option value="">DESC</option>
-                                        </select>
+                                <div className="grid grid-cols-4">
+                                    <div className="col-span-1">
+                                        <button>
+                                            &#8645; Sort
+                                        </button>
+                                    </div>
+                                    {
+                                        ['Category', 'Brand'].map((it) => (
+                                            <>
+                                                <div className="col-span-1  ">
+                                                    <button className="text-start text-sm">
+                                                        {it} <DownOutlined className="text-xs" />
+                                                    </button>
+                                                </div>
+                                            </>
+                                        ))
+                                    }
+                                    <div className="col-span-1">
+                                        <button>
+                                            Filter <FilterOutlined />
+                                        </button>
                                     </div>
 
                                 </div>
