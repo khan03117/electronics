@@ -195,6 +195,10 @@ body {
     color: #000;
   }
 
+  .fixednavbar a p {
+    font-size: 12px;
+  }
+
   .fixednavbar a.active p span svg {
     color: red;
   }

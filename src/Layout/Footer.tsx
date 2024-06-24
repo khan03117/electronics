@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <>
 
-      <section className="fixed fixednavbar w-full pe-5  bg-gray-100 *:relative *:text-sm *:text-center  z-50 bottom-0 start-0 lg:hidden block py-2 pt-5 *:mt-1 px-4 ">
+      <section className="fixed fixednavbar w-full pe-5  bg-gray-100 *:relative *:text-sm *:text-center  z-50 bottom-0 start-0 lg:hidden block py-2 pt-2 *:mt-1 px-4 ">
 
         <div className="flex justify-between w-full relative">
           <Link to={'/'} className='active'>
