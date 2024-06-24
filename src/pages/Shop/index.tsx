@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import ProductSlider from "../../component/ProductSlider"
 import { Checkbox, Collapse } from "@material-tailwind/react";
 import { ArrowDownOutlined, ArrowUpOutlined, CloseOutlined, DownOutlined, FilterOutlined, PlusOutlined } from "@ant-design/icons";
+import Shorting from "./Shorting";
 
 const Shop = () => {
     const [open, setOpen] = useState('');
@@ -159,6 +160,7 @@ const Shop = () => {
                 <div className="container mx-auto">
                     <div className="grid lg:grid-cols-5 grid-cols-1">
                         <div className="col-span-1 ">
+                            <Shorting />
                             <div className="w-full px-4 py-2 lg:block hidden sticky top-0">
                                 {filterdiv}
                             </div>
@@ -172,16 +174,16 @@ const Shop = () => {
                                     {
                                         ['Category', 'Brand'].map((it) => (
                                             <>
-                                                <div className="col-span-1  ">
-                                                    <button className="text-start text-sm">
+                                                <div className="col-span-1 text-end ">
+                                                    <button className="text-end text-sm">
                                                         {it} <DownOutlined className="text-xs" />
                                                     </button>
                                                 </div>
                                             </>
                                         ))
                                     }
-                                    <div className="col-span-1">
-                                        <button>
+                                    <div className="col-span-1 text-end">
+                                        <button className="text-end">
                                             Filter <FilterOutlined />
                                         </button>
                                     </div>
@@ -209,7 +211,7 @@ const Shop = () => {
 
                     </div>
                 </div>
-            </section>
+            </section >
 
         </>
     )

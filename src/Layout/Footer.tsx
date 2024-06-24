@@ -47,7 +47,7 @@ const Footer = () => {
       </section>
       <section className="footersection py-20 bg-primary text-white">
         <div className="container">
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1">
+          <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2">
             <div className="col-span-1">
               <figure className="w-full mb-5">
                 <img src={logo} alt="" className="max-w-full invert" />
