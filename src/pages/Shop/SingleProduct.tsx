@@ -159,7 +159,7 @@ const SingleProduct = () => {
                             <div className="w-full">
                                 <div className="grid lg:grid-cols-6 grid-cols-6 gap-6">
 
-                                    <div className="lg:col-span-5 md:order-2 order-1 col-span-6">
+                                    <div className="lg:col-span-5 md:order-2 order-1 col-span-6 lg:pb-4 pb-10">
                                         <Slider  {...settingsFor} className='slider-for'>
                                             {
                                                 images.map((itm) => (
