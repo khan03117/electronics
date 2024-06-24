@@ -1,16 +1,20 @@
-import { FacebookFilled, HeartOutlined, HomeFilled, HomeOutlined, InstagramFilled, PhoneFilled, RedEnvelopeFilled, ShopOutlined, ShoppingCartOutlined, TwitterSquareFilled, WhatsAppOutlined } from '@ant-design/icons'
+import { ContactsOutlined, FacebookFilled, HeartOutlined, HomeFilled, HomeOutlined, InstagramFilled, PhoneFilled, RedEnvelopeFilled, ShopOutlined, ShoppingCartOutlined, TwitterSquareFilled, WhatsAppOutlined } from '@ant-design/icons'
 //@ts-ignore
 import logo from '../assets/logo.png'
 import { Link } from 'react-router-dom'
 import React from 'react'
-import { content } from '../pages/Home/CategoriesSlider'
+
 const Footer = () => {
   return (
     <>
+      <div className="fixed inline-block max-w-28 bottom-16 start-2 z-50">
+        <Link to={'https://wa.me'} className='text-3xl text-green-900  rounded-full  inline-block'>
+          <WhatsAppOutlined />
+        </Link>
+      </div>
+      <section className="fixed fixednavbar w-full pe-5  bg-gray-100 *:relative *:text-sm *:text-center  z-50 bottom-0 start-0 lg:hidden block pb-0 pt-0 *:mt-1 px-4 ">
 
-      <section className="fixed fixednavbar w-full pe-5  bg-gray-100 *:relative *:text-sm *:text-center  z-50 bottom-0 start-0 lg:hidden block py-2 pt-2 *:mt-1 px-4 ">
-
-        <div className="flex justify-between w-full relative">
+        <div className="flex justify-between *:relative w-full relative">
           <Link to={'/'} className='active'>
             <p>
               <HomeOutlined />
@@ -26,7 +30,7 @@ const Footer = () => {
 
           </Link>
           <Link to={'/wishlist'}>
-            <div className="absolute size-5 rounded-full bg-primary text-white text-xs -end-0 -top-3">1</div>
+            <div className="absolute hidden size-5 rounded-full bg-primary text-white text-xs -end-0 -top-3">1</div>
             <p>
               <HeartOutlined />
             </p>
@@ -35,7 +39,7 @@ const Footer = () => {
 
           </Link>
           <Link to={'/cart'}>
-            <div className="absolute size-5 rounded-full bg-primary text-white text-xs -end-1 -top-3">1</div>
+            {/* <div className="absolute size-5 rounded-full bg-primary text-white text-xs -end-1 -top-3">1</div> */}
 
             <p>
               <ShoppingCartOutlined />
@@ -43,12 +47,20 @@ const Footer = () => {
             <p>Cart</p>
 
           </Link>
+          <Link to={'/contact'}>
+            <p>
+              <ContactsOutlined />
+            </p>
+            <p>Contact</p>
+
+          </Link>
+
         </div>
       </section>
-      <section className="footersection py-20 bg-primary text-white">
+      <section className="footersection py-20 bg-gray-900 text-white">
         <div className="container">
           <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2">
-            <div className="col-span-1">
+            <div className="lg:col-span-1 col-span-2">
               <figure className="w-full mb-5">
                 <img src={logo} alt="" className="max-w-full invert" />
               </figure>
@@ -139,7 +151,7 @@ const Footer = () => {
                 </ul>
               </div>
             </div>
-            <div className="col-span-1">
+            <div className="lg:col-span-1 col-span-2">
               <h4 className="mb-">Follow Us</h4>
               <div className="flex">
                 <input type="text" name="" id="" className="w-full outline-none px-4 py-2 border border-blue-gray-200" />

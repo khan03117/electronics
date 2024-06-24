@@ -7,7 +7,7 @@ interface Prop {
 const ProductSlider = (props: Prop) => {
   return (
     <>
-      <Link to={'/single-product'} className="w-full block productbox relative lg:pt-5  lg:shadow-lg shadow-md border border-primary/20 pt-4 shadow-blue-gray-800  rounded-xl ">
+      <Link to={'/single-product'} className="w-full block productbox relative lg:pt-5  lg:shadow-lg shadow-sm border border-primary/20 pt-4 shadow-blue-gray-500  rounded-xl ">
         <div className="absolute shopincon z-10 *:size-10 *:shadow-md *:shadow-blue-gray-400 *:bg-white *:text-center *:rounded-full *:leading-10 flex w-10 flex-col gap-5 top-20 end-3">
           <a className='quicklink'>
             <HeartOutlined />
@@ -29,7 +29,7 @@ const ProductSlider = (props: Prop) => {
             <span className="text-gray-600 me-3 lg:text-sm text-xs line-through">₹ 599.99</span>  <span >₹ 399.99</span>
           </p>
           <div className="w-full md:mb-5 mb-0 text-center flex items-center justify-center">
-            <button type='button' className="md:px-4 md:py-2 px-2 py-1 uppercase text-xs tracking-widest font-light rounded-full bg-primary text-white shadow-sm shadow-deep-orange-600">Add to Cart</button>
+            <button type='button' className="md:px-4 md:py-2 px-2 py-1 uppercase text-xs   rounded-full bg-gray-700/30 text-black ">Add to Cart</button>
           </div>
           <div className="w-full lg:block hidden text-center md:px-5 px-1 mt-5">
             <p className='inline-flex px-2 border border-blue-gray-200 rounded-full justify-center  text-sm items-center gap-2'>

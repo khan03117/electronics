@@ -14,7 +14,7 @@ const Testimonialbox = (props: Props) => {
             <div className="py-2">
 
 
-                <div className="w-full rounded-xl bg-white shadow-lg shadow-gray-700 py-10 lg:px-6 px-2 ">
+                <div className="w-full rounded-xl bg-white lg:shadow-lg shadow-md shadow-blue-gray-300 lg:shadow-gray-700 lg:py-10 lg:px-6 px-2 ">
                     <p className="lg:text-lg text-sm mb-2 font-bold">{props.subject}</p>
                     <div className="flex text-orange-600 lg:mb-10 mb-4 items-center gap-1">
                         <StarFilled />
