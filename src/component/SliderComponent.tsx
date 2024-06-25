@@ -2,16 +2,29 @@ import React from 'react'
 import Slider from "react-slick";
 import { NextArrow, PrevArrow } from './Arrows';
 import ProductSlider from './ProductSlider';
+interface Product {
+    _id: string;
+    url: string;
+    category: string;
+    product_type: string;
+    title: string;
+    price: number;
+    images: string[];
+    modals: {
+        brand: string;
+        modal: string;
+        moq: number;
+        stock: number;
+        _id: string;
+    }[];
+    description: string;
+    is_hidden: boolean;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+}
+const SliderComponent: React.FC<{ products: Product[] }> = ({ products }) => {
 
-const SliderComponent: React.FC = () => {
-    const items = [
-        'https://rukminim2.flixcart.com/image/850/1000/ksxjs7k0/cases-covers/bumper-case/a/h/m/viv-y21-jaipurcrafts-original-imag6e6kubtfujdj.jpeg',
-        'https://ringke.co.in/cdn/shop/products/71qzKhaghAL._SL1500.jpg',
-        'https://stationeryshop.in/wp-content/uploads/2024/01/iphone-back-cover-MagsafePremium.jpg',
-        'https://m.media-amazon.com/images/I/51UZY09sM-L._AC_UF1000,1000_QL80_.jpg',
-        'https://m.media-amazon.com/images/I/51dm8rwDwDL.jpg',
-        'https://dsta-demo.myshopify.com/cdn/shop/files/air_buds1_large.jpg?v=1698265253'
-    ];
     const settings = {
         dots: false,
         navs: true,
@@ -59,10 +72,10 @@ const SliderComponent: React.FC = () => {
         <>
             <Slider {...settings}>
                 {
-                    [...items].map((itm) => (
+                    [...products].map((itm) => (
                         <>
                             <div className="lg:p-4 p-1">
-                                <ProductSlider image={itm} />
+                                <ProductSlider product={itm} />
                             </div>
 
                         </>

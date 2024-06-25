@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Categories from './Categories'
 import Banner from './Banner'
 import CategoriesSlider from './CategoriesSlider'
@@ -6,8 +6,49 @@ import SliderComponent from '../../component/SliderComponent'
 import Testimonials from './Testimonials'
 import { RightOutlined } from '@ant-design/icons'
 import SectionDevider from '../../component/SectionDevider'
+import { useState } from 'react';
+import axios from 'axios'
+import { base_url } from '../../utils'
 
 const Home = () => {
+  interface Product {
+    _id: string;
+    url: string;
+    category: string;
+    product_type: string;
+    title: string;
+    price: number;
+    images: string[];
+    modals: {
+      brand: string;
+      modal: string;
+      moq: number;
+      stock: number;
+      _id: string;
+    }[];
+    description: string;
+    is_hidden: boolean;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  }
+
+  interface CategoryWithProducts {
+    category: {
+      _id: string;
+      title: string;
+      products: Product[];
+    };
+  }
+  const [catproducts, setProduct] = useState<CategoryWithProducts[]>([]);
+  const getproducts = async () => {
+    await axios.get(base_url + 'product/shop').then((resp) => {
+      setProduct(resp.data.data)
+    })
+  }
+  useEffect(() => {
+    getproducts();
+  }, [])
   return (
     <>
       <section className='pb-5'>
@@ -35,12 +76,12 @@ const Home = () => {
       </section>
       <SectionDevider />
       {
-        ['Screen Guards', 'Mobile Covers', 'Accessories', 'Gadgets'].map((itm) => (
+        catproducts.map((itm) => (
           <>
             <section className="md:py-10 py-3">
               <div className="container">
                 <div className="w-full   sectiontitle_parent">
-                  <h2 className="sectiontitle">{itm}</h2>
+                  <h2 className="sectiontitle">{itm.category.title}</h2>
                 </div>
                 <div className="w-full flex justify-between items-center mb-2">
                   <h4 className="md:text-xl text-sm text-primary font-bold">Start from just 99.99 only</h4>
@@ -50,7 +91,7 @@ const Home = () => {
                   </button>
                 </div>
                 <div className="w-full">
-                  <SliderComponent />
+                  <SliderComponent products={itm.category.products} />
                 </div>
               </div>
             </section>
@@ -79,7 +120,7 @@ const Home = () => {
                 </div>
 
                 <div className="w-full">
-                  <SliderComponent />
+
                 </div>
               </div>
             </section>

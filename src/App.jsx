@@ -18,13 +18,13 @@ function App() {
         <Route path='/' element={<WebLayout />} >
           <Route index element={<Home />} />
           <Route path='/shop' element={<Shop />} />
-          <Route path='/single-product' element={<SingleProduct />} />
+          <Route path='/single-product/:id' element={<SingleProduct />} />
           <Route path='/checkout' element={<Checkout />} />
-          <Route path='/cart' element={<Cart/>}/>
-          <Route path='/wishlist' element={<Cart/>}/>
-          <Route path='/contact' element={<Contact/>}/>
-          <Route path='/orders' element={<Orders/>}/>
-          <Route path='/login' element={<Login/>}/>
+          <Route path='/cart' element={<Cart />} />
+          <Route path='/wishlist' element={<Cart />} />
+          <Route path='/contact' element={<Contact />} />
+          <Route path='/orders' element={<Orders />} />
+          <Route path='/login' element={<Login />} />
         </Route>
       </>
     )
