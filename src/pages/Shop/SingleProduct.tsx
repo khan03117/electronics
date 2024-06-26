@@ -41,8 +41,10 @@ const SingleProduct: React.FC = () => {
         __v: number;
     }
     const { id } = useParams();
-    interface Quantity { user: string; product: string | undefined; modal: string | undefined; brand: string | undefined; quantity: number | undefined; price: number | undefined; }
+    const token: string | null = localStorage.getItem('_token') ?? null;
+    interface Quantity { product: string | undefined; modal: string | undefined; brand: string | undefined; quantity: number | undefined; price: number | undefined; }
     const [qty, setQty] = useState<Quantity[]>([]);
+    const [mobj, setMobj] = useState<Quantity>();
     const [s_section, setSection] = useState('specifications');
     const [product, setProduct] = useState<Product>();
     const getProduct = async () => {
@@ -77,16 +79,17 @@ const SingleProduct: React.FC = () => {
                 if (idx > -1) {
                     const nqty = (arr[idx]?.quantity ?? 0) + (modal?.moq ?? 0);
                     arr[idx].quantity = nqty;
+                    addtocart(arr[idx]);
                     setQty(arr);
                 } else {
                     const obj = {
-                        user: '32423432',
                         product: product?._id,
                         modal: modal?.modal._id,
                         brand: modal?.brand._id,
                         quantity: modal?.moq,
                         price: product?.price
                     }
+                    addtocart(obj)
                     arr.push(obj);
                     setQty(arr);
                 }
@@ -100,6 +103,7 @@ const SingleProduct: React.FC = () => {
 
                         // Update arr[idx] with new quantity
                         arr[idx].quantity = newQuantity;
+                        addtocart(arr[idx]);
                         setQty(arr);
                     }
                 }
@@ -108,25 +112,22 @@ const SingleProduct: React.FC = () => {
         }
 
     }
-    const addtocart = async () => {
-        if (qty.length == 0) {
-            Swal.fire({
-                title: 'There is no product in cart',
-                text: 'Minimum one product is required',
-                icon: 'warning',
-                showCancelButton: false,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ok!'
-            })
-        }
-        await axios.post(base_url + 'cart', qty).then(resp => {
+    const addtocart = async (obj: Quantity) => {
+
+        await axios.post(base_url + 'cart', obj, {
+            headers: {
+                'Accept': "application/json",
+                'Content-Type': "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }).then(resp => {
             if (resp.data.succes == "1") {
                 setOpen(true);
             }
 
         })
     }
+
     return (
         <>
 
@@ -225,24 +226,24 @@ const SingleProduct: React.FC = () => {
                                         Availabel modal list {product?.modals.length}
                                     </p>
                                     {
-                                        product?.modals.map(modal => (
+                                        product?.modals.map(mdl => (
                                             <>
                                                 <div className="w-full py-2">
                                                     <div className="grid grid-cols-2 gap-4">
                                                         <div className="col-span-1">
                                                             <label htmlFor="" className=''>
-                                                                {modal.brand.title}  /  {modal.modal.title}
+                                                                {mdl.brand.title}  /  {mdl.modal.title}
                                                             </label>
 
                                                         </div>
                                                         <div className="col-span-1">
                                                             <div className="w-full flex justify-end">
                                                                 <div className="inline-flex">
-                                                                    <button type="button" aria-label="Click Me" title='Click Me' onClick={() => handleqty('minus', modal.modal._id, modal.brand._id)} className="size-10  border border-blue-gray-600">
+                                                                    <button type="button" aria-label="Click Me" title='Click Me' onClick={() => handleqty('minus', mdl.modal._id, mdl.brand._id)} className="size-10  border border-blue-gray-600">
                                                                         <MinusOutlined />
                                                                     </button>
-                                                                    <input type="text" value={qty.find(obj => obj.modal == modal.modal._id)?.quantity} readOnly name="" id="" className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
-                                                                    <button type='button' title='Increase button' onClick={() => handleqty('plus', modal.modal._id, modal.brand._id)} className="size-10 border border-blue-gray-600">
+                                                                    <input type="text" value={qty.find(obj => obj.modal == mdl.modal._id)?.quantity} readOnly name="" id="" className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
+                                                                    <button type='button' title='Increase button' onClick={() => handleqty('plus', mdl.modal._id, mdl.brand._id)} className="size-10 border border-blue-gray-600">
                                                                         <PlusOutlined />
                                                                     </button>
                                                                 </div>
@@ -261,7 +262,7 @@ const SingleProduct: React.FC = () => {
 
                                 </div>
                                 <div className="w-full my-4">
-                                    <button type='button' onClick={addtocart} className="w-full uppercase shadow-md shadow-deep-orange-700  font-light mb-4 text-md px-4 py-3 rounded-sm text-white bg-orange-700 ">Add to cart</button>
+                                    {/* <button type='button' onClick={addtocart} className="w-full uppercase shadow-md shadow-deep-orange-700  font-light mb-4 text-md px-4 py-3 rounded-sm text-white bg-orange-700 ">Add to cart</button> */}
                                     <button type='button' className="w-full uppercase shadow-md shadow-blue-gray-700  font-light text-md px-4 py-3 rounded-sm text-white bg-blue-gray-900 ">Buy it now</button>
                                 </div>
 

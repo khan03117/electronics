@@ -1,136 +1,94 @@
 import React, { useEffect, useState } from 'react'
 import { CloseOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { base_url, base_url_img } from '../../utils';
+import CartProduct from './CartProduct';
+
 
 const Cart: React.FC = () => {
-    interface VariantDetail {
-        id: number;
-        product_id: number;
-        varient_id: string;
-        v_key: string;
-        v_val: string;
-        created_at: string | null;
-        is_deleted: string;
-        updated_at: string | null;
-    }
+    const token: string | null = localStorage.getItem('_token') ?? null;
     interface Product {
-        id: number;
-        category_id: number;
-        subcategory_id: number;
-        endcategory_id: number | null;
-        url: string;
-        name: string;
-        sku: string;
-        description: string;
-        is_hide: string;
-        created_at: string;
-        updated_at: string | null;
-    }
-    interface Variant {
-        id: number;
-        url: string;
-        product_id: number;
-        varient_id: string;
-        mrp: number;
-        price: number;
-        images: string;
-        skuid: string;
-        is_deleted: string;
-        created_at: string | null;
-        updated_at: string | null;
-        details: VariantDetail[];
-    }
-    interface CartItem {
-        id: number;
-        session_id: string;
-        user_id: string;
-        product_id: number;
-        varient_id: string;
-        quantity: number;
-        price: number;
-        is_deal: string;
-        size: string;
-        is_paid: string;
-        delivery_status: number;
-        transaction_id: string | null;
-        created_at: string;
-        updated_at: string | null;
-        product: Product;
-        varient: Variant;
+        _id: string;
+        title: string;
+        images: string[];
     }
 
-    const [CartItems, setCartItems] = React.useState<CartItem[]>([]);
-    const [charge, setCharge] = useState(0);
-    const images = [
-        'https://m.media-amazon.com/images/I/41N0Avct1kL._SY679_.jpg',
-        'https://m.media-amazon.com/images/I/61M6p7VahNL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/61SDuTH3XkL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/61VJpLpweHL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/51jLrGrPBpL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/51EwFkHeO8L._SX679_.jpg',
-        // 'https://m.media-amazon.com/images/I/71xMd0d6xcL._SX679_.jpg',
-        // 'https://m.media-amazon.com/images/I/61RofAW9BML._SX679_.jpg',
-        // 'https://m.media-amazon.com/images/I/61hnO6ktjiL._SX679_.jpg',
-        // 'https://m.media-amazon.com/images/I/71GKVUMzSCL._SX679_.jpg',
-        // 'https://m.media-amazon.com/images/I/51RYO482znL._SX679_.jpg',
-        // 'https://m.media-amazon.com/images/I/71Al63qjPxL._SX679_.jpg',
-        // 'https://m.media-amazon.com/images/I/61s1Ro7VONL._SX679_.jpg'
-    ];
+    interface Brand {
+        _id: string;
+        title: string;
+        image: string;
+    }
+
+    interface Modal {
+        _id: string;
+        title: string;
+    }
+
+    interface Item {
+        _id: string;
+        user: string;
+        product: Product;
+        brand: Brand;
+        modal: Modal;
+        price: number;
+        quantity: number;
+        createdAt: string;
+        updatedAt: string;
+        __v: number;
+    }
+
+    const [CartItems, setCartItems] = React.useState<Item[]>([]);
+    const [total, setTotal] = useState(0);
+    const getcart_items = async () => {
+        await axios.get(base_url + 'cart', {
+            headers: {
+                'Accept': "application/json",
+                'Content-Type': "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }).then(resp => {
+            setCartItems(resp.data.data)
+        })
+    }
+    useEffect(() => {
+        getcart_items();
+    }, []);
+    const findTotal = () => {
+        const total = CartItems.reduce((sum, item) => {
+            return sum + (item.price * item.quantity);
+        }, 0);
+        setTotal(total);
+    }
+    useEffect(() => {
+        findTotal()
+    }, [CartItems])
 
     return (
         <>
             <section className="py-10">
                 <div className="container">
                     {
-                        images.length > 0 && (
+                        CartItems.length > 0 && (
                             <>
 
                                 <div className="grid lg:grid-cols-6 grid-cols-1 gap-5">
                                     <div className="lg:col-span-4 col-span-12 overflow-hidden">
-                                        <div className="w-full min-w-[600px] overflow-x-auto">
-                                            <table className="w-full *:text-sm table-fixed bg-white shadow-md shadow-blue-gray-500 rounded-xl overflow-hidden">
-                                                <thead>
-                                                    <tr className='*:p-2 *:border *:border-blue-gray-200  *:bg-white *:text-black'>
-                                                        <th>Image</th>
-                                                        <th>Product</th>
-                                                        <th>Quantity</th>
-                                                        <th>Size</th>
-                                                        <th>Price</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {
-                                                        images.map(cr => (
-                                                            <>
-                                                                <tr className='*:p-2 *:border *:border-blue-gray-200'>
-                                                                    <td>
-                                                                        <img src={cr} alt="" className="size-24 object-cover" />
+                                        <div className="w-full  overflow-x-auto">
+                                            <div className="grid lg:grid-cols-4 grid-cols-2 gap-3">
+                                                {
 
-                                                                    </td>
-                                                                    <td>
-                                                                        Redmi Note 12 Pro max Cover Guard
-                                                                    </td>
-                                                                    <td>
-                                                                        3
-                                                                    </td>
-                                                                    <td>
-                                                                        Compatiable
-                                                                    </td>
-                                                                    <td>
-                                                                        ₹ 899.99
-                                                                    </td>
-                                                                    <td>
-                                                                        <button className="size-6 bg-black/50 leading-6 text-white text-sm rounded-full">
-                                                                            <CloseOutlined />
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-                                                            </>
-                                                        ))
-                                                    }
-                                                </tbody>
-                                            </table>
+                                                    CartItems.map(cr => (
+                                                        <>
+                                                            <div className="col-span-1">
+                                                                <CartProduct item={cr} />
+
+                                                            </div>
+
+                                                        </>
+                                                    ))
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="lg:col-span-2 col-span-12">
@@ -143,7 +101,7 @@ const Cart: React.FC = () => {
                                                                 Cart total
                                                             </td>
                                                             <td>
-                                                                ₹ {CartItems.reduce((acc, itm) => acc + itm.price, 0)}
+                                                                ₹ {total}
                                                             </td>
                                                         </tr>
                                                         <tr className='*:p-2 *:text-sm'>
@@ -151,7 +109,7 @@ const Cart: React.FC = () => {
                                                                 Delivery
                                                             </td>
                                                             <td>
-                                                                ₹ {charge.toFixed(2)}
+                                                                ₹ {0.00}
                                                             </td>
                                                         </tr>
                                                         <tr className='*:p-2 *:text-sm'>
@@ -167,7 +125,7 @@ const Cart: React.FC = () => {
                                                                 Net Amount
                                                             </td>
                                                             <td>
-                                                                ₹ {(CartItems.reduce((acc, itm) => acc + itm.price, 0) + charge).toFixed(2)}
+                                                                ₹ {total.toFixed(2)}
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -184,7 +142,7 @@ const Cart: React.FC = () => {
                         )
                     }
 
-                   
+
 
                 </div>
             </section>

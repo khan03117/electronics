@@ -1,5 +1,6 @@
 import { Checkbox } from '@material-tailwind/react';
-import React, { useState } from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 
 const Checkout = () => {
     interface InputEvent {
@@ -17,13 +18,57 @@ const Checkout = () => {
     interface FormData {
         [key: string]: string;
     }
+    interface PostOffice {
+        Name: string;
+        Description: string | null;
+        BranchType: string;
+        DeliveryStatus: string;
+        Circle: string;
+        District: string;
+        Division: string;
+        Region: string;
+        Block: string;
+        State: string;
+        Country: string;
+        Pincode: string;
+    }
     const [states, setState] = useState<State[]>([]);
     const [pincode, setPincode] = useState<string>('');
     const [fdata, setFdata] = useState<FormData>({});
     const [errors, setErrors] = useState<Error[]>([]);
+    const [location, setLocation] = useState<PostOffice[]>();
     const handlePincodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPincode(e.target.value);
+        const data = { ...fdata };
+        data['state'] = '';
+        data['city'] = '';
+        setFdata(data);
     }
+    const getlocation = async () => {
+        await axios.get('https://api.postalpincode.in/pincode/' + pincode).then((resp) => {
+            if (resp.data[0].Status === "Success") {
+                const postoffice = resp.data[0].PostOffice;
+                setLocation(postoffice)
+            }
+        })
+    }
+    const setfdata = () => {
+        const data = { ...fdata };
+        if (location) {
+
+            data['state'] = location[0].State;
+            data['city'] = location[0].District;
+            setFdata(data);
+        }
+    }
+    useEffect(() => {
+        setfdata();
+    }, [location])
+    useEffect(() => {
+        if (pincode.length == 6) {
+            getlocation();
+        }
+    }, [pincode])
     const handlefdata = (e: InputEvent) => {
         const key = e.target.name;
         const val = e.target.value;
@@ -51,6 +96,9 @@ const Checkout = () => {
         }
         return true;
     }
+    useEffect(() => {
+        console.log(fdata)
+    }, [fdata])
     const checkoutnow = async (action: string) => {
         if (validation()) {
             try {
@@ -68,13 +116,29 @@ const Checkout = () => {
                 <div className="container">
                     <div className="grid lg:grid-cols-6 grid-cols-1">
                         <div className="col-span-4">
-                            <div className="w-full mb-10">
-                                <h4 className="py-2 sectiontitle">
-                                    Shipping Details
-                                </h4>
-                            </div>
+
                             <div className="w-full">
                                 <div className="grid lg:grid-cols-3 grid-cols-1 gap-3">
+
+                                    <div className="lg:col-span-1 col-span-12 mb-5">
+                                        <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block' >Enter Name</label>
+                                        <div className="flex w-full">
+                                            <input type="text" onChange={handlefdata} name="name" id="name" className="p-2 w-full border border-blue-gray-300" />
+                                        </div>
+                                    </div>
+                                    <div className="lg:col-span-1 col-span-12 mb-5">
+                                        <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block' >Enter Email</label>
+                                        <div className="flex w-full">
+                                            <input type="text" onChange={handlefdata} name="email" id="email" className="p-2 w-full border border-blue-gray-300" />
+                                        </div>
+                                    </div>
+                                    <div className="col-span-4">
+                                        <div className="w-full mb-10">
+                                            <h4 className="py-2 sectiontitle">
+                                                Shipping Details
+                                            </h4>
+                                        </div>
+                                    </div>
                                     <div className="lg:col-span-1 col-span-12 mb-5">
                                         <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block' >Enter Pincode</label>
                                         <div className="flex w-full">
@@ -82,8 +146,9 @@ const Checkout = () => {
                                         </div>
                                     </div>
                                     <div className="lg:col-span-3 col-span-12 mb-5">
+
                                         <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Enter Address</label>
-                                        <input type="text" name="address" onChange={handlefdata} className="px-4 py-2 w-full border border-blue-gray-300" />
+                                        <input type="text" name="address" value={fdata?.address} onChange={handlefdata} className="px-4 py-2 w-full border border-blue-gray-300" />
                                         <span className="text-deep-orange-500">
                                             {errors.find(obj => obj.path == "address")?.msg}
                                         </span>
@@ -92,38 +157,29 @@ const Checkout = () => {
 
                                     <div className="lg:col-span-1 col-span-12 mb-5">
                                         <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Enter city </label>
-                                        <input type="text" name="city" onChange={handlefdata} className="px-4 py-2 w-full border border-blue-gray-300" />
+                                        <input type="text" value={fdata?.city} readOnly name="city" onChange={handlefdata} className="px-4 py-2 w-full border border-blue-gray-300" />
                                         <span className="text-deep-orange-500">
                                             {errors.find(obj => obj.path == "city")?.msg}
                                         </span>
                                     </div>
                                     <div className="lg:col-span-1 col-span-12 mb-5">
                                         <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Enter State </label>
-                                        <select name="state_id" onChange={handlefdata} className="px-4 py-2 w-full border border-blue-gray-300" >
-                                            <option value="">---Select---</option>
-                                            {
-                                                states.map(st => (
-                                                    <>
-                                                        <option value={st.id}>{st.state}</option>
-                                                    </>
-                                                ))
-                                            }
-                                        </select>
+                                        <input type="text" value={fdata?.state} readOnly name="state" onChange={handlefdata} className="px-4 py-2 w-full border border-blue-gray-300" />
                                         <span className="text-deep-orange-500">
                                             {errors.find(obj => obj.path == "state_id")?.msg}
                                         </span>
                                     </div>
-                                    <div className="lg:col-span-1 col-span-12 mb-5">
+                                    {/* <div className="lg:col-span-1 col-span-12 mb-5">
                                         <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Select Mode</label>
-                                        <select name="" id="" className="py-2 px-2 w-full outline-none border border-blue-gray-500">
+                                        <select title='cod' name="" id="" className="py-2 px-2 w-full outline-none border border-blue-gray-500">
                                             <option value="">---Select---</option>
                                             <option value="Online">Online</option>
                                             <option value="COD">COD</option>
                                         </select>
-                                    </div>
-                                    <div className="lg:col-span-1 col-span-12 mb-5">
+                                    </div> */}
+                                    <div className="lg:col-span-4 col-span-12 mb-5">
                                         <div className="w-full">
-                                            <button onClick={() => checkoutnow('online')} className="px-3 py-2 w-full   bg-primary rounded-lg text-white shadow-md shadow-blue-gray-400">Place Order</button>
+                                            <button title='online' onClick={() => checkoutnow('online')} className="px-3 py-2   bg-primary  text-white shadow-md shadow-blue-gray-400">Place Order</button>
 
                                         </div>
                                     </div>
@@ -133,8 +189,8 @@ const Checkout = () => {
                         </div>
                         <div className="col-span-2">
                             <div className="w-full px-4">
-                                <div className="w-full p-4 rounded-lg shadow-md shadow-blue-gray-100 bg-deep-orange-50">
-                                    <table className="w-full">
+                                <div className="w-full p-4 rounded-lg hidden shadow-md shadow-blue-gray-100 bg-deep-orange-50">
+                                    <table className="w-full hidden">
                                         <tbody >
                                             <tr className='*:p-2 *:text-sm'>
                                                 <td>
@@ -184,23 +240,12 @@ const Checkout = () => {
                                     <h4 className="text-xl mb-3">Use Saved Address</h4>
                                     <ul className='*:mb-3'>
                                         <li>
-                                            <div className="w-full rounded-lg text-sm tracking-wider  bg-deep-orange-50">
+                                            <div className="w-full rounded-lg text-sm tracking-wider  ">
                                                 <Checkbox className='border border-blue-gray-600' color='red' crossOrigin={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
                                                 H N 89 Street No 8 Main Road Ghaziabad 201102
                                             </div>
                                         </li>
-                                        <li>
-                                            <div className="w-full rounded-lg text-sm tracking-wider  bg-deep-orange-50">
-                                                <Checkbox className='border border-blue-gray-600' color='red' crossOrigin={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
-                                                H N 89 Street No 8 Main Road Ghaziabad 201102
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="w-full rounded-lg text-sm tracking-wider  bg-deep-orange-50">
-                                                <Checkbox className='border border-blue-gray-600' color='red' crossOrigin={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
-                                                H N 89 Street No 8 Main Road Ghaziabad 201102
-                                            </div>
-                                        </li>
+
                                     </ul>
                                 </div>
                             </div>
