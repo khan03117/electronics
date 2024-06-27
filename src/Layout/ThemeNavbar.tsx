@@ -19,14 +19,14 @@ const ThemeNavbar = () => {
                 <li
 
 
-                    color="black"
+
                     className="p-1 text-black font-medium"
                 >
                     <Link to={'/shop'} className="flex items-center hover:text-blue-500 transition-colors">
                         Shop
                     </Link>
                 </li>
-                <li color="black"
+                <li
                     className="p-1 text-black font-medium"
                 >
                     <Link to={'/login'} className="flex items-center hover:text-blue-500 transition-colors">
@@ -36,7 +36,7 @@ const ThemeNavbar = () => {
                 <li
 
 
-                    color="black"
+
                     className="p-1 text-black font-medium"
                 >
                     <Link to={'/contact'} className="flex items-center hover:text-blue-500 transition-colors">
@@ -46,7 +46,7 @@ const ThemeNavbar = () => {
                 <li
 
 
-                    color="black"
+
                     className="p-1 text-black font-medium"
                 >
                     <Link to={'/'} className="flex items-center hover:text-blue-500 transition-colors">
@@ -93,10 +93,21 @@ const ThemeNavbar = () => {
                     </div>
 
                 </div>
-                <Collapse open={openNav}>
+                {/* <Collapse open={openNav}>
                     <NavList />
-                </Collapse>
+                </Collapse> */}
+
+
+
+
             </Navbar>
+            <>
+                <div className={`w-3/4 transition-all z-[9999999] duration-500 fixed top-10 start-0 h-screen bg-white ${!openNav ? 'translate-x-[-100%]' : 'translate-x-[0]'}`}>
+
+                    <NavList />
+
+                </div>
+            </>
 
         </>
     )
