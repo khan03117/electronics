@@ -1,44 +1,75 @@
-import React from 'react'
-import ProductSlider from '../../component/ProductSlider';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { base_url } from '../../utils';
+import CartProduct from './CartProduct';
 
 const Orders = () => {
-    const images = [
-        'https://m.media-amazon.com/images/I/41N0Avct1kL._SY679_.jpg',
-        'https://m.media-amazon.com/images/I/61M6p7VahNL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/61SDuTH3XkL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/61VJpLpweHL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/51jLrGrPBpL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/51EwFkHeO8L._SX679_.jpg',
-        // 'https://m.media-amazon.com/images/I/71xMd0d6xcL._SX679_.jpg',
-        // 'https://m.media-amazon.com/images/I/61RofAW9BML._SX679_.jpg',
-        // 'https://m.media-amazon.com/images/I/61hnO6ktjiL._SX679_.jpg',
-        // 'https://m.media-amazon.com/images/I/71GKVUMzSCL._SX679_.jpg',
-        // 'https://m.media-amazon.com/images/I/51RYO482znL._SX679_.jpg',
-        // 'https://m.media-amazon.com/images/I/71Al63qjPxL._SX679_.jpg',
-        // 'https://m.media-amazon.com/images/I/61s1Ro7VONL._SX679_.jpg'
-    ];
-  return (
-    <>
-    <section className="py-10">
-        <div className="container">
-            <div className="w-full">
-                <h2 className="sectiontitle">
-                    My Orders
-                </h2>
-            </div>
-            <div className="grid lg:grid-cols-4 grid-cols-1 gap-3">
-                {
-                    [...images].map((img) => (
-                        <>
-                            <ProductSlider image={img}/>
-                        </>
-                    ))
-                }
-            </div>
-        </div>
-    </section>
-    </>
-  )
+    interface Product {
+        _id: string;
+        title: string;
+        images: string[];
+    }
+
+    interface Brand {
+        _id: string;
+        title: string;
+        image: string;
+    }
+
+    interface Modal {
+        _id: string;
+        title: string;
+    }
+
+    interface Item {
+        _id: string;
+        user: string;
+        product: Product;
+        brand: Brand;
+        modal: Modal;
+        price: number;
+        quantity: number;
+        createdAt: string;
+        updatedAt: string;
+        __v: number;
+    }
+    const [orders, setOrder] = useState<Item[]>([]);
+    const getorders = async () => {
+        await axios.get(base_url + 'cart/orders', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('_token')
+            }
+        }).then(resp => {
+            setOrder(resp.data.data);
+        })
+
+    }
+    useEffect(() => {
+        getorders();
+    }, [])
+    return (
+        <>
+            <section className="py-10">
+                <div className="container">
+                    <div className="w-full">
+                        <h2 className="sectiontitle">
+                            My Orders
+                        </h2>
+                    </div>
+                    <div className="grid lg:grid-cols-4 grid-cols-1 gap-3">
+                            {
+                                orders.map((order, index) => (
+                                    <>
+                                    <CartProduct item={order}/>
+                                    </>
+                                ))
+                            }
+                    </div>
+                </div>
+            </section>
+        </>
+    )
 }
 
 export default Orders

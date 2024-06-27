@@ -1,8 +1,10 @@
 import { Checkbox } from '@material-tailwind/react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { base_url } from '../../utils';
 
 const Checkout = () => {
+    const token : string | null = localStorage.getItem('_token');
     interface InputEvent {
         target: HTMLInputElement | HTMLSelectElement;
     }
@@ -87,7 +89,7 @@ const Checkout = () => {
             err.push({ path: 'city', msg: "city is required" })
         }
 
-        if (!fdata?.state_id) {
+        if (!fdata?.state) {
             err.push({ path: 'state_id', msg: "state is required" })
         }
         if (err.length > 0) {
@@ -102,9 +104,13 @@ const Checkout = () => {
     const checkoutnow = async (action: string) => {
         if (validation()) {
             try {
-                fdata['action'] = action;
-                fdata['pincode'] = pincode;
-
+                const data = {...fdata};
+                data['pincode'] = pincode;
+                await axios.post(base_url + 'cart/checkout', data, {
+                    headers: { 'Authorization': `Bearer ${token}`}
+                }).then(resp => {
+                    console.log(resp)
+                })
             } catch (error) {
                 console.log(error)
             }
