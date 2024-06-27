@@ -10,36 +10,27 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { NextArrow, PrevArrow } from "../../component/Arrows";
+import { base_url, base_url_img } from '../../utils'
+import axios from 'axios'
 
-export const content = [
-    {
-        title: "Mobile",
-        sub_title: "Best Collection",
-        Image: mobileimg
-    },
-    {
-        title: "Smart TV",
-        sub_title: "Best Collection",
-        Image: smtv
-    },
-    {
-        title: "Computer",
-        sub_title: "Best Collection",
-        Image: comp
-    },
-    {
-        title: "Smart Watch",
-        sub_title: "Best Collection",
-        Image: comp
-    },
-    {
-        title: "Mobitar",
-        sub_title: "Best Collection",
-        Image: comp
-    }
-]
+
 
 const CategoriesSlider = () => {
+    interface Category {
+        image: string;
+        _id: string;
+        url: string;
+        title: string;
+    }
+    const [category, setCategories] = React.useState<Category[]>([]);
+    const getcategories = async () => {
+        await axios.get(base_url + 'category').then(resp => {
+            setCategories(resp.data.data)
+        })
+    }
+    React.useEffect(() => {
+        getcategories();
+    }, [])
     const settings = {
         dots: false,
         navs: true,
@@ -94,11 +85,11 @@ const CategoriesSlider = () => {
                     <div className="w-full">
                         <Slider {...settings}>
                             {
-                                content.map((crr) => (
+                                category.map((crr) => (
                                     <div className="">
                                         <div className="w-full text-center lg:p-10 p-0">
                                             <figure className='lg:size-16 block lg:mb-5 mb-1 text-center mx-auto size-10 overflow-hidden rounded-full'>
-                                                <img src={crr.Image} alt='image' className='  object-contain' />
+                                                <img src={base_url_img + crr.image} alt='image' className='  object-contain' />
                                             </figure>
                                             <div className="w-full">
                                                 <h2 className='text-black font-bold  lg:text-md text-xs'>{crr.title}</h2>

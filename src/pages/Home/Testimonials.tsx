@@ -2,9 +2,29 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { NextArrow, PrevArrow } from "../../component/Arrows";
-import React from "react";
+import React, { useEffect } from "react";
 import Testimonialbox from "../../component/Testimonialbox";
+import axios from "axios";
+import { base_url } from "../../utils";
 const Testimonials = () => {
+    interface ASK {
+        location?: string;
+        _id: string;
+        name: string;
+        subject: string;
+        description: string;
+        rating: string;
+        image: string;
+    }
+    const [data, setData] = React.useState<ASK[]>([]);
+    const getdata = async () => {
+        await axios.get(base_url + 'testimonial').then((resp) => {
+            setData(resp.data.data);
+        })
+    }
+    useEffect(() => {
+        getdata();
+    }, [])
     const settings = {
         dots: false,
         infinite: true,
@@ -45,15 +65,16 @@ const Testimonials = () => {
         <>
 
             <Slider {...settings}>
-                <div className='p-1'>
-                    <Testimonialbox name={'John doe'} post={'Ghaziabad UP'} image={'https://foesta-demo.myshopify.com/cdn/shop/files/testimonial-3.png?v=1711252165'} description={'"I absolutely love shopping here! The selection is fantastic, the prices are competitive, Highly recommend."'} subject={'Product Quality'} />
-                </div>
-                <div className='p-1'>
-                    <Testimonialbox name={'Abhmram James'} post={'Kerala'} image={'https://foesta-demo.myshopify.com/cdn/shop/files/testimonial-3.png?v=1711252165'} description={'"I absolutely love shopping here! The selection is fantastic, the prices are competitive, Highly recommend."'} subject={'Product Delivery'} />
-                </div>
-                <div className='p-1'>
-                    <Testimonialbox name={'Shkte James'} post={'Andhara Pradesh'} image={'https://foesta-demo.myshopify.com/cdn/shop/files/testimonial-3.png?v=1711252165'} description={'"I absolutely love shopping here! The selection is fantastic, the prices are competitive, Highly recommend."'} subject={'Product Price'} />
-                </div>
+                {
+                    data.length > 0 && data.map((tesst) => (
+                        <>
+                            <div className='p-1'>
+                                <Testimonialbox data={tesst} />
+                            </div>
+                        </>
+                    ))
+                }
+
             </Slider>
         </>
     )

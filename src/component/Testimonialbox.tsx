@@ -1,42 +1,57 @@
-import { StarFilled } from "@ant-design/icons"
+import { StarFilled, StarOutlined } from "@ant-design/icons"
 import React from "react"
+import { base_url_img } from "../utils";
 
 interface Props {
-    name: string | undefined,
-    post: string | undefined,
-    image: string | undefined,
-    description: string | undefined,
-    subject: string | undefined
+    rating: string;
+    name: string | undefined;
+    location?: string | undefined;
+    image: string | undefined;
+    description: string | undefined;
+    subject: string | undefined;
 }
-const Testimonialbox = (props: Props) => {
+interface Data {
+    data: Props
+}
+const Testimonialbox: React.FC<Data> = ({ data }) => {
     return (
         <>
             <div className="py-2">
 
 
                 <div className="w-full rounded-xl bg-white lg:shadow-lg shadow-md shadow-blue-gray-300 lg:shadow-gray-700 lg:py-10 lg:px-6 px-2 ">
-                    <p className="lg:text-lg text-sm mb-2 font-bold">{props.subject}</p>
+                    <p className="lg:text-lg text-sm mb-2 font-bold">{data.subject}</p>
                     <div className="flex text-orange-600 lg:mb-10 mb-4 items-center gap-1">
-                        <StarFilled />
-                        <StarFilled />
-                        <StarFilled />
-                        <StarFilled />
-                        <StarFilled />
+                        {
+                            [...Array(parseInt(data.rating))].map(() => (
+                                <>
+                                    <StarFilled />
+                                </>
+                            ))
+                        }
+                        {
+                            [...Array(5 - parseInt(data.rating))].map(() => (
+                                <>
+                                    <StarOutlined />
+                                </>
+                            ))
+                        }
+
                     </div>
                     <div className="w-full mb-4">
-                        <p className="lg:text-md  text-sm  lg:font-light tracking-[1px]">
-                            {props.description}
+                        <p className="lg:text-md  text-sm   tracking-[1px]">
+                            {data.description}
                         </p>
                     </div>
                     <div className="w-full">
                         <div className="flex ">
                             <div className="lg:size-16 size-8 lg:mx-0 mx-auto rounded-full overflow-hidden">
-                                <img src={props.image} alt="" className="w-full h-full rounded-full border" />
+                                <img src={base_url_img + data.image} alt="" className="w-full h-full rounded-full border" />
                             </div>
                             <div className="lg:w-[calc(100%-2rem)]">
                                 <div className="w-full lg:ps-5 ps-2">
-                                    <h4 className="lg:text-lg text-sm font-bold">{props.name}</h4>
-                                    <p className="lg:text-md text-xs font-light text-gray-800">{props.post}</p>
+                                    <h4 className="lg:text-lg text-sm font-bold">{data.name}</h4>
+                                    <p className="lg:text-md text-xs font-light text-gray-800">{data?.location ?? 'End User'}</p>
                                 </div>
                             </div>
                         </div>

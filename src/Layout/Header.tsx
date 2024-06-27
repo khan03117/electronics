@@ -8,8 +8,7 @@ import {
     Dialog, DialogBody, DialogHeader, Input, Menu,
     MenuHandler,
     MenuList,
-    MenuItem,
-    Button,
+    MenuItem
 } from '@material-tailwind/react';
 import axios from 'axios';
 import { base_url } from '../utils';
@@ -39,7 +38,7 @@ const Header = () => {
         setOpen(!open);
     }
     useEffect(() => {
-        let timer: string | number | NodeJS.Timeout | undefined;
+        let timer: number | undefined;
         if (time > 0) {
             timer = setInterval(() => {
                 setTimeLeft((prev) => prev - 1);

@@ -1,10 +1,27 @@
 import { MenuOutlined } from '@ant-design/icons'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 // @ts-ignore
 import hpimage from '../../assets/hp.png'
+import axios from 'axios'
+import { base_url } from '../../utils'
 
 const Categories = () => {
+    interface Category {
+        image: string;
+        _id: string;
+        url: string;
+        title: string;
+    }
+    const [category, setCategories] = useState<Category[]>([]);
+    const getcategories = async () => {
+        await axios.get(base_url + 'category').then(resp => {
+            setCategories(resp.data.data)
+        })
+    }
+    useEffect(() => {
+        getcategories();
+    }, [])
     return (
         <>
             <div className="w-full">
@@ -17,13 +34,13 @@ const Categories = () => {
                 <div className="w-full">
                     <ul className='p-0 m-0 list-none *:border-b border-blue-gray-100 shadow-lg shadow-blue-gray-700 rounded-b-md'>
                         {
-                            [...Array(6)].map(() => (
+                            category.map((cat) => (
                                 <>
                                     <li>
                                         <Link to={'/'} className='w-full  mb-3 py-2 px-4 rounded-md flex gap-4 items-center'>
                                             <img src={hpimage} alt="" className="text-sm font-bold" />
                                             <span className=''>
-                                                Home applicance
+                                                {cat.title}
                                             </span>
                                         </Link>
                                     </li>
