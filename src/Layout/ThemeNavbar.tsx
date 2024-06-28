@@ -203,7 +203,6 @@ const ThemeNavbar = () => {
                                             </>
                                         ))
                                     }
-
                                 </div>
                             </div>
                         </div>
