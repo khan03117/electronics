@@ -41,12 +41,19 @@ const Home = () => {
     };
   }
   const [catproducts, setProduct] = useState<CategoryWithProducts[]>([]);
+  const [rproducts, setRecommended] = useState<Product[]>([]);
   const getproducts = async () => {
     await axios.get(base_url + 'product/shop').then((resp) => {
       setProduct(resp.data.data)
     })
   }
+  const recommended = async () => {
+    await axios.get(base_url + 'product/recommended').then((resp) => {
+      setRecommended(resp.data.data)
+    })
+  }
   useEffect(() => {
+    recommended();
     getproducts();
   }, [])
   return (
@@ -120,7 +127,7 @@ const Home = () => {
                 </div>
 
                 <div className="w-full">
-
+                  <SliderComponent products={rproducts} />
                 </div>
               </div>
             </section>

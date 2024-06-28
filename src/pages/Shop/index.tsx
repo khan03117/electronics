@@ -1,30 +1,125 @@
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import ProductSlider from "../../component/ProductSlider"
 import { Checkbox, Collapse } from "@material-tailwind/react";
-import { ArrowDownOutlined, ArrowUpOutlined, CloseOutlined, DownOutlined, FilterOutlined, PlusOutlined } from "@ant-design/icons";
+import { CloseOutlined, DownOutlined, PlusOutlined } from "@ant-design/icons";
 import Shorting from "./Shorting";
+import { base_url, base_url_img } from "../../utils";
+import axios from "axios";
 
 const Shop = () => {
+
     const [open, setOpen] = useState('');
-    const [filo, setFilO] = useState(false);
+    const [filo, setFilO] = useState<boolean>(false);
+    const [fshow, setFshow] = useState<boolean>(false);
+    const [scategory, setScategory] = useState<string>('');
+    const [sbrand, setSbrand] = useState<string>('')
+    const [smodal, setSmodal] = useState<string>('')
+    const [filterby, setFilterBy] = useState<string>('');
+    const popupRef = useRef<HTMLDivElement | null>(null);
+    interface Modal {
+        image: string;
+        _id: string;
+        url: string;
+        title: string;
+        modals: {
+            _id: string;
+            url: string;
+            title: string;
+        }[]
+    }
+    interface Brand {
+        image: string;
+        _id: string;
+        url: string;
+        title: string;
+    }
+    interface MCategory {
+        image: string;
+        _id: string;
+        url: string;
+        title: string;
+    }
+    interface Product {
+        _id: string;
+        url: string;
+        category: string;
+        product_type: string;
+        title: string;
+        price: number;
+        images: string[];
+        modals: {
+            brand: string;
+            modal: string;
+            moq: number;
+            stock: number;
+            _id: string;
+        }[];
+        description: string;
+        is_hidden: boolean;
+        createdAt: string;
+        updatedAt: string;
+        __v: number;
+    }
+
+    interface CategoryWithProducts {
+        category: {
+            _id: string;
+            title: string;
+            products: Product[];
+        };
+    }
+    const [catproducts, setProduct] = useState<CategoryWithProducts[]>([]);
+    const [modals, setModals] = useState<Modal[]>([]);
+    const [brands, setBrands] = useState<Brand[]>([]);
+    const [categories, setCategory] = useState<MCategory[]>([]);
+
+    const getproducts = async () => {
+        await axios.get(base_url + 'product/shop?category_url=' + scategory + '&brand_url=' + sbrand + '&modal_url=' + smodal).then((resp) => {
+            setProduct(resp.data.data)
+        })
+    }
+    const getbrands = async () => {
+        await axios.get(base_url + 'brand').then((resp) => {
+            setBrands(resp.data.data)
+        })
+    }
+    const getmodals = async () => {
+        await axios.get(base_url + 'modal').then((resp) => {
+            setModals(resp.data.data)
+        })
+    }
+    const getcategories = async () => {
+        await axios.get(base_url + 'category').then((resp) => {
+            setCategory(resp.data.data)
+        })
+    }
+    useEffect(() => {
+        getmodals();
+        getbrands();
+        getcategories();
+
+    }, []);
+    useEffect(() => {
+        getproducts();
+    }, [scategory, sbrand, smodal])
     const handlefilter = () => {
         setFilO(prev => !prev);
     }
-    const items = [
-        'https://m.media-amazon.com/images/I/41N0Avct1kL._SY679_.jpg',
-        'https://m.media-amazon.com/images/I/61M6p7VahNL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/61SDuTH3XkL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/61VJpLpweHL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/51jLrGrPBpL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/51EwFkHeO8L._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/71xMd0d6xcL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/61RofAW9BML._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/61hnO6ktjiL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/71GKVUMzSCL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/51RYO482znL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/71Al63qjPxL._SX679_.jpg',
-        'https://m.media-amazon.com/images/I/61s1Ro7VONL._SX679_.jpg'
-    ];
+    const handlescategory = (url: string) => {
+        setScategory(url);
+        setSbrand('')
+        setSmodal('')
+        setFshow(false)
+    }
+    const handlesbrand = (url: string) => {
+        setSbrand(url);
+        setFshow(false)
+    }
+    const handlesmodal = (url: string) => {
+        setSmodal(url);
+        setFshow(false)
+    }
+
     const handleOpen = (url: string) => {
         if (open != url) {
             setOpen(url);
@@ -127,6 +222,29 @@ const Shop = () => {
             </div>
         </>
     )
+    const hanlePopup = (id: string) => {
+        setFshow(!fshow);
+        setFilterBy(id);
+    }
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+                setFshow(false);
+            }
+        };
+
+        if (fshow) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [fshow]);
+
+
     return (
         <>
             {
@@ -144,6 +262,107 @@ const Shop = () => {
                     </>
                 )
             }
+            {
+
+                <>
+
+                    <div ref={popupRef} className={`fixed text-black overflow-y-auto transition-all duration-300 z-50 h-[70vh] bottom-0 start-0 w-full bg-white rounded-t-3xl ${fshow ? 'translate-y-0' : 'translate-y-[100%]'}`}>
+                        {
+                            filterby.toLowerCase() == "category" && (
+                                <>
+                                    <div className="w-full px-4 py-5">
+                                        <div className="grid grid-cols-3 gap-5">
+                                            {
+                                                categories.map((catg) => (
+                                                    <>
+                                                        <div onClick={() => handlescategory(catg.url)} className="col-span-1">
+                                                            <div className="w-full border border-blue-gray-100 p-2 h-full rounded-lg bg-white shadow-md shadow-blue-gray-200">
+                                                                <figure className="w-full">
+                                                                    <img src={base_url_img + catg.image} alt="" className="size-10 mx-auto  rounded-full" />
+                                                                </figure>
+                                                                <div className="w-full  mt-4 text-center text-xs">
+                                                                    {catg.title}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </>
+                                                ))
+                                            }
+                                        </div>
+                                    </div>
+
+                                </>
+                            )
+                        }
+                        {
+                            filterby == "Modal" && (
+                                <>
+                                    <div className="w-full px-4 py-5">
+                                        <div className="grid grid-cols-3 gap-5">
+                                            <div className="col-span-3"> </div>
+                                            {
+                                                modals.map((modl) => (
+                                                    <>
+                                                        {
+                                                            modl.modals.map((mdl) => (
+                                                                <>
+                                                                    <div onClick={() => handlesmodal(mdl.url)} className="col-span-1">
+                                                                        <div className="w-full border border-blue-gray-100 p-2 h-full rounded-lg bg-white shadow-md shadow-blue-gray-200">
+                                                                            <figure className="w-full">
+                                                                                <img src={base_url_img + modl.image} alt="" className="size-10 mx-auto  rounded-full" />
+                                                                            </figure>
+                                                                            <div className="w-full  mt-4 text-center text-xs">
+                                                                                {mdl.title}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </>
+                                                            ))
+                                                        }
+
+                                                    </>
+                                                ))
+                                            }
+                                        </div>
+                                    </div>
+                                </>
+                            )
+                        }
+                        {
+                            filterby == "Brand" && (
+                                <>
+                                    <div className="w-full px-4 py-5">
+                                        <div className="grid grid-cols-3 gap-5">
+                                            <div className="col-span-3"> </div>
+                                            {
+                                                brands.map((modl) => (
+                                                    <>
+
+                                                        <div onClick={() => handlesbrand(modl.url)} className="col-span-1">
+                                                            <div className="w-full border border-blue-gray-100 p-2 h-full rounded-lg bg-white shadow-md shadow-blue-gray-200">
+                                                                <figure className="w-full">
+                                                                    <img src={base_url_img + modl.image} alt="" className="size-10 mx-auto  rounded-full" />
+                                                                </figure>
+                                                                <div className="w-full  mt-4 text-center text-xs">
+                                                                    {modl.title}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </>
+                                                ))
+                                            }
+                                        </div>
+                                    </div>
+                                </>
+                            )
+                        }
+                    </div>
+                </>
+
+            }
             <section id='shopbanner' className='lg:py-20 py-5'>
                 <div className="container mx-auto">
                     <div className="grid lg:grid-cols-1">
@@ -160,53 +379,56 @@ const Shop = () => {
                 <div className="container mx-auto">
                     <div className="grid lg:grid-cols-5 grid-cols-1">
                         <div className="col-span-1 ">
-                            <Shorting />
+
                             <div className="w-full px-4 py-2 lg:block hidden sticky top-0">
                                 {filterdiv}
                             </div>
                             <div className="md:hidden block mb-5">
-                                <div className="grid grid-cols-4">
+                                <div className="grid grid-cols-2">
                                     <div className="col-span-1">
                                         <button>
                                             &#8645; Sort
                                         </button>
                                     </div>
                                     {
-                                        ['Category', 'Brand'].map((it) => (
+                                        ['Category'].map((it) => (
                                             <>
                                                 <div className="col-span-1 text-end ">
-                                                    <button className="text-end text-sm">
+                                                    <button onClick={() => hanlePopup(it)} className="text-end text-sm">
                                                         {it} <DownOutlined className="text-xs" />
                                                     </button>
                                                 </div>
                                             </>
                                         ))
                                     }
-                                    <div className="col-span-1 text-end">
-                                        <button className="text-end">
-                                            Filter <FilterOutlined />
-                                        </button>
-                                    </div>
 
                                 </div>
                             </div>
                         </div>
                         <div className="col-span-4">
-                            <div className="w-full">
-                                <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 md:gap-4 gap-4">
-                                    {
-                                        [...items].map((img) => (
-                                            <>
-                                                <div className="col-span-1">
-                                                    <ProductSlider image={img} />
-                                                </div>
+                            {
+                                catproducts.length > 0 && catproducts.map((cat) => (
+                                    <>
+                                        <div className="w-full">
+                                            <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 md:gap-4 gap-4">
 
-                                            </>
-                                        ))
-                                    }
+                                                {
+                                                    cat.category.products && cat.category.products.map((pdt) => (
+                                                        <>
+                                                            <div className="col-span-1">
+                                                                <ProductSlider product={pdt} />
+                                                            </div>
 
-                                </div>
-                            </div>
+                                                        </>
+                                                    ))
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </>
+                                ))
+                            }
+
                         </div>
 
                     </div>

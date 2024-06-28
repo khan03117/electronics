@@ -69,7 +69,7 @@ const ThemeNavbar = () => {
     }, [])
     React.useEffect(() => {
         getproducts();
-    }, [category])
+    }, [category, scat])
 
     function NavList() {
         return (
@@ -162,18 +162,17 @@ const ThemeNavbar = () => {
             <>
                 <div className={`w-full transition-all py-3 z-[9999999] duration-500 fixed top-10 start-0 h-screen bg-white ${!openNav ? 'translate-x-[-100%]' : 'translate-x-[0]'}`}>
 
-                    <div className="grid grid-cols-12">
+                    <div className="grid grid-cols-12 gap-2">
                         <div className="col-span-4">
                             <div className="w-full h-full flex flex-col">
                                 {
                                     category.map(cat =>
                                     (
                                         <>
-                                            <button onClick={() => setScat(cat.url)} className="w-full text-xs  text-start border px-2 border-blue-gray-200 py-6">
+                                            <button onClick={() => setScat(cat.url)} className={`w-full text-xs  text-start border px-2 border-blue-gray-200 py-6 ${scat == cat.url ? 'bg-blue-gray-100' : 'bg-white'}`}>
                                                 <div className="inline-flex gap-2">
                                                     <img src={base_url_img + cat.image} alt="" className="size-4" />  {cat.title}
                                                 </div>
-
                                             </button>
                                         </>
                                     )
@@ -190,10 +189,20 @@ const ThemeNavbar = () => {
                                                 {
                                                     pdt.category.products.map(prod => (
                                                         <>
-                                                            <div className="col-span-1">
-                                                                <figure className="w-full">
-                                                                    <img src={base_url_img + prod.images[0]} alt="" className="size-8" />
-                                                                </figure>
+                                                            <div className="col-span-1 ">
+                                                                <Link to={'/'}>
+                                                                    <figure className="w-full p-4 border border-blue-gray-200">
+                                                                        <img
+                                                                            src={base_url_img + prod.images[0]}
+                                                                            onError={(e) => {
+                                                                                const target = e.target as HTMLImageElement;
+                                                                                target.src = "https://upciclo.com/media/catalog/product/cache/6005d9038b6e8ecaa962eaa7c92a6c42/d/e/desk.jpg";
+                                                                            }}
+                                                                            alt=""
+                                                                            className="size-10 mx-auto "
+                                                                        />
+                                                                    </figure>
+                                                                </Link>
                                                             </div>
                                                         </>
                                                     ))

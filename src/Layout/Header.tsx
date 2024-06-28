@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 // @ts-ignore
 import logoimg from './../assets/logo.png';
 import { DashboardOutlined, LogoutOutlined, OrderedListOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
@@ -24,8 +24,15 @@ const Header = () => {
     const [step, setStep] = useState(initialstep);
     const [msg, setMessage] = useState<string>('');
     const [time, setTimeLeft] = useState(0);
-   
 
+    const location = useLocation();
+    const logout = () => {
+        localStorage.clear();
+        setStep('1');
+    }
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location.pathname])
 
     const mobilehandle = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessage('')
@@ -220,12 +227,12 @@ const Header = () => {
                                                         </Link>
                                                     </MenuItem>
                                                     <MenuItem placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                                                        <Link to={'/logout'}>
+                                                        <button onClick={logout}>
                                                             <LogoutOutlined />
                                                             <span className="ms-2">
                                                                 Logout
                                                             </span>
-                                                        </Link>
+                                                        </button>
                                                     </MenuItem>
 
                                                 </MenuList>
