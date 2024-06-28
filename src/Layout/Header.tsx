@@ -24,6 +24,7 @@ const Header = () => {
     const [step, setStep] = useState(initialstep);
     const [msg, setMessage] = useState<string>('');
     const [time, setTimeLeft] = useState(0);
+   
 
 
     const mobilehandle = (e: React.ChangeEvent<HTMLInputElement>) => {

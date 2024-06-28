@@ -9,9 +9,67 @@ import suportimg from '../assets/support.png';
 import logoimg from './../assets/logo.png';
 import React, { useState } from 'react'
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { base_url, base_url_img } from "../utils";
 
 const ThemeNavbar = () => {
     const [openNav, setOpenNav] = useState(false);
+    interface Category {
+        image: string;
+        _id: string;
+        url: string;
+        title: string;
+    }
+    interface Product {
+        _id: string;
+        url: string;
+        category: string;
+        product_type: string;
+        title: string;
+        price: number;
+        images: string[];
+        modals: {
+            brand: string;
+            modal: string;
+            moq: number;
+            stock: number;
+            _id: string;
+        }[];
+        description: string;
+        is_hidden: boolean;
+        createdAt: string;
+        updatedAt: string;
+        __v: number;
+    }
+
+    interface CategoryWithProducts {
+        category: {
+            _id: string;
+            title: string;
+            products: Product[];
+        };
+    }
+    const [category, setCategories] = useState<Category[]>([]);
+    const [catproducts, setProduct] = useState<CategoryWithProducts[]>([]);
+    const [scat, setScat] = useState<string>('');
+    const getproducts = async () => {
+        const caturl = scat ? scat : category.length > 0 ? category[0].url : '';
+        await axios.get(base_url + 'product/shop?category_url=' + caturl).then((resp) => {
+            setProduct(resp.data.data)
+        })
+    }
+    const getcategories = async () => {
+        await axios.get(base_url + 'category').then(resp => {
+            setCategories(resp.data.data)
+        })
+    }
+    React.useEffect(() => {
+
+        getcategories();
+    }, [])
+    React.useEffect(() => {
+        getproducts();
+    }, [category])
 
     function NavList() {
         return (
@@ -102,10 +160,54 @@ const ThemeNavbar = () => {
 
             </Navbar>
             <>
-                <div className={`w-3/4 transition-all z-[9999999] duration-500 fixed top-10 start-0 h-screen bg-white ${!openNav ? 'translate-x-[-100%]' : 'translate-x-[0]'}`}>
+                <div className={`w-full transition-all py-3 z-[9999999] duration-500 fixed top-10 start-0 h-screen bg-white ${!openNav ? 'translate-x-[-100%]' : 'translate-x-[0]'}`}>
 
-                    <NavList />
+                    <div className="grid grid-cols-12">
+                        <div className="col-span-4">
+                            <div className="w-full h-full flex flex-col">
+                                {
+                                    category.map(cat =>
+                                    (
+                                        <>
+                                            <button onClick={() => setScat(cat.url)} className="w-full text-xs  text-start border px-2 border-blue-gray-200 py-6">
+                                                <div className="inline-flex gap-2">
+                                                    <img src={base_url_img + cat.image} alt="" className="size-4" />  {cat.title}
+                                                </div>
 
+                                            </button>
+                                        </>
+                                    )
+                                    )
+                                }
+                            </div>
+                        </div>
+                        <div className="col-span-8">
+                            <div className="w-full">
+                                <div className="grid grid-cols-3 gap-2">
+                                    {
+                                        catproducts.map(pdt => (
+                                            <>
+                                                {
+                                                    pdt.category.products.map(prod => (
+                                                        <>
+                                                            <div className="col-span-1">
+                                                                <figure className="w-full">
+                                                                    <img src={base_url_img + prod.images[0]} alt="" className="size-8" />
+                                                                </figure>
+                                                            </div>
+                                                        </>
+                                                    ))
+                                                }
+
+
+                                            </>
+                                        ))
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </>
 
