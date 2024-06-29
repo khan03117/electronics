@@ -1,17 +1,22 @@
 import React, { useEffect, useRef, useState } from "react"
 import ProductSlider from "../../component/ProductSlider"
 import { Checkbox, Collapse } from "@material-tailwind/react";
-import { CloseOutlined, DownOutlined, PlusOutlined } from "@ant-design/icons";
+import { CloseOutlined, DownOutlined, FilterOutlined, PlusOutlined } from "@ant-design/icons";
 import Shorting from "./Shorting";
 import { base_url, base_url_img } from "../../utils";
 import axios from "axios";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 const Shop = () => {
-
+    const location = useLocation();
+    const { url } = useParams();
     const [open, setOpen] = useState('');
     const [filo, setFilO] = useState<boolean>(false);
     const [fshow, setFshow] = useState<boolean>(false);
-    const [scategory, setScategory] = useState<string>('');
+    const [scategory, setScategory] = useState<string>(url ? url : '');
+    useEffect(() => {
+        setScategory(url ? url : scategory)
+    }, [location.pathname])
     const [sbrand, setSbrand] = useState<string>('')
     const [smodal, setSmodal] = useState<string>('')
     const [filterby, setFilterBy] = useState<string>('');
@@ -68,10 +73,12 @@ const Shop = () => {
             products: Product[];
         };
     }
+
     const [catproducts, setProduct] = useState<CategoryWithProducts[]>([]);
     const [modals, setModals] = useState<Modal[]>([]);
     const [brands, setBrands] = useState<Brand[]>([]);
     const [categories, setCategory] = useState<MCategory[]>([]);
+    const [allProducts, setAllProducts] = useState<Product[]>([]);
 
     const getproducts = async () => {
         await axios.get(base_url + 'product/shop?category_url=' + scategory + '&brand_url=' + sbrand + '&modal_url=' + smodal).then((resp) => {
@@ -98,10 +105,12 @@ const Shop = () => {
         getbrands();
         getcategories();
 
-    }, []);
+    }, [location.pathname]);
+
+
     useEffect(() => {
         getproducts();
-    }, [scategory, sbrand, smodal])
+    }, [scategory, sbrand, smodal, location.pathname])
     const handlefilter = () => {
         setFilO(prev => !prev);
     }
@@ -128,6 +137,10 @@ const Shop = () => {
         }
 
     }
+    useEffect(() => {
+        const products = catproducts.flatMap(categoryWithProducts => categoryWithProducts.category.products);
+        setAllProducts(products);
+    }, [catproducts]);
 
     const colors = [
         '#ddd', '#727272', '#FF5733', '#FF9033 ', '#FFC433', '#FFFC33 ', '#77FF33', '#3390FF', '#FF3352', '#FF33C7', '#DA33FF', '#9933FF'
@@ -158,7 +171,7 @@ const Shop = () => {
                 </Collapse>
 
             </div>
-            <div className="w-full">
+            <div className="w-full hidden">
                 <div onClick={() => handleOpen('brand')} className="flex cursor-pointer items-center justify-between">
                     <h3 className="md:text-[1.2rem] text-md my-5 border-l-2 relative filtertitle border-black px-2">Brand</h3>
                     <span>
@@ -186,7 +199,7 @@ const Shop = () => {
 
 
             </div>
-            <div className="w-full">
+            <div className="w-full hidden">
                 <h3 className="md:text-[1.2rem] text-md my-5 border-l-2 relative filtertitle border-black px-2">Types</h3>
                 <div className="flex flex-wrap gap-3 *:border *:border-blue-gray-900 *:text-center *:md:px-3 *:md:py-2  *:p-1 text-sm">
                     <button type="button" title="brand button">Vivo</button>
@@ -196,7 +209,7 @@ const Shop = () => {
                     <button type="button" title="brand button">Nokia</button>
                 </div>
             </div>
-            <div className="w-full">
+            <div className="w-full hidden">
                 <h3 className="md:text-[1.2rem] text-md my-5 border-l-2 relative filtertitle border-black px-2">Tags</h3>
                 <div className="flex flex-wrap gap-3 *:border *:border-blue-gray-500 *:md:px-3 *:md:py-2  *:p-1 text-sm">
                     {
@@ -208,7 +221,7 @@ const Shop = () => {
                     }
                 </div>
             </div>
-            <div className="w-full">
+            <div className="w-full hidden">
                 <h3 className="md:text-[1.2rem] text-md my-5 border-l-2 relative filtertitle border-black px-2">Colors</h3>
                 <div className="flex flex-wrap gap-3 *:border *:border-blue-gray-900  ">
                     {
@@ -375,10 +388,10 @@ const Shop = () => {
                     </div>
                 </div>
             </section>
-            <section id="productitem" className="md:py-20 py-5">
+            <section id="productitem" className="md:py-10 py-5">
                 <div className="container mx-auto">
                     <div className="grid lg:grid-cols-5 grid-cols-1">
-                        <div className="col-span-1 ">
+                        <div className="lg:hidden block col-span-1 ">
 
                             <div className="w-full px-4 py-2 lg:block hidden sticky top-0">
                                 {filterdiv}
@@ -405,29 +418,46 @@ const Shop = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-span-4">
-                            {
-                                catproducts.length > 0 && catproducts.map((cat) => (
-                                    <>
-                                        <div className="w-full">
-                                            <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 md:gap-4 gap-4">
+                        <div className="col-span-5 lg:block hidden">
+                            <div className="w-full flex justify-between flex-wrap ">
+                                <div className="filterby">
+                                    <FilterOutlined />Filter
+                                </div>
+                                <div className="filtercat flex gap-2 flex-wrap">
+                                    {
+                                        categories.map(cat => (
+                                            <>
+                                                <Link to={'/shop/category/' + cat.url} className={`${scategory != cat.url ? 'bg-blue-gray-100 text-blue-gray-700' : 'bg-primary text-white'} px-5 py-2 border`}>
+                                                    {cat.title}
+                                                </Link>
+                                            </>
+                                        ))
+                                    }
+                                </div>
 
-                                                {
-                                                    cat.category.products && cat.category.products.map((pdt) => (
-                                                        <>
-                                                            <div className="col-span-1">
-                                                                <ProductSlider product={pdt} />
-                                                            </div>
+                            </div>
+                        </div>
+                        <div className="lg:col-span-5 col-span-4">
 
-                                                        </>
-                                                    ))
-                                                }
+                            <div className=" py-2 block">
+                                <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 md:gap-4 gap-4">
 
-                                            </div>
-                                        </div>
-                                    </>
-                                ))
-                            }
+                                    {
+                                        allProducts.map((pdt) => (
+                                            <>
+                                                <div className="col-span-1">
+                                                    <ProductSlider product={pdt} />
+                                                </div>
+
+                                            </>
+                                        ))
+                                    }
+
+                                </div>
+                            </div>
+
+
+
 
                         </div>
 

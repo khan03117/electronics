@@ -1,4 +1,4 @@
-import { CloseOutlined, HeartFilled, MenuOutlined, ShoppingCartOutlined, ShoppingFilled, ShoppingOutlined, UserOutlined } from "@ant-design/icons";
+import { CloseOutlined, HeartFilled, MenuOutlined, PhoneOutlined, ShoppingCartOutlined, ShoppingFilled, ShoppingOutlined, UserOutlined } from "@ant-design/icons";
 import {
     Navbar,
     Collapse
@@ -78,14 +78,14 @@ const ThemeNavbar = () => {
 
 
 
-                    className="p-1 text-black font-medium"
+                    className="p-1  font-medium"
                 >
                     <Link to={'/shop'} className="flex items-center hover:text-blue-500 transition-colors">
                         Shop
                     </Link>
                 </li>
                 <li
-                    className="p-1 text-black font-medium"
+                    className="p-1  font-medium"
                 >
                     <Link to={'/login'} className="flex items-center hover:text-blue-500 transition-colors">
                         Account
@@ -95,7 +95,7 @@ const ThemeNavbar = () => {
 
 
 
-                    className="p-1 text-black font-medium"
+                    className="p-1  font-medium"
                 >
                     <Link to={'/contact'} className="flex items-center hover:text-blue-500 transition-colors">
                         Contact us
@@ -105,7 +105,7 @@ const ThemeNavbar = () => {
 
 
 
-                    className="p-1 text-black font-medium"
+                    className="p-1  font-medium"
                 >
                     <Link to={'/'} className="flex items-center hover:text-blue-500 transition-colors">
                         Faq's
@@ -116,12 +116,12 @@ const ThemeNavbar = () => {
     }
     return (
         <>
-            <Navbar className="mx-auto rounded-none max-w-full w-full px-3 py-0  shadow-none" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                <div className="flex w-full items-center justify-between text-black">
-                    <div className="lg:hidden block">
+            <Navbar className="mx-auto rounded-none lg:bg-opacity-100 lg:bg-transparent lg:border-none max-w-full w-full px-3 py-0  shadow-none" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                <div className="flex w-full items-center justify-between ">
+                    <div className="lg:hidden block text-black">
                         <button
 
-                            className="  inline-block h-6 w-6 relative -top-1 me-2 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+                            className="  inline-block text-black h-6 w-6 relative -top-1 me-2 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
 
                             onClick={() => setOpenNav(!openNav)}
                         >
@@ -140,10 +140,10 @@ const ThemeNavbar = () => {
                     </div>
                     <div className="call_us ms-auto  ">
                         <Link className="lg:inline-flex hidden items-center gap-4" to={'tel:+91-9090909090'}>
-                            <img src={suportimg} alt="" className="size-6 object-contain" />
+                            <PhoneOutlined className="inline-block rotate-[100deg]" />
                             +91-909090090
                         </Link>
-                        <div className="lg:hidden inline-block">
+                        <div className="lg:hidden inline-block text-black">
                             <Link to={'/cart'} className='text-[1.2rem] text-primary'> <HeartFilled /></Link>
                             <Link to={'/cart'} className='text-[1.2rem] ps-1'> <ShoppingCartOutlined /></Link>
                             <Link to={'/orders'} className='text-[1.2rem] ps-1'> <UserOutlined /></Link>

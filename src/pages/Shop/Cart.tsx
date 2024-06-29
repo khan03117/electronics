@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { CloseOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { base_url, base_url_img } from '../../utils';
 import CartProduct from './CartProduct';
+//@ts-ignore
+import empty from '../../assets/cart.png'
 
 
 const Cart: React.FC = () => {
@@ -52,7 +53,10 @@ const Cart: React.FC = () => {
         })
     }
     useEffect(() => {
-        getcart_items();
+        if (token) {
+            getcart_items();
+        }
+
     }, []);
     const findTotal = () => {
         const total = CartItems.reduce((sum, item) => {
@@ -78,7 +82,7 @@ const Cart: React.FC = () => {
                                             <div className="grid lg:grid-cols-4 grid-cols-2 gap-3">
                                                 {
 
-                                                    CartItems.map(cr => (
+                                                    CartItems.length > 0 && CartItems.map(cr => (
                                                         <>
                                                             <div className="col-span-1">
                                                                 <CartProduct item={cr} />
@@ -88,6 +92,8 @@ const Cart: React.FC = () => {
                                                         </>
                                                     ))
                                                 }
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -141,6 +147,23 @@ const Cart: React.FC = () => {
                             </>
                         )
                     }
+
+                    {
+                        CartItems.length == 0 && (
+                            <>
+                                <div className="lg:col-span-4 col-span-2">
+                                    <img src={empty} alt="" className="lg:w-48 w-32 mx-auto" />
+                                    <div className="text-center">
+                                        <h2 className="text-primary lg:text-[2rem] font-bold">
+                                            Your cart is empty
+                                        </h2>
+                                        <Link to={'/shop'} title='Shop' className="bg-primary text-center  text-white rounded-md px-6 py-3 inline-block mt-4">Shop Now</Link>
+                                    </div>
+                                </div>
+                            </>
+                        )
+                    }
+
 
 
 

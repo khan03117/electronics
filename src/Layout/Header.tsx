@@ -177,7 +177,7 @@ const Header = () => {
                     </div>
                 </DialogBody>
             </Dialog>
-            <section className='lg:py-2 py-3'>
+            <section className='lg:py-2 py-3 lg:bg-black bg-white lg:text-white text-black'>
                 <ThemeNavbar />
             </section>
             <section className="lg:py-5  lg:mb-0 mb-3">

@@ -106,16 +106,14 @@ const Footer = () => {
                     <Link to={'/about-us'}>About Us</Link>
                   </li>
                   <li>
-                    <Link to={'/about-us'}>New Arrivals</Link>
+                    <Link to={'/shop'}>New Arrivals</Link>
                   </li>
                   <li>
-                    <Link to={'/about-us'}>Sale</Link>
+                    <Link to={'/shop'}>Sale</Link>
                   </li>
+
                   <li>
-                    <Link to={'/about-us'}>Store Location</Link>
-                  </li>
-                  <li>
-                    <Link to={'/about-us'}>Reviews</Link>
+                    <Link to={'/testimonials'}>Reviews</Link>
                   </li>
 
                 </ul>
@@ -128,7 +126,7 @@ const Footer = () => {
                 </h4>
                 <ul className='*:py-2 *:text-sm'>
                   <li>
-                    <Link to={'/about-us'}>Terms & Condition</Link>
+                    <Link to={'/policy/terms-conditions'}>Terms & Condition</Link>
                   </li>
                   <li>
                     <Link to={'/about-us'}>Shipping & Delivery</Link>
@@ -142,11 +140,9 @@ const Footer = () => {
                   <li>
                     <Link to={'/about-us'}>Privacy Policies</Link>
                   </li>
+
                   <li>
-                    <Link to={'/about-us'}>FAQs</Link>
-                  </li>
-                  <li>
-                    <Link to={'/about-us'}>Contact us</Link>
+                    <Link to={'/contact-us'}>Contact us</Link>
                   </li>
                 </ul>
               </div>

@@ -9,6 +9,8 @@ import Cart from './pages/Shop/Cart'
 import Contact from './pages/contact'
 import Orders from './pages/Shop/Orders'
 import Login from './pages/auth/Login'
+import About from './pages/about'
+import Testimonial from './pages/Testimonial'
 
 function App() {
 
@@ -18,6 +20,8 @@ function App() {
         <Route path='/' element={<WebLayout />} >
           <Route index element={<Home />} />
           <Route path='/shop' element={<Shop />} />
+          <Route path='/about-us' element={<About />} />
+          <Route path='/testimonials' element={<Testimonial />} />
           <Route path='/single-product/:id' element={<SingleProduct />} />
           <Route path='/checkout' element={<Checkout />} />
           <Route path='/cart' element={<Cart />} />
@@ -25,6 +29,7 @@ function App() {
           <Route path='/contact' element={<Contact />} />
           <Route path='/orders' element={<Orders />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/shop/category/:url' element={<Shop />} />
         </Route>
       </>
     )

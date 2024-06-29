@@ -9,6 +9,7 @@ import SectionDevider from '../../component/SectionDevider'
 import { useState } from 'react';
 import axios from 'axios'
 import { base_url } from '../../utils'
+import ViewAll from './ViewAll'
 
 const Home = () => {
   interface Product {
@@ -92,10 +93,7 @@ const Home = () => {
                 </div>
                 <div className="w-full flex justify-between items-center mb-2">
                   <h4 className="md:text-xl text-sm text-primary font-bold">Start from just 99.99 only</h4>
-                  <button type='button' className="  md:px-5 px-2 text-xs uppercase font-bold  py-2  text-primary">
-                    View All
-                    <RightOutlined className='md:ms-3 ms-1' />
-                  </button>
+                  <ViewAll />
                 </div>
                 <div className="w-full">
                   <SliderComponent products={itm.category.products} />
