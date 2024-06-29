@@ -1,10 +1,38 @@
-import { ContactsOutlined, FacebookFilled, HeartOutlined, HomeFilled, HomeOutlined, InstagramFilled, PhoneFilled, RedEnvelopeFilled, ShopOutlined, ShoppingCartOutlined, TwitterSquareFilled, WhatsAppOutlined } from '@ant-design/icons'
+import { FacebookFilled, HeartOutlined, HomeFilled, HomeOutlined, InstagramFilled, PhoneFilled, RedEnvelopeFilled, ShopOutlined, ShoppingCartOutlined, TwitterSquareFilled, WhatsAppOutlined } from '@ant-design/icons'
 //@ts-ignore
 import logo from '../assets/logo.png'
 import { Link } from 'react-router-dom'
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios'
+import { base_url } from '../utils'
 
 const Footer = () => {
+  interface Policy {
+    title: string;
+    _id: string;
+    description: string;
+    url: string;
+  }
+  interface Media {
+    title: string;
+    type: string;
+    media_value: string;
+  }
+  const [policies, setPolicies] = React.useState<Policy[]>([]);
+  const [medias, setMedias] = useState<Media[]>([]);
+
+  const getdata = async () => {
+    const resp = await axios.get(base_url + 'policy');
+    setPolicies(resp.data.data);
+  }
+  const getdata2 = async () => {
+    const resp = await axios.get(base_url + 'social/contact-media');
+    setMedias(resp.data.data);
+  }
+  React.useEffect(() => {
+    getdata();
+    getdata2();
+  }, [])
   return (
     <>
       {/* <div className="fixed inline-block max-w-28 bottom-16 start-2 z-50">
@@ -47,7 +75,7 @@ const Footer = () => {
             <p>Cart</p>
 
           </Link>
-          <Link to={'/contact'}>
+          <Link to={`https://wa.me/${medias.find(obj => obj.title == "Whatsapp")?.media_value}?text=I'm%20interested%20in%20your%20car%20for%20sale`}>
             <p>
               <WhatsAppOutlined />
             </p>
@@ -72,7 +100,7 @@ const Footer = () => {
                       <strong className='text-md font-bold'>
                         Address :
                       </strong>
-                      Frantic Infotech Private Limited. Near Torrent Power Office,Cinema Road , Dehli Gate - Noida - 201301
+                      {medias.find(obj => obj.title == "Address")?.media_value}
                     </p>
                   </div>
 
@@ -81,7 +109,7 @@ const Footer = () => {
                   <strong className='text-md font-bold'>
                     <RedEnvelopeFilled />  Email :
                   </strong>
-                  krishnaboutique2023@gmail.com
+                  {medias.find(obj => obj.title == "Email")?.media_value}
                 </p>
 
 
@@ -91,7 +119,7 @@ const Footer = () => {
                     <strong className='text-md font-bold'>
                       <PhoneFilled />   Mobile :
                     </strong>
-                    +91-8866030337
+                    {medias.find(obj => obj.title == "Mobile")?.media_value}
                   </p>
                 </li>
               </ul>
@@ -125,24 +153,19 @@ const Footer = () => {
                   QUICK LINKS
                 </h4>
                 <ul className='*:py-2 *:text-sm'>
-                  <li>
-                    <Link to={'/policy/terms-conditions'}>Terms & Condition</Link>
-                  </li>
-                  <li>
-                    <Link to={'/about-us'}>Shipping & Delivery</Link>
-                  </li>
-                  <li>
-                    <Link to={'/about-us'}>Refund and Cancellation</Link>
-                  </li>
-                  <li>
-                    <Link to={'/about-us'}>Privacy Policies</Link>
-                  </li>
-                  <li>
-                    <Link to={'/about-us'}>Privacy Policies</Link>
-                  </li>
+                  {
+                    policies.map(pol => (
+                      <>
+                        <li>
+                          <Link to={'/policy/' + pol.url}>{pol.title}</Link>
+                        </li>
+                      </>
+                    ))
+                  }
+
 
                   <li>
-                    <Link to={'/contact-us'}>Contact us</Link>
+                    <Link to={'/contact'}>Contact us</Link>
                   </li>
                 </ul>
               </div>
@@ -154,18 +177,48 @@ const Footer = () => {
                 <button className="bg-blue-gray-700 px-4 py-2 text-sm text-white">Subscribe</button>
               </div>
               <div className="flex *:size-10 *:text-lg *:text-center *:leading-10 *:rounded-full gap-3  mt-10">
-                <Link className='bg-blue-800 text-white' to={'/'}>
-                  <FacebookFilled />
-                </Link>
-                <Link className='bg-blue-500 text-white' to={'/'}>
-                  <TwitterSquareFilled />
-                </Link>
-                <Link className='bg-pink-400 text-white' to={'/'}>
-                  <InstagramFilled />
-                </Link>
-                <Link className='bg-green-800 text-white' to={'/'}>
-                  <WhatsAppOutlined />
-                </Link>
+                {
+                  medias.find(obj => obj.title == "Facebook") && (
+                    <>
+                      <Link className='bg-blue-800 text-white' to={'/'}>
+                        <FacebookFilled />
+                      </Link>
+                    </>
+                  )
+                }
+                {
+                  medias.find(obj => obj.title == "Twitter") && (
+                    <>
+                      <Link className='bg-blue-500 text-white' to={'/'}>
+                        <TwitterSquareFilled />
+                      </Link>
+                    </>
+                  )
+                }
+                {
+                  medias.find(obj => obj.title == "Instagram") && (
+                    <>
+                      <Link className='bg-pink-400 text-white' to={'/'}>
+                        <InstagramFilled />
+                      </Link>
+                    </>
+                  )
+                }
+                {
+                  medias.find(obj => obj.title == "Whatsapp") && (
+                    <>
+                      <Link className='bg-green-800 text-white' to={`https://wa.me/${medias.find(obj => obj.title == "Whatsapp")?.media_value}?text=I'm%20interested%20in%20your%20car%20for%20sale`}>
+                        <WhatsAppOutlined />
+                      </Link>
+                    </>
+                  )
+                }
+
+
+
+
+
+
               </div>
             </div>
           </div>

@@ -11,6 +11,7 @@ import Orders from './pages/Shop/Orders'
 import Login from './pages/auth/Login'
 import About from './pages/about'
 import Testimonial from './pages/Testimonial'
+import Polcy from './Layout/Polcy'
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path='/orders' element={<Orders />} />
           <Route path='/login' element={<Login />} />
           <Route path='/shop/category/:url' element={<Shop />} />
+          <Route path='/policy/:url' element={<Polcy />} />
         </Route>
       </>
     )
