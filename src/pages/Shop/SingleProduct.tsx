@@ -114,7 +114,7 @@ const SingleProduct: React.FC = () => {
 
                 }
                 setCopen(true);
-                setTimeout(()=>{
+                setTimeout(() => {
                     setCopen(false);
                 }, 2000)
             }
@@ -122,7 +122,7 @@ const SingleProduct: React.FC = () => {
 
             Swal.fire({
                 title: 'Error',
-                text: 'Please login to add to cart'+token,
+                text: 'Please login to add to cart' + token,
                 icon: 'error',
 
             })
@@ -277,7 +277,7 @@ const SingleProduct: React.FC = () => {
                                 </div>
 
 
-                                    
+
                                 <div className={`w-full fixed bottom-0 transition-all duration-500  bg-gray-200 start-0 ${copen ? 'translate-y-0' : 'translate-y-full'}`}>
                                     <div className="flex justify-between p-4 ">
                                         <div className="w-1/2">
@@ -311,7 +311,7 @@ const SingleProduct: React.FC = () => {
                         {
                             s_section == "specifications" && (
                                 <>
-                                    <Specification />
+                                    <Specification description={product?.description} />
                                 </>
                             )
                         }

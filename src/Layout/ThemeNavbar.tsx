@@ -1,8 +1,12 @@
-import { CloseOutlined, HeartFilled, MenuOutlined, PhoneOutlined, ShoppingCartOutlined, ShoppingFilled, ShoppingOutlined, UserOutlined } from "@ant-design/icons";
+import { DashboardOutlined, OrderedListOutlined, LogoutOutlined, HeartFilled, MenuOutlined, PhoneOutlined, ShoppingCartOutlined, ShoppingFilled, ShoppingOutlined, UserOutlined, CloseOutlined } from "@ant-design/icons";
 import {
     Navbar,
-    Collapse
+
+    Menu, MenuHandler,
+    MenuList,
+    MenuItem
 } from "@material-tailwind/react";
+
 // @ts-ignore
 import suportimg from '../assets/support.png';
 // @ts-ignore
@@ -13,6 +17,7 @@ import axios from "axios";
 import { base_url, base_url_img } from "../utils";
 
 const ThemeNavbar = () => {
+    const token: string | null = localStorage.getItem('_token')
     const [openNav, setOpenNav] = useState(false);
     interface Category {
         image: string;
@@ -66,7 +71,11 @@ const ThemeNavbar = () => {
     React.useEffect(() => {
 
         getcategories();
-    }, [])
+    }, []);
+    const logout = () => {
+        localStorage.clear();
+        window.location.reload();
+    }
     React.useEffect(() => {
         getproducts();
     }, [category, scat])
@@ -146,7 +155,41 @@ const ThemeNavbar = () => {
                         <div className="lg:hidden inline-block text-black">
                             <Link to={'/cart'} className='text-[1.2rem] text-primary'> <HeartFilled /></Link>
                             <Link to={'/cart'} className='text-[1.2rem] ps-1'> <ShoppingCartOutlined /></Link>
-                            <Link to={'/orders'} className='text-[1.2rem] ps-1'> <UserOutlined /></Link>
+                            {
+                                token ? (
+                                    <>
+                                        <Menu>
+                                            <MenuHandler>
+                                                <button title='menu icon' className='ms-4 lg:text-[1.5rem] text-[1.2rem]'>
+                                                    <DashboardOutlined />
+                                                </button>
+                                            </MenuHandler>
+                                            <MenuList placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                                                <MenuItem placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                                                    <Link to={'/orders'}>
+                                                        <OrderedListOutlined />
+                                                        <span className="ms-2">Orders</span>
+                                                    </Link>
+                                                </MenuItem>
+                                                <MenuItem placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                                                    <button onClick={logout}>
+                                                        <LogoutOutlined />
+                                                        <span className="ms-2">
+                                                            Logout
+                                                        </span>
+                                                    </button>
+                                                </MenuItem>
+
+                                            </MenuList>
+                                        </Menu>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link to={'/login'} className='text-[1.2rem] ps-1'> <UserOutlined /></Link>
+                                    </>
+                                )
+                            }
+
                         </div>
                     </div>
 

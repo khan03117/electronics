@@ -30,6 +30,7 @@ const Header = () => {
     const logout = () => {
         localStorage.clear();
         setStep('1');
+        window.location.reload();
     }
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -58,7 +59,7 @@ const Header = () => {
 
         return () => clearInterval(timer);
     }, [time]);
-  
+
 
     const handlerequestlogin = async () => {
         if (step == "1") {
@@ -91,7 +92,7 @@ const Header = () => {
                     if (resp.data.success == "1") {
                         localStorage.setItem('_token', resp.data.data);
                         setStep('3');
-                       
+
                         setOpen(false);
                         window.location.reload();
                     }
