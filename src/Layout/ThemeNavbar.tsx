@@ -83,39 +83,22 @@ const ThemeNavbar = () => {
     function NavList() {
         return (
             <ul className="my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-                <li
-
-
-
-                    className="p-1  font-medium"
-                >
+                <li className="p-1  font-medium" >
                     <Link to={'/shop'} className="flex items-center hover:text-blue-500 transition-colors">
                         Shop
                     </Link>
                 </li>
-                <li
-                    className="p-1  font-medium"
-                >
+                <li className="p-1  font-medium" >
                     <Link to={'/login'} className="flex items-center hover:text-blue-500 transition-colors">
                         Account
                     </Link>
                 </li>
-                <li
-
-
-
-                    className="p-1  font-medium"
-                >
+                <li className="p-1  font-medium" >
                     <Link to={'/contact'} className="flex items-center hover:text-blue-500 transition-colors">
                         Contact us
                     </Link>
                 </li>
-                <li
-
-
-
-                    className="p-1  font-medium"
-                >
+                <li className="p-1  font-medium" >
                     <Link to={'/'} className="flex items-center hover:text-blue-500 transition-colors">
                         Faq's
                     </Link>
@@ -128,9 +111,7 @@ const ThemeNavbar = () => {
             <Navbar className="mx-auto rounded-none lg:bg-opacity-100 lg:bg-transparent lg:border-none max-w-full w-full px-3 py-0  shadow-none" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                 <div className="flex w-full items-center justify-between ">
                     <div className="lg:hidden block text-black">
-                        <button
-
-                            className="  inline-block text-black h-6 w-6 relative -top-1 me-2 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+                        <button className="  inline-block text-black h-6 w-6 relative -top-1 me-2 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
 
                             onClick={() => setOpenNav(!openNav)}
                         >

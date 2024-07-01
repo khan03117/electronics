@@ -13,6 +13,7 @@ const Cart: React.FC = () => {
         _id: string;
         title: string;
         images: string[];
+        url: string;
     }
 
     interface Brand {
@@ -66,7 +67,21 @@ const Cart: React.FC = () => {
     }
     useEffect(() => {
         findTotal()
-    }, [CartItems])
+    }, [CartItems]);
+    const deleteCart = async (id: string) => {
+        const token = localStorage.getItem('_token');
+        if (!token) {
+            throw new Error('No authorization token found');
+        }
+        await axios.delete(base_url + 'cart/' + id, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`, // Ensure the token is set correctly
+            },
+        });
+        await getcart_items();
+    }
+
 
     return (
         <>
@@ -85,8 +100,7 @@ const Cart: React.FC = () => {
                                                     CartItems.length > 0 && CartItems.map(cr => (
                                                         <>
                                                             <div className="col-span-1">
-                                                                <CartProduct item={cr} />
-
+                                                                <CartProduct deleteitem={() => deleteCart(cr._id)} item={cr} />
                                                             </div>
 
                                                         </>

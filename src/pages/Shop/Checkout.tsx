@@ -2,9 +2,10 @@ import { Checkbox } from '@material-tailwind/react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { base_url } from '../../utils';
+import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
-    const token : string | null = localStorage.getItem('_token');
+    const token: string | null = localStorage.getItem('_token');
     interface InputEvent {
         target: HTMLInputElement | HTMLSelectElement;
     }
@@ -34,7 +35,7 @@ const Checkout = () => {
         Country: string;
         Pincode: string;
     }
-    const [states, setState] = useState<State[]>([]);
+    const [success, setSuccess] = useState<string>('0');
     const [pincode, setPincode] = useState<string>('');
     const [fdata, setFdata] = useState<FormData>({});
     const [errors, setErrors] = useState<Error[]>([]);
@@ -104,18 +105,27 @@ const Checkout = () => {
     const checkoutnow = async (action: string) => {
         if (validation()) {
             try {
-                const data = {...fdata};
+                const data = { ...fdata };
                 data['pincode'] = pincode;
                 await axios.post(base_url + 'cart/checkout', data, {
-                    headers: { 'Authorization': `Bearer ${token}`}
+                    headers: { 'Authorization': `Bearer ${token}` }
                 }).then(resp => {
-                    console.log(resp)
+                    if (resp.data.success == "1") {
+                        setSuccess('1');
+                    }
                 })
             } catch (error) {
                 console.log(error)
             }
         }
     }
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (success == "1") {
+            navigate('/orders');
+        }
+    }, [success])
     return (
         <>
             <section className="py-10">

@@ -42,6 +42,7 @@ const SingleProduct: React.FC = () => {
     }
     const { id } = useParams();
     const token: string | null = localStorage.getItem('_token') ?? null;
+
     interface Quantity { product: string | undefined; modal: string | undefined; brand: string | undefined; quantity: number | undefined; price: number | undefined; }
     const [qty, setQty] = useState<Quantity[]>([]);
     // const [mobj, setMobj] = useState<Quantity>();
@@ -278,12 +279,12 @@ const SingleProduct: React.FC = () => {
 
 
 
-                                <div className={`w-full fixed bottom-0 transition-all duration-500  bg-gray-200 start-0 ${copen ? 'translate-y-0' : 'translate-y-full'}`}>
+                                <div className={`w-full fixed lg:bottom-0 bottom-10 transition-all duration-500  bg-gray-200 start-0 ${copen ? 'translate-y-0' : 'translate-y-full'}`}>
                                     <div className="flex justify-between p-4 ">
                                         <div className="w-1/2">
                                             Total Items : {qty.length}
                                         </div>
-                                        <button type='button' className=" uppercase shadow-md shadow-blue-gray-700  font-light text-md px-4 py-3 rounded-sm text-white bg-primary ">Buy it now</button>
+                                        <Link to={'/cart'} type='button' className=" uppercase shadow-md shadow-blue-gray-700  font-light text-md px-4 py-3 rounded-sm text-white bg-primary ">Buy it now</Link>
 
                                     </div>
                                     {/* <button type='button' onClick={addtocart} className="w-full uppercase shadow-md shadow-deep-orange-700  font-light mb-4 text-md px-4 py-3 rounded-sm text-white bg-orange-700 ">Add to cart</button> */}
