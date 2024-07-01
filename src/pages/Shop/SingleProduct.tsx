@@ -8,6 +8,7 @@ import Specification from './Specification';
 import Reviews from './Reviews';
 import axios from 'axios';
 import { base_url, base_url_img } from '../../utils';
+import Swal from 'sweetalert2';
 
 
 const SingleProduct: React.FC = () => {
@@ -43,9 +44,10 @@ const SingleProduct: React.FC = () => {
     const token: string | null = localStorage.getItem('_token') ?? null;
     interface Quantity { product: string | undefined; modal: string | undefined; brand: string | undefined; quantity: number | undefined; price: number | undefined; }
     const [qty, setQty] = useState<Quantity[]>([]);
-    const [mobj, setMobj] = useState<Quantity>();
+    // const [mobj, setMobj] = useState<Quantity>();
     const [s_section, setSection] = useState('specifications');
     const [product, setProduct] = useState<Product>();
+    const [copen, setCopen] = useState<boolean>(false);
     const getProduct = async () => {
         await axios.get(base_url + 'product/show/' + id).then(resp => {
             setProduct(resp.data.data)
@@ -70,44 +72,60 @@ const SingleProduct: React.FC = () => {
 
 
     const handleqty = (action: string, id: string, bid: string) => {
-        const modal = product?.modals.find(obj => obj.modal._id == id && obj.brand._id == bid);
-        if (modal) {
-            const arr = [...qty];
-            const idx = arr.findIndex(obj => obj.modal == modal?.modal._id && obj.brand == modal.brand._id);
-            if (action == "plus") {
-                if (idx > -1) {
-                    const nqty = (arr[idx]?.quantity ?? 0) + (modal?.moq ?? 0);
-                    arr[idx].quantity = nqty;
-                    addtocart(arr[idx]);
-                    setQty(arr);
-                } else {
-                    const obj = {
-                        product: product?._id,
-                        modal: modal?.modal._id,
-                        brand: modal?.brand._id,
-                        quantity: modal?.moq,
-                        price: product?.price
-                    }
-                    addtocart(obj)
-                    arr.push(obj);
-                    setQty(arr);
-                }
-            }
-            if (action == 'minus') {
-                if (arr[idx]) {
-                    if (idx > -1 && typeof arr[idx]?.quantity === 'number') {
-                        const currentQuantity = arr[idx].quantity ?? 0;
-                        const moq = modal?.moq ?? 0; // Default moq to 0 if modal is undefined
-                        const newQuantity = Math.max(currentQuantity - moq, 0); // Ensure new quantity is non-negative
+        if (token) {
 
-                        // Update arr[idx] with new quantity
-                        arr[idx].quantity = newQuantity;
+
+            const modal = product?.modals.find(obj => obj.modal._id == id && obj.brand._id == bid);
+            if (modal) {
+                const arr = [...qty];
+                const idx = arr.findIndex(obj => obj.modal == modal?.modal._id && obj.brand == modal.brand._id);
+                if (action == "plus") {
+                    if (idx > -1) {
+                        const nqty = (arr[idx]?.quantity ?? 0) + (modal?.moq ?? 0);
+                        arr[idx].quantity = nqty;
                         addtocart(arr[idx]);
+                        setQty(arr);
+                    } else {
+                        const obj = {
+                            product: product?._id,
+                            modal: modal?.modal._id,
+                            brand: modal?.brand._id,
+                            quantity: modal?.moq,
+                            price: product?.price
+                        }
+                        addtocart(obj)
+                        arr.push(obj);
                         setQty(arr);
                     }
                 }
+                if (action == 'minus') {
+                    if (arr[idx]) {
+                        if (idx > -1 && typeof arr[idx]?.quantity === 'number') {
+                            const currentQuantity = arr[idx].quantity ?? 0;
+                            const moq = modal?.moq ?? 0; // Default moq to 0 if modal is undefined
+                            const newQuantity = Math.max(currentQuantity - moq, 0); // Ensure new quantity is non-negative
 
+                            // Update arr[idx] with new quantity
+                            arr[idx].quantity = newQuantity;
+                            addtocart(arr[idx]);
+                            setQty(arr);
+                        }
+                    }
+
+                }
+                setCopen(true);
+                setTimeout(()=>{
+                    setCopen(false);
+                }, 2000)
             }
+        } else {
+
+            Swal.fire({
+                title: 'Error',
+                text: 'Please login to add to cart'+token,
+                icon: 'error',
+
+            })
         }
 
     }
@@ -125,6 +143,8 @@ const SingleProduct: React.FC = () => {
             }
 
         })
+
+
     }
 
     return (
@@ -257,12 +277,16 @@ const SingleProduct: React.FC = () => {
                                 </div>
 
 
-                                <div className="w-full mb-4">
+                                    
+                                <div className={`w-full fixed bottom-0 transition-all duration-500  bg-gray-200 start-0 ${copen ? 'translate-y-0' : 'translate-y-full'}`}>
+                                    <div className="flex justify-between p-4 ">
+                                        <div className="w-1/2">
+                                            Total Items : {qty.length}
+                                        </div>
+                                        <button type='button' className=" uppercase shadow-md shadow-blue-gray-700  font-light text-md px-4 py-3 rounded-sm text-white bg-primary ">Buy it now</button>
 
-                                </div>
-                                <div className="w-full my-4">
+                                    </div>
                                     {/* <button type='button' onClick={addtocart} className="w-full uppercase shadow-md shadow-deep-orange-700  font-light mb-4 text-md px-4 py-3 rounded-sm text-white bg-orange-700 ">Add to cart</button> */}
-                                    <button type='button' className="w-full uppercase shadow-md shadow-blue-gray-700  font-light text-md px-4 py-3 rounded-sm text-white bg-blue-gray-900 ">Buy it now</button>
                                 </div>
 
                             </div>

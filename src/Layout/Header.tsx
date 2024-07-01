@@ -24,6 +24,7 @@ const Header = () => {
     const [step, setStep] = useState(initialstep);
     const [msg, setMessage] = useState<string>('');
     const [time, setTimeLeft] = useState(0);
+    const [rotp, setRotp] = useState<string>('');
 
     const location = useLocation();
     const logout = () => {
@@ -57,6 +58,7 @@ const Header = () => {
 
         return () => clearInterval(timer);
     }, [time]);
+  
 
     const handlerequestlogin = async () => {
         if (step == "1") {
@@ -64,6 +66,7 @@ const Header = () => {
                 await axios.post(base_url + 'user/send-otp', { mobile: mobile }).then(resp => {
                     setMessage(resp.data.message)
                     if (resp.data.success == "1") {
+                        setRotp(resp.data.otp);
                         setStep('2');
                         setTimeLeft(20)
                     }
@@ -88,7 +91,9 @@ const Header = () => {
                     if (resp.data.success == "1") {
                         localStorage.setItem('_token', resp.data.data);
                         setStep('3');
+                       
                         setOpen(false);
+                        window.location.reload();
                     }
                 })
             } else {
@@ -122,6 +127,7 @@ const Header = () => {
                                 </span>
                             </>
                         )}
+                        {rotp}
 
 
                     </div>
