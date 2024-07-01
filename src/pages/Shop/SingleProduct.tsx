@@ -8,7 +8,6 @@ import Specification from './Specification';
 import Reviews from './Reviews';
 import axios from 'axios';
 import { base_url, base_url_img } from '../../utils';
-import Swal from 'sweetalert2';
 
 
 const SingleProduct: React.FC = () => {
@@ -48,7 +47,7 @@ const SingleProduct: React.FC = () => {
     const [s_section, setSection] = useState('specifications');
     const [product, setProduct] = useState<Product>();
     const getProduct = async () => {
-        await axios.get(base_url + 'product/single-product/' + id).then(resp => {
+        await axios.get(base_url + 'product/show/' + id).then(resp => {
             setProduct(resp.data.data)
         })
     }

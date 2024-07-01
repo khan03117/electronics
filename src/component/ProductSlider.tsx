@@ -43,7 +43,7 @@ const ProductSlider: React.FC<{ product: Product }> = ({ product }) => {
 
   return (
     <>
-      <Link to={'/single-product/' + product._id} className="w-full block productbox relative lg:pt-5  lg:shadow-lg shadow-sm border border-primary/20 pt-4 shadow-blue-gray-500  rounded-xl ">
+      <Link to={'/single-product/' + product.url} className="w-full block productbox relative lg:pt-5  lg:shadow-lg shadow-sm border border-primary/20 pt-4 shadow-blue-gray-500  rounded-xl ">
         <div className="absolute shopincon z-10 *:size-10 *:shadow-md *:shadow-blue-gray-400 *:bg-white *:text-center *:rounded-full *:leading-10 flex w-10 flex-col gap-5 top-20 end-3">
           <a className='quicklink'>
             <HeartOutlined />
