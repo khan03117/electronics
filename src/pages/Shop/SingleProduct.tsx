@@ -56,7 +56,7 @@ const SingleProduct: React.FC = () => {
     }
     useEffect(() => {
         getProduct();
-    }, []);
+    }, [location.pathname]);
     const [open, setOpen] = useState(false);
     const settingsFor = {
         slidesToShow: 1,
@@ -74,8 +74,6 @@ const SingleProduct: React.FC = () => {
 
     const handleqty = (action: string, id: string, bid: string) => {
         if (token) {
-
-
             const modal = product?.modals.find(obj => obj.modal._id == id && obj.brand._id == bid);
             if (modal) {
                 const arr = [...qty];
@@ -115,9 +113,9 @@ const SingleProduct: React.FC = () => {
 
                 }
                 setCopen(true);
-                setTimeout(() => {
-                    setCopen(false);
-                }, 2000)
+                // setTimeout(() => {
+                //     setCopen(false);
+                // }, 2000)
             }
         } else {
 
@@ -262,7 +260,7 @@ const SingleProduct: React.FC = () => {
                                                                     <button type="button" aria-label="Click Me" title='Click Me' onClick={() => handleqty('minus', mdl.modal._id, mdl.brand._id)} className="size-10  border border-blue-gray-600">
                                                                         <MinusOutlined />
                                                                     </button>
-                                                                    <input type="text" value={qty.find(obj => obj.modal == mdl.modal._id)?.quantity} readOnly name="" id="" className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
+                                                                    <input type="text" value={qty.find(obj => obj.modal == mdl.modal._id)?.quantity ?? 0} readOnly name="" id="" className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
                                                                     <button type='button' title='Increase button' onClick={() => handleqty('plus', mdl.modal._id, mdl.brand._id)} className="size-10 border border-blue-gray-600">
                                                                         <PlusOutlined />
                                                                     </button>

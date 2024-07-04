@@ -134,12 +134,24 @@ const Cart: React.FC = () => {
                                                         </tr>
                                                         <tr className='*:p-2 *:text-sm'>
                                                             <td>
+                                                                Enter Promo Code
+                                                            </td>
+                                                            <td>
+                                                                <div className="flex w-full">
+                                                                    <input type="text" placeholder='Enter Promo Code' className="p-2 w-full outline-none border border-primary" />
+                                                                    <button className="bg-primary px-2 text-sm text-white ">Apply</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr className='*:p-2 *:text-sm'>
+                                                            <td>
                                                                 Discount
                                                             </td>
                                                             <td>
                                                                 ₹ 0.00
                                                             </td>
                                                         </tr>
+
                                                         <tr className='*:p-2 *:text-sm'>
                                                             <td>
                                                                 Net Amount

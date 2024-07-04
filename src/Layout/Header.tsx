@@ -187,7 +187,7 @@ const Header = () => {
             <section className='lg:py-2 py-3 lg:bg-black bg-white lg:text-white text-black'>
                 <ThemeNavbar />
             </section>
-            <section className="lg:py-5  lg:mb-0 mb-3">
+            <section className="lg:py-5  lg:mb-0 mb-3 lg:block hidden">
                 <div className="container">
                     <div className="grid lg:grid-cols-12 md:grid-cols-1 grid-cols-1 gap-4">
                         <div className="lg:col-span-2 col-span-6 lg:order-1 order-1 lg:block hidden">

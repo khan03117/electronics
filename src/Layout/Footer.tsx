@@ -76,8 +76,8 @@ const Footer = () => {
 
           </Link>
           <Link to={`https://wa.me/${medias.find(obj => obj.title == "Whatsapp")?.media_value}?text=I'm%20interested%20in%20your%20car%20for%20sale`}>
-            <p>
-              <WhatsAppOutlined />
+            <p >
+              <WhatsAppOutlined className='text-green-700' />
             </p>
             <p>Contact</p>
 
@@ -213,11 +213,6 @@ const Footer = () => {
                     </>
                   )
                 }
-
-
-
-
-
 
               </div>
             </div>

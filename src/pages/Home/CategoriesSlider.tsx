@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 //@ts-ignore
 import mobileimg from '../../assets/mobileimg.png'
@@ -6,16 +6,23 @@ import mobileimg from '../../assets/mobileimg.png'
 import smtv from '../../assets/smart-tv.png'
 //@ts-ignore
 import comp from '../../assets/computer.png'
+//@ts-ignore
+import categoryimg from '../../assets/application.png'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { NextArrow, PrevArrow } from "../../component/Arrows";
 import { base_url, base_url_img } from '../../utils'
 import axios from 'axios'
+import MobileSidebar from '../../Layout/MobileSidebar'
 
 
 
 const CategoriesSlider = () => {
+    const [open, setOpen] = useState(false);
+    const handleCategory = () => {
+        setOpen(!open);
+    }
     interface Category {
         image: string;
         _id: string;
@@ -80,30 +87,37 @@ const CategoriesSlider = () => {
     return (
         <>
 
-            <section className='py-4'>
-                <div className="container">
-                    <div className="w-full">
-                        <Slider {...settings}>
-                            {
-                                category.map((crr) => (
-                                    <div className="">
-                                        <div className="w-full text-center lg:p-10 p-0">
-                                            <figure className='lg:size-16 block lg:mb-5 mb-1 text-center mx-auto size-10 overflow-hidden rounded-full'>
-                                                <img src={base_url_img + crr.image} alt='image' className='  object-contain' />
-                                            </figure>
-                                            <div className="w-full">
-                                                <h2 className='text-black font-bold  lg:text-md text-xs'>{crr.title}</h2>
+            <MobileSidebar open={open} setOpen={setOpen} />
+            <div className="container">
+                <div className="w-full">
+                    <Slider {...settings}>
+                        <div>
+                            <div onClick={handleCategory} className="w-full text-center lg:p-10 p-0">
+                                <figure className='lg:size-16 block lg:mb-5 mb-1 text-center mx-auto size-10 overflow-hidden rounded-full'>
+                                    <img src={categoryimg} alt="" className="max-w-full mx-auto" />
+                                </figure>
+                            </div>
+                        </div>
+                        {
+                            category.map((crr) => (
+                                <div className="">
+                                    <div className="w-full text-center lg:p-10 p-0">
+                                        <figure className='lg:size-16 block lg:mb-5 mb-1 text-center mx-auto size-10 overflow-hidden rounded-full'>
+                                            <img src={base_url_img + crr.image} alt='image' className='  object-contain' />
+                                        </figure>
+                                        <div className="w-full">
+                                            <h2 className='text-black font-bold  lg:text-md text-xs'>{crr.title}</h2>
 
-                                            </div>
                                         </div>
                                     </div>
-                                ))
-                            }
-                        </Slider>
-                    </div>
+                                </div>
+                            ))
+                        }
+                    </Slider>
                 </div>
+            </div>
 
-            </section >
+
         </>
     )
 }

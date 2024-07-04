@@ -59,7 +59,7 @@ const Home = () => {
   }, [])
   return (
     <>
-      <section className='pb-5'>
+      <section className='lg:pb-5 pb-0'>
         <div className="container lg:p-2 p-0">
           <div className="grid lg:grid-cols-12 grid-cols-1 lg:gap-3 gap-0">
             <div className="col-span-2 lg:block hidden">
@@ -74,7 +74,7 @@ const Home = () => {
 
       <section className="">
         <div className="container">
-          <div className="w-full">
+          <div className="w-full lg:block hidden">
             <div className="w-full  mb-3 sectiontitle_parent">
               <h2 className="sectiontitle">Shop By Category</h2>
             </div>
