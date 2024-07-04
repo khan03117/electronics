@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
     const token: string | null = localStorage.getItem('_token');
+
     interface InputEvent {
         target: HTMLInputElement | HTMLSelectElement;
     }
@@ -35,11 +36,44 @@ const Checkout = () => {
         Country: string;
         Pincode: string;
     }
+    interface User {
+        _id: string;
+        name: string;
+        email: string;
+        mobile: string;
+    }
+    interface UserAddress {
+        _id: string;
+        user: string;
+        address: string;
+        city: string;
+        state: string;
+        pincode: string;
+    }
     const [success, setSuccess] = useState<string>('0');
     const [pincode, setPincode] = useState<string>('');
     const [fdata, setFdata] = useState<FormData>({});
     const [errors, setErrors] = useState<Error[]>([]);
     const [location, setLocation] = useState<PostOffice[]>();
+    const [user, setUser] = useState<User>();
+    const [address_id, setAddressId] = useState<string>('')
+
+    const [alladd, setAlladd] = useState<UserAddress[]>([]);
+    const getaddress = async () => {
+        const resp = await axios.get(base_url + 'user/address', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        setAlladd(resp.data.data);
+    }
+
+
+    const getuser = async () => {
+        const udt = await axios.get(base_url + 'user', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        setUser(udt.data.data);
+    }
+
     const handlePincodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPincode(e.target.value);
         const data = { ...fdata };
@@ -58,7 +92,6 @@ const Checkout = () => {
     const setfdata = () => {
         const data = { ...fdata };
         if (location) {
-
             data['state'] = location[0].State;
             data['city'] = location[0].District;
             setFdata(data);
@@ -66,6 +99,8 @@ const Checkout = () => {
     }
     useEffect(() => {
         setfdata();
+        getuser();
+        getaddress();
     }, [location])
     useEffect(() => {
         if (pincode.length == 6) {
@@ -83,6 +118,9 @@ const Checkout = () => {
     }
     const validation = () => {
         const err: ValidationError[] = [];
+        if (!fdata?.name) {
+            err.push({ path: 'name', msg: "Name is required" });
+        }
         if (!fdata?.address) {
             err.push({ path: 'address', msg: "Address is required" });
         }
@@ -107,6 +145,7 @@ const Checkout = () => {
             try {
                 const data = { ...fdata };
                 data['pincode'] = pincode;
+                data['address_id'] = address_id;
                 await axios.post(base_url + 'cart/checkout', data, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 }).then(resp => {
@@ -119,6 +158,42 @@ const Checkout = () => {
             }
         }
     }
+    const handleaddressid = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAddressId(e.target.value);
+    }
+    const setAddressvalue = () => {
+        const found = alladd.find(obj => obj._id == address_id);
+        if (found) {
+            setPincode(found.pincode);
+            let obj = {
+                address: found.address,
+                pincode: found.pincode,
+                state: found.state,
+                city: found.city
+            }
+            const data = { ...fdata, ...obj };
+            setFdata(data);
+        }
+
+    }
+    const setUserdata = () => {
+        if (user) {
+            const obj = {
+                name: user?.name,
+                email: user?.email
+
+            }
+            const data = { ...fdata, ...obj };
+            setFdata(data);
+        }
+
+    }
+    useEffect(() => {
+        setAddressvalue();
+    }, [address_id])
+    useEffect(() => {
+        setUserdata();
+    }, [user])
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -139,13 +214,13 @@ const Checkout = () => {
                                     <div className="lg:col-span-1 col-span-12 mb-5">
                                         <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block' >Enter Name</label>
                                         <div className="flex w-full">
-                                            <input type="text" onChange={handlefdata} name="name" id="name" className="p-2 w-full border border-blue-gray-300" />
+                                            <input type="text" onChange={handlefdata} name="name" id="name" value={fdata?.name ?? user?.name} className="p-2 w-full border border-blue-gray-300" />
                                         </div>
                                     </div>
                                     <div className="lg:col-span-1 col-span-12 mb-5">
                                         <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block' >Enter Email</label>
                                         <div className="flex w-full">
-                                            <input type="text" onChange={handlefdata} name="email" id="email" className="p-2 w-full border border-blue-gray-300" />
+                                            <input type="text" onChange={handlefdata} name="email" id="email" value={fdata?.email ?? user?.email} className="p-2 w-full border border-blue-gray-300" />
                                         </div>
                                     </div>
                                     <div className="col-span-4">
@@ -185,14 +260,14 @@ const Checkout = () => {
                                             {errors.find(obj => obj.path == "state_id")?.msg}
                                         </span>
                                     </div>
-                                    {/* <div className="lg:col-span-1 col-span-12 mb-5">
+                                    <div className="lg:col-span-1 col-span-12 mb-5">
                                         <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Select Mode</label>
-                                        <select title='cod' name="" id="" className="py-2 px-2 w-full outline-none border border-blue-gray-500">
+                                        <select title='payment_mode' name="payment_mode" onChange={handlefdata} id="payment_mode" className="py-2 px-2 w-full outline-none border border-blue-gray-500">
                                             <option value="">---Select---</option>
                                             <option value="Online">Online</option>
                                             <option value="COD">COD</option>
                                         </select>
-                                    </div> */}
+                                    </div>
                                     <div className="lg:col-span-4 col-span-12 mb-5">
                                         <div className="w-full">
                                             <button title='online' onClick={() => checkoutnow('online')} className="px-3 py-2   bg-primary  text-white shadow-md shadow-blue-gray-400">Place Order</button>
@@ -255,12 +330,19 @@ const Checkout = () => {
                                 <div className="w-full mt-5">
                                     <h4 className="text-xl mb-3">Use Saved Address</h4>
                                     <ul className='*:mb-3'>
-                                        <li>
-                                            <div className="w-full rounded-lg text-sm tracking-wider  ">
-                                                <Checkbox className='border border-blue-gray-600' color='red' crossOrigin={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
-                                                H N 89 Street No 8 Main Road Ghaziabad 201102
-                                            </div>
-                                        </li>
+                                        {
+                                            alladd.map((add) => (
+                                                <>
+                                                    <li>
+                                                        <div className="w-full rounded-lg text-sm tracking-wider  ">
+                                                            <Checkbox checked={add._id == address_id} value={add._id} onChange={handleaddressid} className='border border-blue-gray-600' color='red' crossOrigin={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+                                                            {add.address} {add.city} {add.state} {add.pincode}
+                                                        </div>
+                                                    </li>
+                                                </>
+                                            ))
+                                        }
+
 
                                     </ul>
                                 </div>

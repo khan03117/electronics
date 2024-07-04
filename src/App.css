@@ -24,8 +24,8 @@ body {
   width: 50px !important;
   height: 50px !important;
   border-radius: 50% !important;
-  background-color: rgba(255, 0, 0, 0.068) !important;
-  border: 1px solid #bbbbbb !important;
+  background-color: #d1d1d1 !important;
+  /* border: 1px solid #bbbbbb !important; */
 }
 
 .slick-prev {
@@ -45,7 +45,7 @@ body {
 
 .slick-next svg,
 .slick-prev svg {
-  color: #bbbbbb;
+  color: #818181;
   width: 16px;
   height: 16px;
 }

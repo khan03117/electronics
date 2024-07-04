@@ -54,6 +54,30 @@ const SingleProduct: React.FC = () => {
             setProduct(resp.data.data)
         })
     }
+    const getproductincart = async () => {
+        await axios.get(base_url + 'cart/product/' + product?._id, {
+            headers: {
+                'Accept': "application/json",
+                'Content-Type': "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }).then(resp => {
+            const apdta = resp.data.data;
+            const transformedData: Quantity[] = apdta.map((item: { product: any; modal: any; brand: any; quantity: any; price: any; }) => ({
+                product: item.product,
+                modal: item.modal,
+                brand: item.brand,
+                quantity: item.quantity,
+                price: item.price
+            }));
+            setQty(transformedData);
+        })
+    }
+    useEffect(() => {
+        if (product) {
+            getproductincart()
+        }
+    }, [product])
     useEffect(() => {
         getProduct();
     }, [location.pathname]);

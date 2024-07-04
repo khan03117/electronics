@@ -42,6 +42,19 @@ const Cart: React.FC = () => {
 
     const [CartItems, setCartItems] = React.useState<Item[]>([]);
     const [total, setTotal] = useState(0);
+    const [code, setCode] = useState<string>('');
+    const [discount, setDiscount] = useState<number>(0);
+
+    const apply_promo = async () => {
+        const data = await axios.post(base_url + 'cart/apply-promo', { promo_code: code }, {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`, // Ensure the token is set correctly
+            },
+        });
+        console.log(data);
+        setDiscount(data.data.discount);
+    }
     const getcart_items = async () => {
         await axios.get(base_url + 'cart', {
             headers: {
@@ -138,26 +151,42 @@ const Cart: React.FC = () => {
                                                             </td>
                                                             <td>
                                                                 <div className="flex w-full">
-                                                                    <input type="text" placeholder='Enter Promo Code' className="p-2 w-full outline-none border border-primary" />
-                                                                    <button className="bg-primary px-2 text-sm text-white ">Apply</button>
+                                                                    <input onChange={(e) => setCode(e.target.value)} type="text" placeholder='Enter Promo Code' className="p-2 w-full outline-none border border-primary" />
+                                                                    <button onClick={apply_promo} className="bg-primary px-2 text-sm text-white ">Apply</button>
                                                                 </div>
                                                             </td>
                                                         </tr>
+                                                        {
+                                                            discount && (
+                                                                <>
+                                                                    <tr className='*:p-2 *:text-sm'>
+                                                                        <td colSpan={2}>
+                                                                            <div className="w-full block">
+                                                                                <p className="text-green-800">Promo Code applied successfully</p>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </>
+                                                            )
+                                                        }
                                                         <tr className='*:p-2 *:text-sm'>
                                                             <td>
                                                                 Discount
                                                             </td>
                                                             <td>
-                                                                ₹ 0.00
+                                                                ₹ {discount}
+
                                                             </td>
                                                         </tr>
+
+
 
                                                         <tr className='*:p-2 *:text-sm'>
                                                             <td>
                                                                 Net Amount
                                                             </td>
                                                             <td>
-                                                                ₹ {total.toFixed(2)}
+                                                                ₹ {(total - discount).toFixed(2)}
                                                             </td>
                                                         </tr>
                                                     </tbody>
