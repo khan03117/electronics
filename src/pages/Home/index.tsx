@@ -4,7 +4,7 @@ import Banner from './Banner'
 import CategoriesSlider from './CategoriesSlider'
 import SliderComponent from '../../component/SliderComponent'
 import Testimonials from './Testimonials'
-import { RightOutlined } from '@ant-design/icons'
+// import { RightOutlined } from '@ant-design/icons'
 import SectionDevider from '../../component/SectionDevider'
 import { useState } from 'react';
 import axios from 'axios'
@@ -16,6 +16,11 @@ const Home = () => {
     _id: string;
     url: string;
     category: string;
+    categoryDetails: {
+      _id: string;
+      url: string;
+      title: string;
+    };
     product_type: string;
     title: string;
     price: number;
@@ -38,6 +43,7 @@ const Home = () => {
     category: {
       _id: string;
       title: string;
+      url: string;
       products: Product[];
     };
   }
@@ -93,7 +99,7 @@ const Home = () => {
                 </div>
                 <div className="w-full flex justify-between items-center mb-2">
                   <h4 className="md:text-xl text-sm text-primary font-bold">Start from just 99.99 only</h4>
-                  <ViewAll />
+                  <ViewAll url={itm.category.products[0].categoryDetails.url} />
                 </div>
                 <div className="w-full">
                   <SliderComponent products={itm.category.products} />

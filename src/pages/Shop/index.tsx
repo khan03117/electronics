@@ -5,40 +5,21 @@ import { CloseOutlined, DownOutlined, FilterOutlined, PlusOutlined } from "@ant-
 // import Shorting from "./Shorting";
 import { base_url, base_url_img } from "../../utils";
 import axios from "axios";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Banner from "../Home/Banner";
 
 const Shop = () => {
     const location = useLocation();
-    const { url } = useParams();
+    const { url, suburl, burl } = useParams();
+    const navigate = useNavigate();
     const [open, setOpen] = useState('');
     const [filo, setFilO] = useState<boolean>(false);
     const [fshow, setFshow] = useState<boolean>(false);
     const [scategory, setScategory] = useState<string>(url ? url : '');
-    useEffect(() => {
-        setScategory(url ? url : scategory)
-    }, [location.pathname])
-    const [sbrand, setSbrand] = useState<string>('')
-    const [smodal, setSmodal] = useState<string>('')
+
     const [filterby, setFilterBy] = useState<string>('');
     const popupRef = useRef<HTMLDivElement | null>(null);
-    interface Modal {
-        image: string;
-        _id: string;
-        url: string;
-        title: string;
-        modals: {
-            _id: string;
-            url: string;
-            title: string;
-        }[]
-    }
-    interface Brand {
-        image: string;
-        _id: string;
-        url: string;
-        title: string;
-    }
+
     interface MCategory {
         image: string;
         _id: string;
@@ -74,26 +55,63 @@ const Shop = () => {
             products: Product[];
         };
     }
-
+    interface Subcategory {
+        _id: string;
+        url: string;
+        title: string;
+        image: string;
+        category: MCategory
+    }
+    interface Seller {
+        _id: string;
+        title: string;
+        url: string;
+    }
     const [catproducts, setProduct] = useState<CategoryWithProducts[]>([]);
-    const [modals, setModals] = useState<Modal[]>([]);
-    const [brands, setBrands] = useState<Brand[]>([]);
+    const [sellers, setSellers] = useState<Seller[]>([]);
+    const [seller_id, setSellerId] = useState<string>(burl ?? '');
     const [categories, setCategory] = useState<MCategory[]>([]);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
-
+    const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+    const [subcategory_id, setSubcategoryId] = useState<string>(suburl ?? 'null')
+    useEffect(() => {
+        setScategory(url ? url : scategory)
+    }, [location.pathname, categories])
     const getproducts = async () => {
-        await axios.get(base_url + 'product/shop?category_url=' + scategory + '&brand_url=' + sbrand + '&modal_url=' + smodal).then((resp) => {
+        await axios.get(base_url + 'product/shop?category_url=' + scategory + '&seller=' + seller_id + '&subcategory=' + subcategory_id).then((resp) => {
             setProduct(resp.data.data)
         })
     }
-    const getbrands = async () => {
-        await axios.get(base_url + 'brand').then((resp) => {
-            setBrands(resp.data.data)
-        })
+    const getsubcategory = async () => {
+
+        const foundcategory = categories.find(obj => obj.url == scategory);
+        if (foundcategory) {
+            await axios.get(base_url + 'subcategory?category=' + foundcategory._id).then(resp => {
+                setSubcategories(resp.data.data);
+            })
+        }
+
     }
-    const getmodals = async () => {
-        await axios.get(base_url + 'modal').then((resp) => {
-            setModals(resp.data.data)
+    useEffect(() => {
+        getsubcategory();
+    }, [location.pathname, categories, scategory]);
+
+    useEffect(() => {
+        setSubcategoryId('')
+    }, [scategory]);
+
+    useEffect(() => {
+        const found = subcategories.find(obj => obj.url == suburl);
+        if (found) {
+            setSubcategoryId(found._id)
+        }
+
+    }, [subcategories])
+
+
+    const getsellers = async () => {
+        await axios.get(base_url + 'seller').then((resp) => {
+            setSellers(resp.data.data)
         })
     }
     const getcategories = async () => {
@@ -102,31 +120,47 @@ const Shop = () => {
         })
     }
     useEffect(() => {
-        getmodals();
-        getbrands();
+        getsellers();
         getcategories();
+        if (burl) {
+            setSellerId(burl);
+            setScategory('')
+        } else {
+            setSellerId('')
+        }
+        const found = subcategories.find(obj => obj.url == suburl);
+        if (found) {
+            setSubcategoryId(found._id)
+        }
+        setFshow(false);
+
+
 
     }, [location.pathname]);
 
 
     useEffect(() => {
         getproducts();
-    }, [scategory, sbrand, smodal, location.pathname])
+        console.log(seller_id)
+    }, [scategory, subcategory_id, location.pathname, sellers, seller_id,])
     const handlefilter = () => {
         setFilO(prev => !prev);
     }
     const handlescategory = (url: string) => {
         setScategory(url);
-        setSbrand('')
-        setSmodal('')
+        //navigate('/shop/category/' + url);
         setFshow(false)
     }
-    const handlesbrand = (url: string) => {
-        setSbrand(url);
+    const handleSellerId = (url: string) => {
+        setSellerId(url);
         setFshow(false)
     }
-    const handlesmodal = (url: string) => {
-        setSmodal(url);
+    const handleSubcategoryid = (url: string) => {
+        setSubcategoryId(url);
+        const fsubcategory = subcategories.find(obj => obj._id == url);
+        // if (fsubcategory) {
+        //     navigate('/shop/category/' + scategory + '/' + fsubcategory.url);
+        // }
         setFshow(false)
     }
 
@@ -277,10 +311,8 @@ const Shop = () => {
                 )
             }
             {
-
                 <>
-
-                    <div ref={popupRef} className={`fixed text-black overflow-y-auto transition-all duration-300 z-50 h-[70vh] bottom-0 start-0 w-full bg-white rounded-t-3xl ${fshow ? 'translate-y-0' : 'translate-y-[100%]'}`}>
+                    <div ref={popupRef} className={`fixed text-black overflow-y-auto transition-all duration-300 z-50 h-[65vh] bottom-0 start-0 w-full bg-gray-300 pb-10 scroll-pb-10 rounded-t-3xl ${fshow ? 'translate-y-0' : 'translate-y-[100%]'}`}>
                         {
                             filterby.toLowerCase() == "category" && (
                                 <>
@@ -310,29 +342,29 @@ const Shop = () => {
                             )
                         }
                         {
-                            filterby == "Modal" && (
+                            filterby == "Subcategory" && (
                                 <>
                                     <div className="w-full px-4 py-5">
                                         <div className="grid grid-cols-3 gap-5">
                                             <div className="col-span-3"> </div>
                                             {
-                                                modals.map((modl) => (
+                                                subcategories.map((mdl) => (
                                                     <>
                                                         {
-                                                            modl.modals.map((mdl) => (
-                                                                <>
-                                                                    <div onClick={() => handlesmodal(mdl.url)} className="col-span-1">
-                                                                        <div className="w-full border border-blue-gray-100 p-2 h-full rounded-lg bg-white shadow-md shadow-blue-gray-200">
-                                                                            <figure className="w-full">
-                                                                                <img src={base_url_img + modl.image} alt="" className="size-10 mx-auto  rounded-full" />
-                                                                            </figure>
-                                                                            <div className="w-full  mt-4 text-center text-xs">
-                                                                                {mdl.title}
-                                                                            </div>
-                                                                        </div>
+
+
+                                                            <div onClick={() => handleSubcategoryid(mdl._id)} className="col-span-1">
+                                                                <div className="w-full border border-blue-gray-100 p-2 h-full rounded-lg bg-white shadow-md shadow-blue-gray-200">
+                                                                    <figure className="w-full">
+                                                                        <img src={base_url_img + mdl.image} alt="" className="size-10 mx-auto  rounded-full" />
+                                                                    </figure>
+                                                                    <div className="w-full  mt-4 text-center text-xs">
+                                                                        {mdl.title}
                                                                     </div>
-                                                                </>
-                                                            ))
+                                                                </div>
+                                                            </div>
+
+
                                                         }
 
                                                     </>
@@ -350,19 +382,16 @@ const Shop = () => {
                                         <div className="grid grid-cols-3 gap-5">
                                             <div className="col-span-3"> </div>
                                             {
-                                                brands.map((modl) => (
+                                                sellers.map((modl) => (
                                                     <>
 
-                                                        <div onClick={() => handlesbrand(modl.url)} className="col-span-1">
+                                                        <button onClick={() => handleSellerId(modl.url)} className="col-span-1">
                                                             <div className="w-full border border-blue-gray-100 p-2 h-full rounded-lg bg-white shadow-md shadow-blue-gray-200">
-                                                                <figure className="w-full">
-                                                                    <img src={base_url_img + modl.image} alt="" className="size-10 mx-auto  rounded-full" />
-                                                                </figure>
                                                                 <div className="w-full  mt-4 text-center text-xs">
                                                                     {modl.title}
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </button>
 
 
                                                     </>
@@ -383,6 +412,10 @@ const Shop = () => {
                 </div>
             </section>
 
+
+
+
+
             <section id="productitem" className="md:py-10 py-5">
                 <div className="container mx-auto">
                     <div className="grid lg:grid-cols-5 grid-cols-1">
@@ -392,23 +425,38 @@ const Shop = () => {
                                 {filterdiv}
                             </div>
                             <div className="md:hidden block mb-5">
-                                <div className="grid grid-cols-2">
+                                <div className="grid grid-cols-4">
                                     <div className="col-span-1">
                                         <button>
                                             &#8645; Sort
                                         </button>
                                     </div>
+
+                                    <div className="col-span-1 text-end ">
+                                        <button onClick={() => hanlePopup('Category')} className="text-end text-xs">
+                                            Category <DownOutlined className="text-xs" />
+                                        </button>
+                                    </div>
                                     {
-                                        ['Category'].map((it) => (
+                                        subcategories.length > 0 && (
                                             <>
                                                 <div className="col-span-1 text-end ">
-                                                    <button onClick={() => hanlePopup(it)} className="text-end text-sm">
-                                                        {it} <DownOutlined className="text-xs" />
+                                                    <button onClick={() => hanlePopup('Subcategory')} className="text-end text-xs">
+                                                        Product <DownOutlined className="text-xs" />
                                                     </button>
                                                 </div>
                                             </>
-                                        ))
+                                        )
                                     }
+
+                                    <div className="col-span-1 text-end ">
+                                        <button onClick={() => hanlePopup('Brand')} className="text-end text-xs">
+                                            Brand <DownOutlined className="text-xs" />
+                                        </button>
+                                    </div>
+
+
+
 
                                 </div>
                             </div>
