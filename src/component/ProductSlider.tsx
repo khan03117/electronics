@@ -43,7 +43,7 @@ const ProductSlider: React.FC<{ product: Product }> = ({ product }) => {
 
   return (
     <>
-      <Link to={'/single-product/' + product.url} className="w-full block productbox relative lg:pt-5  lg:shadow-lg shadow-sm border border-primary/20 pt-4 shadow-blue-gray-500  rounded-xl ">
+      <Link to={'/single-product/' + product.url} className="w-full block productbox relative lg:pt-5  lg:shadow-lg shadow-sm border border-primary/20  shadow-blue-gray-500  rounded-xl ">
         <div className="absolute shopincon z-10 *:size-10 *:shadow-md *:shadow-blue-gray-400 *:bg-white *:text-center *:rounded-full *:leading-10 flex w-10 flex-col gap-5 top-20 end-3">
           <a className='quicklink'>
             <HeartOutlined />
@@ -56,9 +56,9 @@ const ProductSlider: React.FC<{ product: Product }> = ({ product }) => {
           </a>
         </div>
         <figure className="w-full">
-          <img src={base_url_img + product.images[0]} alt="" className="w-full lg:h-48 h-20 object-contain" />
+          <img src={base_url_img + product.images[0]} alt="" className="w-full" />
         </figure>
-        <div className="w-full px-5 py-4 text-center">
+        <div className="w-full lg:px-5 px-1 py-4 text-center">
           <h4 className="md:text-[1.2rem] text-md md:mb-4 mb-1 font-bold truncate">{product.title}</h4>
 
           <p className="text-primary lg:text-lg text-sm md:mb-5 mb-2  productPrice">

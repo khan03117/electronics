@@ -3,12 +3,13 @@ import { Link, useParams } from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { CloseOutlined, MinusOutlined, PlusOutlined, StarFilled } from '@ant-design/icons';
+import { HeartOutlined, MinusOutlined, PlusOutlined, StarFilled } from '@ant-design/icons';
 import Specification from './Specification';
 import Reviews from './Reviews';
 import axios from 'axios';
 import { base_url, base_url_img } from '../../utils';
 import Swal from 'sweetalert2';
+import SimilarProducts from './SimilarProducts';
 
 
 const SingleProduct: React.FC = () => {
@@ -22,7 +23,11 @@ const SingleProduct: React.FC = () => {
     }
     interface Product {
         _id: string;
-        category: string;
+        category: {
+            _id: string;
+            url: string;
+            title: string;
+        };
         product_type: string;
         title: string;
         price: number;
@@ -173,58 +178,15 @@ const SingleProduct: React.FC = () => {
     return (
         <>
 
-            {
-                open && (
-                    <>
-                        <div className="fixed top-0 end-0 w-full backdrop-blur-sm h-full bg-black/30 z-[9999]">
-                            <div className="absolute p-4 lg:w-96 w-full h-full end-0 top-0 bg-white">
-                                <div className="w-full *:shadow-sm *:shadow-blue-gray-600 *:rounded-md ">
-                                    <div className="w-full mb-4">
-                                        <div className="w-full flex relative ">
-                                            <button title='Close button' type='button' className="size-4 bg-black/50 leading-2   text-white text-xs absolute -top-2 -end-2 rounded-full">
-                                                <CloseOutlined />
-                                            </button>
-                                            <div className="size-16">
-                                                <img src={'fadsfads'} alt="" className="w-full h-full object-cover" />
-                                            </div>
-                                            <div className="w-[calc(100%-5rem)] p-2">
-                                                <h4 className="text-sm font-semibold">
-                                                    Realme Note 4 Cover guard
-                                                </h4>
-                                                <p className='flex justify-between text-xs text-blue-gray-500'>
-                                                    <span>
-                                                        Qty :4
-                                                    </span>
-                                                    <span>
-                                                        ₹ 599.99
-                                                    </span>
-                                                </p>
 
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div className="w-full absolute bottom-0 start-0 bg-gray-200 mt-4 pt-4 pb-3 shadow-lg shadow-blue-gray-500 px-4">
-                                    <h4 className="text-lg">Subtotal : ₹ 2999.99</h4>
-                                    <div className="flex gap-4">
-                                        <Link to={'/checkout'} className="w-full bg-orange-500 text-white py-2 rounded px-3 text-center uppercase tracking-widest text-sm">Checkout</Link>
-                                        <button type='button' onClick={() => setOpen(false)} className='w-full bg-blue-gray-900 rounded text-white py-2 uppercase tracking-widest text-sm'>Continue</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </>
-                )
-            }
             <section className="lg:py-10 py-4" id="singleproduct">
                 <div className="container mx-auto">
                     <div className="grid lg:grid-cols-8 grid-cols-1 lg:gap-5 gap-6">
                         <div className="md:col-span-4 col-span-5">
                             <div className="w-full">
-                                <div className="grid lg:grid-cols-6 grid-cols-6 gap-6">
+                                <div className="grid lg:grid-cols-6 grid-cols-6 lg:gap-6 gap-2">
 
-                                    <div className="lg:col-span-5 md:order-2 order-1 col-span-6 lg:pb-4 pb-10">
+                                    <div className="lg:col-span-5 md:order-2 order-1 col-span-6 lg:pb-4 pb-0">
                                         <Slider  {...settingsFor} className='slider-for'>
                                             {
                                                 product?.images.map((itm) => (
@@ -243,7 +205,7 @@ const SingleProduct: React.FC = () => {
                             </div>
                         </div>
                         <div className="md:col-span-4 col-span-5">
-                            <div className="w-full md:mt-0 mt-20">
+                            <div className="w-full md:mt-0 mt-10">
                                 <h1 className="productname lg:text-[2rem] font-bold text-[18px] mb-4">{product?.title}</h1>
                                 <div className="pricebox">
 
@@ -253,15 +215,18 @@ const SingleProduct: React.FC = () => {
                                     {/* <span className="oldprice ms-1 strike relative line-through">  </span> */}
 
                                 </div>
-                                <div className="w-full pb-4 border-b border-blue-gray-200">
+                                <div className="w-full pb-4 border-b border-blue-gray-200 relative">
                                     <span className="text-xs text-blue-gray-500 block">Inclusive of all taxes</span>
                                     <div className="flex text-orange-500 items-center">
                                         <StarFilled />
                                         <StarFilled />
                                         <StarFilled />
                                         <StarFilled />
-                                        <StarFilled /> (42)
+                                        <StarFilled />
                                     </div>
+                                    <button title='Wishlist' className='text-primary absolute end-0 top-0 text-2xl'>
+                                        <HeartOutlined />
+                                    </button>
                                 </div>
                                 <div className="w-full">
                                     <p className='text-sm font-bold'>
@@ -342,6 +307,13 @@ const SingleProduct: React.FC = () => {
                             s_section == "reviews" && (
                                 <>
                                     <Reviews />
+                                </>
+                            )
+                        }
+                        {
+                            s_section == "similar" && (
+                                <>
+                                    <SimilarProducts category_url={product?.category.url} />
                                 </>
                             )
                         }

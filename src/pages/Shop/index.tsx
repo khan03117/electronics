@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useState } from "react"
 import ProductSlider from "../../component/ProductSlider"
 import { Checkbox, Collapse } from "@material-tailwind/react";
 import { CloseOutlined, DownOutlined, FilterOutlined, PlusOutlined } from "@ant-design/icons";
-import Shorting from "./Shorting";
+// import Shorting from "./Shorting";
 import { base_url, base_url_img } from "../../utils";
 import axios from "axios";
 import { Link, useLocation, useParams } from "react-router-dom";
+import Banner from "../Home/Banner";
 
 const Shop = () => {
     const location = useLocation();
@@ -376,18 +377,12 @@ const Shop = () => {
                 </>
 
             }
-            <section id='shopbanner' className='lg:py-20 py-5'>
+            <section >
                 <div className="container mx-auto">
-                    <div className="grid lg:grid-cols-1">
-                        <div className="col-span-1">
-                            <div className="w-full text-center">
-                                <h1 className='text-white sectiontitle'>Products</h1>
-                                <p className='text-sm text-white'>Home / products</p>
-                            </div>
-                        </div>
-                    </div>
+                    <Banner type="Product" />
                 </div>
             </section>
+
             <section id="productitem" className="md:py-10 py-5">
                 <div className="container mx-auto">
                     <div className="grid lg:grid-cols-5 grid-cols-1">

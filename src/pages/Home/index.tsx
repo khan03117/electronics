@@ -66,7 +66,7 @@ const Home = () => {
               <Categories />
             </div>
             <div className="lg:col-span-10  col-span-12">
-              <Banner />
+              <Banner type='Banner' />
             </div>
           </div>
         </div>
@@ -110,7 +110,7 @@ const Home = () => {
             <h2 className="sectiontitle">Shop By Brand</h2>
           </div>
           <div className="w-full">
-            <Banner />
+            <Banner type='CTA' />
           </div>
         </div>
       </section>

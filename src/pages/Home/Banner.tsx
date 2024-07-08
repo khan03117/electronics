@@ -5,8 +5,10 @@ import "slick-carousel/slick/slick-theme.css";
 import axios from 'axios';
 import { base_url, base_url_img } from '../../utils';
 
-
-const Banner = () => {
+interface Prop {
+    type: string;
+}
+const Banner: React.FC<Prop> = ({ type }) => {
     interface Banner {
         image: string;
         _id: string;
@@ -15,7 +17,7 @@ const Banner = () => {
     }
     const [banner, setData] = React.useState<Banner[]>([]);
     const getcategories = async () => {
-        await axios.get(base_url + 'banner').then(resp => {
+        await axios.get(base_url + 'banner?type=' + type).then(resp => {
             setData(resp.data.data)
         })
     }

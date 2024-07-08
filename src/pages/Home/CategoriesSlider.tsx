@@ -91,16 +91,20 @@ const CategoriesSlider = () => {
             <div className="container">
                 <div className="w-full">
                     <Slider {...settings}>
-                        <div>
+                        <div className='lg:hidden block'>
                             <div onClick={handleCategory} className="w-full text-center lg:p-10 p-0">
                                 <figure className='lg:size-16 block lg:mb-5 mb-1 text-center mx-auto size-10 overflow-hidden rounded-full'>
                                     <img src={categoryimg} alt="" className="max-w-full mx-auto" />
                                 </figure>
+                                <div className="w-full">
+                                    <h2 className='text-black font-bold  lg:text-md text-xs'>Categories</h2>
+
+                                </div>
                             </div>
                         </div>
                         {
                             category.map((crr) => (
-                                <div className="">
+                                <Link to={'/shop/category/' + crr.url} className="block">
                                     <div className="w-full text-center lg:p-10 p-0">
                                         <figure className='lg:size-16 block lg:mb-5 mb-1 text-center mx-auto size-10 overflow-hidden rounded-full'>
                                             <img src={base_url_img + crr.image} alt='image' className='  object-contain' />
@@ -110,7 +114,7 @@ const CategoriesSlider = () => {
 
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             ))
                         }
                     </Slider>

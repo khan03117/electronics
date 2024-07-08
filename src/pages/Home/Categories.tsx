@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 // @ts-ignore
 import hpimage from '../../assets/hp.png'
 import axios from 'axios'
-import { base_url } from '../../utils'
+import { base_url, base_url_img } from '../../utils'
 
 const Categories = () => {
     interface Category {
@@ -37,8 +37,8 @@ const Categories = () => {
                             category.map((cat) => (
                                 <>
                                     <li>
-                                        <Link to={'/'} className='w-full  mb-3 py-2 px-4 rounded-md flex gap-4 items-center'>
-                                            <img src={hpimage} alt="" className="text-sm font-bold" />
+                                        <Link to={'/shop/category/' + cat.url} className='w-full  mb-3 py-2 px-4 rounded-md flex gap-4 items-center'>
+                                            <img src={base_url_img + cat.image} alt="" className="text-sm size-6 object-contain font-bold" />
                                             <span className=''>
                                                 {cat.title}
                                             </span>

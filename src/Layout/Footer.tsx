@@ -85,7 +85,7 @@ const Footer = () => {
 
         </div>
       </section>
-      <section className="footersection py-20 bg-gray-900 text-white">
+      <section className="footersection lg:py-20 py-5 bg-gray-900 text-white">
         <div className="container">
           <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2">
             <div className="lg:col-span-1 col-span-2">
