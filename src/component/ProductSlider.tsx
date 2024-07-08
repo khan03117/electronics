@@ -55,8 +55,8 @@ const ProductSlider: React.FC<{ product: Product }> = ({ product }) => {
             <EyeOutlined />
           </a>
         </div>
-        <figure className="w-full">
-          <img src={base_url_img + product.images[0]} alt="" className="w-full" />
+        <figure className="w-full lg:h-32 overflow-hidden">
+          <img src={base_url_img + product.images[0]} alt="" className="w-full h-full" />
         </figure>
         <div className="w-full lg:px-5 px-1 py-4 text-center">
           <h4 className="md:text-[1.2rem] text-md md:mb-4 mb-1 font-bold truncate">{product.title}</h4>
