@@ -213,5 +213,7 @@ div:where(.swal2-container) {
 
   #singleproduct .slick-dots {
     bottom: -58px;
+    text-wrap: nowrap;
+    overflow-y: auto;
   }
 }

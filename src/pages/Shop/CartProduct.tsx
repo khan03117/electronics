@@ -42,7 +42,7 @@ interface CartProductProps {
 const CartProduct: React.FC<CartProductProps> = ({ item, deleteitem }) => {
     return (
         <>
-            <Link to={'/single-product/' + item.product.url} className="w-full h-full block productbox relative lg:pt-5  lg:shadow-lg shadow-sm border border-primary/20 pt-4 shadow-blue-gray-500  rounded-xl ">
+            <button className="w-full h-full block productbox relative lg:pt-5  lg:shadow-lg shadow-sm border border-primary/20 pt-4 shadow-blue-gray-500  rounded-xl ">
 
                 <figure className="w-full">
                     <img src={base_url_img + item.product.images[0]} alt="" className="w-full lg:h-28 h-20 object-contain" />
@@ -86,13 +86,13 @@ const CartProduct: React.FC<CartProductProps> = ({ item, deleteitem }) => {
 
                 </div>
                 <div className="w-full mt-4">
-                    <div className="w-1/2 mx-auto border-t border-blue-gray-800 py-4">
-                        <button onClick={() => deleteitem()} className="w-full text-xs bg-primary rounded-md shadow-md shadow-blue-gray-300 text-white py-1">
+                    <div className="w-1/2 mx-auto border-t border-blue-gray-800 py-4 relative">
+                        <button onClick={() => deleteitem()} className="w-full relative z-50 text-xs bg-primary rounded-md shadow-md shadow-blue-gray-300 text-white py-1">
                             Remove
                         </button>
                     </div>
                 </div>
-            </Link>
+            </button>
         </>
     )
 }

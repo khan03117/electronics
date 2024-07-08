@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Reviews = () => {
+const Wishlist = () => {
     return (
         <>
             <section>
                 <div className="container">
-                    <div className="grid grid-cols-4">
+                    <div className="w-full">
 
                     </div>
                 </div>
@@ -14,4 +14,4 @@ const Reviews = () => {
     )
 }
 
-export default Reviews
+export default Wishlist
