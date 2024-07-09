@@ -13,6 +13,7 @@ import About from './pages/about'
 import Testimonial from './pages/Testimonial'
 import Polcy from './Layout/Polcy'
 import Wishlist from './pages/Shop/Wishlist'
+import Faq from './pages/contact/Faq'
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
           <Route path='/shop/brand/:burl' element={<Shop />} />
 
           <Route path='/policy/:url' element={<Polcy />} />
+          <Route path='/faq' element={<Faq />} />
         </Route>
       </>
     )
