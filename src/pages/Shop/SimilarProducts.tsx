@@ -24,6 +24,7 @@ const SimilarProducts: React.FC<Prop> = ({ category_url }) => {
         product_type: string;
         title: string;
         price: number;
+        mrp: number;
         images: string[];
         modals: {
             brand: string;

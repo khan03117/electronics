@@ -10,6 +10,7 @@ import axios from 'axios';
 import { base_url, base_url_img } from '../../utils';
 import Swal from 'sweetalert2';
 import SimilarProducts from './SimilarProducts';
+import SectionTitle from '../../component/SectionTitle';
 
 
 const SingleProduct: React.FC = () => {
@@ -31,6 +32,7 @@ const SingleProduct: React.FC = () => {
         product_type: string;
         title: string;
         price: number;
+        mrp: number;
         images: string[];
         modals: {
             brand: Brand;
@@ -45,6 +47,17 @@ const SingleProduct: React.FC = () => {
         updatedAt: string;
         __v: number;
     }
+    interface ProductDiscount {
+        _id: string;
+        product: string;
+        start_at: string;
+        end_at: string;
+        discount_percent: number;
+        is_Active: boolean;
+        createdAt: string;
+        updatedAt: string;
+        __v: number;
+    }
     const { id } = useParams();
     const token: string | null = localStorage.getItem('_token') ?? null;
 
@@ -55,9 +68,11 @@ const SingleProduct: React.FC = () => {
     const [product, setProduct] = useState<Product>();
     const [copen, setCopen] = useState<boolean>(false);
     const [wishlist, setWishlist] = useState<boolean>(false);
+    const [discount, setDiscount] = useState<ProductDiscount>()
     const getProduct = async () => {
         await axios.get(base_url + 'product/show/' + id).then(resp => {
-            setProduct(resp.data.data)
+            setProduct(resp.data.data);
+            setDiscount(resp.data.offer)
         })
     }
     const checkwishlist = async () => {
@@ -205,7 +220,8 @@ const SingleProduct: React.FC = () => {
 
 
     }
-
+    const discountvalue = discount ? discount.discount_percent * 0.01 : 0;
+    const price = product?.price ?? 0;
     return (
         <>
 
@@ -238,12 +254,26 @@ const SingleProduct: React.FC = () => {
                         <div className="md:col-span-4 col-span-5">
                             <div className="w-full md:mt-0 mt-10">
                                 <h1 className="productname lg:text-[2rem] font-bold text-[18px] mb-4">{product?.title}</h1>
-                                <div className="pricebox">
+                                <div className="pricebox flex justify-between ">
+                                    <div className="w-3/4">
+                                        <span className="text-red-600 price">
+                                            ₹ {(price * (1 - discountvalue)).toFixed(2)}
+                                        </span>
+                                        <span className="oldprice text-gray-700 ms-1 strike relative line-through">
+                                            ₹ {discountvalue > 0 ? price : product?.mrp}
+                                        </span>
 
-                                    <span className="text-red-600 price">
-                                        ₹ {product?.price.toFixed(2)}
-                                    </span>
-                                    {/* <span className="oldprice ms-1 strike relative line-through">  </span> */}
+                                    </div>
+                                    {
+                                        discountvalue > 0 && (
+                                            <>
+                                                <div className="inline-block  text-wrap  text-center text-md border border-primary rounded text-primary  px-2 ">
+                                                    {discountvalue * 100} % off
+                                                </div>
+                                            </>
+                                        )
+                                    }
+
 
                                 </div>
                                 <div className="w-full pb-4 border-b border-blue-gray-200 relative">
@@ -324,9 +354,7 @@ const SingleProduct: React.FC = () => {
                         <button type='button' className={`${s_section == 'reviews' ? 'bg-primary text-white' : ''}`} onClick={() => setSection('reviews')}>
                             Reviews
                         </button>
-                        <button type='button' className={`${s_section == 'similar' ? 'bg-primary text-white' : ''}`} onClick={() => setSection('similar')}>
-                            Similar Product
-                        </button>
+
                     </div>
                     <div className="w-full my-5">
                         {
@@ -351,8 +379,9 @@ const SingleProduct: React.FC = () => {
                             )
                         }
                         {
-                            s_section == "similar" && (
+                            (
                                 <>
+                                    <SectionTitle title='Related Products' />
                                     <SimilarProducts category_url={product?.category.url} />
                                 </>
                             )

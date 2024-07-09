@@ -9,6 +9,7 @@ interface Product {
     product_type: string;
     title: string;
     price: number;
+    mrp: number;
     images: string[];
     modals: {
         brand: string;
@@ -75,7 +76,7 @@ const SliderComponent: React.FC<{ products: Product[] }> = ({ products }) => {
                     [...products].map((itm) => (
                         <>
                             <div className="lg:p-4 p-1">
-                                <ProductSlider product={itm} />
+                                <ProductSlider product={itm} offer={{ discount_percent: 0 }} />
                             </div>
 
                         </>

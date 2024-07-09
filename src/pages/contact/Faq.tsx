@@ -6,6 +6,7 @@ import {
 } from "@material-tailwind/react";
 import axios from 'axios';
 import { base_url } from '../../utils';
+import SectionTitle from '../../component/SectionTitle';
 const Faq = () => {
     interface FAQ {
         _id: string;
@@ -17,7 +18,8 @@ const Faq = () => {
     const handleOpen = (value: number) => setOpen(open === value ? 0 : value);
     const getdata = async () => {
         await axios.get(base_url + 'faq').then(resp => {
-            setFaq(resp.data);
+            setFaq(resp.data.data);
+
         })
     }
 
@@ -26,8 +28,11 @@ const Faq = () => {
     }, [])
     return (
         <>
-            <section>
-                <div className="container">
+            <section className='py-10'>
+                <div className=" lg:w-1/2 mx-auto px-10 w-full">
+                    <div className="w-full mb-10">
+                        <SectionTitle title="Faq's" />
+                    </div>
                     {
                         faqs.length > 0 && faqs.map((faq, index) => (
                             <>

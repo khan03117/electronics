@@ -24,6 +24,7 @@ const Home = () => {
     product_type: string;
     title: string;
     price: number;
+    mrp: number;
     images: string[];
     modals: {
       brand: string;
@@ -111,8 +112,8 @@ const Home = () => {
         ))
       }
       <section className="md:py-10 py-1">
-        <div className="container">
-          <div className="w-full  mb-3 sectiontitle_parent">
+        <div className="w-full">
+          <div className="w-full  mb-3 sectiontitle_parent px-5">
             <h2 className="sectiontitle">Shop By Brand</h2>
           </div>
           <div className="w-full">

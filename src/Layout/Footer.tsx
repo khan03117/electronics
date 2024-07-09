@@ -1,7 +1,7 @@
 import { FacebookFilled, HeartOutlined, HomeFilled, HomeOutlined, InstagramFilled, PhoneFilled, RedEnvelopeFilled, ShopOutlined, ShoppingCartOutlined, TwitterSquareFilled, WhatsAppOutlined } from '@ant-design/icons'
 //@ts-ignore
 import logo from '../assets/logo.png'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import React, { useState } from 'react'
 import axios from 'axios'
 import { base_url } from '../utils'
@@ -20,7 +20,7 @@ const Footer = () => {
   }
   const [policies, setPolicies] = React.useState<Policy[]>([]);
   const [medias, setMedias] = useState<Media[]>([]);
-
+  const location = useLocation();
   const getdata = async () => {
     const resp = await axios.get(base_url + 'policy');
     setPolicies(resp.data.data);
@@ -43,21 +43,21 @@ const Footer = () => {
       <section className="fixed fixednavbar w-full pe-5  bg-gray-100 *:relative *:text-sm *:text-center  z-50 bottom-0 start-0 lg:hidden block pb-0 pt-0 *:mt-1 px-4 ">
 
         <div className="flex justify-between *:relative w-full relative">
-          <Link to={'/'} className='active'>
+          <Link to={'/'} className={`${location.pathname == "/" ? 'active' : ''}`}>
             <p>
               <HomeOutlined />
             </p>
             <p>Home</p>
 
           </Link>
-          <Link to={'/shop'}>
+          <Link to={'/shop'} className={`${location.pathname == "/shop" ? 'active' : ''}`}>
             <p>
               <ShopOutlined />
             </p>
             <p>Shop</p>
 
           </Link>
-          <Link to={'/wishlist'}>
+          <Link to={'/wishlist'} className={`${location.pathname == "/wishlist" ? 'active' : ''}`}>
             <div className="absolute hidden size-5 rounded-full bg-primary text-white text-xs -end-0 -top-3">1</div>
             <p>
               <HeartOutlined />
@@ -66,7 +66,7 @@ const Footer = () => {
             <p>Wishlist</p>
 
           </Link>
-          <Link to={'/cart'}>
+          <Link to={'/cart'} className={`${location.pathname == "/cart" ? 'active' : ''}`}>
             {/* <div className="absolute size-5 rounded-full bg-primary text-white text-xs -end-1 -top-3">1</div> */}
 
             <p>
@@ -75,11 +75,11 @@ const Footer = () => {
             <p>Cart</p>
 
           </Link>
-          <Link to={`https://wa.me/${medias.find(obj => obj.title == "Whatsapp")?.media_value}?text=I'm%20interested%20in%20your%20car%20for%20sale`}>
-            <p >
-              <WhatsAppOutlined className='text-green-700' />
+          <Link className='text-green-900' to={`https://wa.me/${medias.find(obj => obj.title == "Whatsapp")?.media_value}?text=I'm%20interested%20in%20your%20car%20for%20sale`}>
+            <p className='text-green-900'>
+              <WhatsAppOutlined className='text-green-800' />
             </p>
-            <p>Contact</p>
+            <p className='text-green-900'>Contact</p>
 
           </Link>
 
@@ -172,10 +172,7 @@ const Footer = () => {
             </div>
             <div className="lg:col-span-1 col-span-2">
               <h4 className="mb-">Follow Us</h4>
-              <div className="flex">
-                <input type="text" name="" id="" className="w-full outline-none px-4 py-2 border border-blue-gray-200" />
-                <button className="bg-blue-gray-700 px-4 py-2 text-sm text-white">Subscribe</button>
-              </div>
+
               <div className="flex *:size-10 *:text-lg *:text-center *:leading-10 *:rounded-full gap-3  mt-10">
                 {
                   medias.find(obj => obj.title == "Facebook") && (

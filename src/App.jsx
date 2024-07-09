@@ -14,6 +14,7 @@ import Testimonial from './pages/Testimonial'
 import Polcy from './Layout/Polcy'
 import Wishlist from './pages/Shop/Wishlist'
 import Faq from './pages/contact/Faq'
+import Offers from './pages/Shop/Offers'
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
 
           <Route path='/policy/:url' element={<Polcy />} />
           <Route path='/faq' element={<Faq />} />
+          <Route path='/offers' element={<Offers />} />
         </Route>
       </>
     )

@@ -33,6 +33,7 @@ const Shop = () => {
         product_type: string;
         title: string;
         price: number;
+        mrp: number;
         images: string[];
         modals: {
             brand: string;
@@ -489,7 +490,7 @@ const Shop = () => {
                                         allProducts.map((pdt) => (
                                             <>
                                                 <div className="col-span-1">
-                                                    <ProductSlider product={pdt} />
+                                                    <ProductSlider product={pdt} offer={{ discount_percent: 0 }} />
                                                 </div>
 
                                             </>

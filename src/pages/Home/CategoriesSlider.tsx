@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-//@ts-ignore
-import mobileimg from '../../assets/mobileimg.png'
-//@ts-ignore
-import smtv from '../../assets/smart-tv.png'
-//@ts-ignore
-import comp from '../../assets/computer.png'
+
 //@ts-ignore
 import categoryimg from '../../assets/application.png'
+//@ts-ignore
+import offerimg from '../../assets/gift.png';
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -91,17 +89,26 @@ const CategoriesSlider = () => {
             <div className="container">
                 <div className="w-full">
                     <Slider {...settings}>
-                        <div className='lg:hidden block'>
+                        <div className=' block'>
                             <div onClick={handleCategory} className="w-full text-center lg:p-10 p-0">
                                 <figure className='lg:size-16 block lg:mb-5 mb-1 text-center mx-auto size-10 overflow-hidden rounded-full'>
                                     <img src={categoryimg} alt="" className="max-w-full mx-auto" />
                                 </figure>
                                 <div className="w-full">
                                     <h2 className='text-black font-bold  lg:text-md text-xs'>Categories</h2>
-
                                 </div>
                             </div>
                         </div>
+                        <Link to={'/offers'} className=' block'>
+                            <div className="w-full text-center lg:p-10 p-0">
+                                <figure className='lg:size-16 block lg:mb-5 mb-1 text-center mx-auto size-10 overflow-hidden rounded-full'>
+                                    <img src={offerimg} alt="" className="max-w-full mx-auto" />
+                                </figure>
+                                <div className="w-full">
+                                    <h2 className='text-black font-bold  lg:text-md text-xs'>Offer zone</h2>
+                                </div>
+                            </div>
+                        </Link>
                         {
                             category.map((crr) => (
                                 <Link to={'/shop/category/' + crr.url} className="block">

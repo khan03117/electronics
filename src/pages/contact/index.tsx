@@ -57,8 +57,6 @@ const Contact = () => {
             </section>
             <section id="contactdata">
                 <div className="container mx-auto">
-
-
                     <div className="grid lg:grid-cols-3 grid-cols-1 gap-5 contactformdata">
                         <div className="col-span-3 mb-4">
                             <div className="text-center">

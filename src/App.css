@@ -142,7 +142,7 @@ body {
 }
 
 #banner .slick-dots {
-  bottom: 25px !important;
+  bottom: 0 !important;
   max-width: 100%;
   overflow-x: auto;
   text-wrap: nowrap;
@@ -196,7 +196,7 @@ div:where(.swal2-container) {
 
     height: 18px;
     width: 18px;
-    color: #000;
+
   }
 
   .fixednavbar a p {

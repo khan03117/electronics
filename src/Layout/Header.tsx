@@ -92,7 +92,6 @@ const Header = () => {
                     if (resp.data.success == "1") {
                         localStorage.setItem('_token', resp.data.data);
                         setStep('3');
-
                         setOpen(false);
                         window.location.reload();
                     }

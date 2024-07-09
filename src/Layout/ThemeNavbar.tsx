@@ -48,7 +48,7 @@ const ThemeNavbar = () => {
                     </Link>
                 </li>
                 <li className="p-1  font-medium" >
-                    <Link to={'/'} className="flex items-center hover:text-blue-500 transition-colors">
+                    <Link to={'/faq'} className="flex items-center hover:text-blue-500 transition-colors">
                         Faq's
                     </Link>
                 </li>
@@ -119,7 +119,7 @@ const ThemeNavbar = () => {
                                             <MenuList placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                                                 <MenuItem placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                                                     <Link to={'/orders'}>
-                                                        <OrderedListOutlined /> 
+                                                        <OrderedListOutlined />
                                                         <span className="ms-2">Orders</span>
                                                     </Link>
                                                 </MenuItem>

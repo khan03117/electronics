@@ -20,6 +20,7 @@ const Wishlist: React.FC = () => {
         product_type: string;
         title: string;
         price: number;
+        mrp: number;
         images: string[];
         modals: Modal[];
         description: string;
@@ -29,8 +30,8 @@ const Wishlist: React.FC = () => {
         __v: number;
     }
     interface Prop {
-        user : string;
-        product : Product;
+        user: string;
+        product: Product;
     }
     const [wishlist, setWishlist] = React.useState<Prop[]>([]);
     const token: string | null = localStorage.getItem('_token') ?? null;
@@ -52,19 +53,19 @@ const Wishlist: React.FC = () => {
         <>
             <section className='lg:py-10 py-5'>
                 <div className="container">
-                <div className="w-full">
+                    <div className="w-full">
                         <h2 className="sectiontitle">
                             My Wishlist
                         </h2>
                     </div>
-                    
+
                     <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-4 gap-2">
                         {
                             wishlist.map((item) => {
                                 return (
                                     <div className="col-span-1">
-                                     
-                                        <ProductSlider product={item.product} />
+
+                                        <ProductSlider product={item.product} offer={{ discount_percent: 0 }} />
                                     </div>
 
                                 )

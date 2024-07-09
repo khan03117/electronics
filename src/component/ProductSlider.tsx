@@ -29,6 +29,7 @@ interface Product {
   product_type: string;
   title: string;
   price: number;
+  mrp: number;
   images: string[];
   modals: Modal[];
   description: string;
@@ -37,24 +38,33 @@ interface Product {
   updatedAt: string;
   __v: number;
 }
+interface Offer {
+  discount_percent: number | undefined,
+}
+interface Prop {
+  product: Product,
+  offer: Offer
+}
 
 
-const ProductSlider: React.FC<{ product: Product }> = ({ product }) => {
-  const image =   (product.images && product.images.length > 0) ? product.images[0] : '';
+const ProductSlider: React.FC<Prop> = ({ product, offer }) => {
+  const image = (product.images && product.images.length > 0) ? product.images[0] : '';
+  const offertag = (offer.discount_percent && offer.discount_percent > 0) ? offer.discount_percent : false;
+  const discount = (offer.discount_percent && offer.discount_percent > 0) ? offer.discount_percent * 0.01 : 0;
   return (
     <>
-      <Link to={'/single-product/' + product.url} className="w-full block productbox relative lg:shadow-lg shadow-sm border border-primary/20  shadow-blue-gray-500  rounded-xl ">
-        <div className="absolute shopincon z-10 *:size-10 *:shadow-md *:shadow-blue-gray-400 *:bg-white *:text-center *:rounded-full *:leading-10 flex w-10 flex-col gap-5 top-20 end-3">
-          <a className='quicklink'>
-            <HeartOutlined />
-          </a>
-          <a className='quicklink'>
-            <ShoppingOutlined />
-          </a>
-          <a className='quicklink'>
-            <EyeOutlined />
-          </a>
-        </div>
+      <Link to={'/single-product/' + product.url} className="w-full block productbox overflow-hidden relative lg:shadow-lg shadow-sm border border-primary/20  shadow-blue-gray-500  rounded-xl ">
+        {
+          offertag && (
+            <>
+              <div className="inline-block absolute lg:top-0 lg:-start-10 -start-5 w-1/2 text-white text-center -rotate-45 bg-deep-orange-500">
+                <span className='lg:me-10 me-2 text-xs'>
+                  {offertag} % off
+                </span>
+              </div>
+            </>
+          )
+        }
         <figure className="w-full lg:h-80 h-44 overflow-hidden">
           <img src={base_url_img + image} alt="" className="w-full h-full object-fill" />
         </figure>
@@ -62,7 +72,7 @@ const ProductSlider: React.FC<{ product: Product }> = ({ product }) => {
           <h4 className="md:text-[1.2rem] text-md md:mb-4 mb-1 font-bold truncate">{product.title}</h4>
 
           <p className="text-primary lg:text-lg text-sm md:mb-5 mb-2  productPrice">
-            <span className="text-gray-600 me-3 lg:text-sm text-xs line-through">₹ {(product.price * 1.8).toFixed(2)}</span>  <span >₹ {product.price.toFixed(2)}</span>
+            <span className="text-gray-600 me-3 lg:text-sm text-xs line-through">₹ {(product.price * 1.18).toFixed(2)}</span>  <span >₹ {(product.price * (1 - discount)).toFixed(2)}</span>
           </p>
           <div className="w-full md:mb-5 mb-0 text-center flex items-center justify-center">
             <button type='button' className="md:px-4 md:py-2 px-2 py-1 uppercase text-xs   rounded-full bg-gray-700/30 text-black ">Add to Cart</button>
