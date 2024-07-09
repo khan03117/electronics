@@ -1,4 +1,4 @@
-import { DashboardOutlined, OrderedListOutlined, LogoutOutlined, MenuOutlined, PhoneOutlined, UserOutlined, CloseOutlined, SearchOutlined } from "@ant-design/icons";
+import { DashboardOutlined, OrderedListOutlined, LogoutOutlined, MenuOutlined, PhoneOutlined, UserOutlined, CloseOutlined, SearchOutlined, HeartFilled } from "@ant-design/icons";
 import {
     Navbar,
     Menu, MenuHandler,
@@ -119,8 +119,14 @@ const ThemeNavbar = () => {
                                             <MenuList placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                                                 <MenuItem placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                                                     <Link to={'/orders'}>
-                                                        <OrderedListOutlined />
+                                                        <OrderedListOutlined /> 
                                                         <span className="ms-2">Orders</span>
+                                                    </Link>
+                                                </MenuItem>
+                                                <MenuItem placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                                                    <Link to={'/wishlist'}>
+                                                        <HeartFilled />
+                                                        <span className="ms-2">Wishlist</span>
                                                     </Link>
                                                 </MenuItem>
                                                 <MenuItem placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>

@@ -40,7 +40,7 @@ interface Product {
 
 
 const ProductSlider: React.FC<{ product: Product }> = ({ product }) => {
-
+  const image =   (product.images && product.images.length > 0) ? product.images[0] : '';
   return (
     <>
       <Link to={'/single-product/' + product.url} className="w-full block productbox relative lg:shadow-lg shadow-sm border border-primary/20  shadow-blue-gray-500  rounded-xl ">
@@ -56,7 +56,7 @@ const ProductSlider: React.FC<{ product: Product }> = ({ product }) => {
           </a>
         </div>
         <figure className="w-full lg:h-80 h-44 overflow-hidden">
-          <img src={base_url_img + product.images[0]} alt="" className="w-full h-full object-fill" />
+          <img src={base_url_img + image} alt="" className="w-full h-full object-fill" />
         </figure>
         <div className="w-full lg:px-5 px-1 py-4 text-center">
           <h4 className="md:text-[1.2rem] text-md md:mb-4 mb-1 font-bold truncate">{product.title}</h4>

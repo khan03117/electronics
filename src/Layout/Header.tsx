@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 // @ts-ignore
 import logoimg from './../assets/logo.png';
-import { DashboardOutlined, LogoutOutlined, OrderedListOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+import { DashboardOutlined, HeartFilled, LogoutOutlined, OrderedListOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import ThemeNavbar from './ThemeNavbar';
 import {
     Dialog, DialogBody, DialogHeader, Input, Menu,
@@ -231,6 +231,12 @@ const Header = () => {
                                                         <Link to={'/orders'}>
                                                             <OrderedListOutlined />
                                                             <span className="ms-2">Orders</span>
+                                                        </Link>
+                                                    </MenuItem>
+                                                    <MenuItem placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                                                        <Link to={'/wishlist'}>
+                                                            <HeartFilled />
+                                                            <span className="ms-2">Wishlist</span>
                                                         </Link>
                                                     </MenuItem>
                                                     <MenuItem placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>

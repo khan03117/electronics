@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { HeartOutlined, MinusOutlined, PlusOutlined, StarFilled } from '@ant-design/icons';
+import { HeartFilled, HeartOutlined, MinusOutlined, PlusOutlined, StarFilled } from '@ant-design/icons';
 import Specification from './Specification';
 import Reviews from './Reviews';
 import axios from 'axios';
@@ -54,11 +54,40 @@ const SingleProduct: React.FC = () => {
     const [s_section, setSection] = useState('specifications');
     const [product, setProduct] = useState<Product>();
     const [copen, setCopen] = useState<boolean>(false);
+    const [wishlist, setWishlist] = useState<boolean>(false);
     const getProduct = async () => {
         await axios.get(base_url + 'product/show/' + id).then(resp => {
             setProduct(resp.data.data)
         })
     }
+    const checkwishlist = async () => {
+        await axios.get(base_url + 'cart/wishlist/' + product?._id, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(resp => {
+            setWishlist(resp.data.data)
+        })
+    }
+    const addtowishlist = async () => {
+        if (token) {
+            const pid = product?._id;
+            await axios.post(base_url + 'cart/wishlist', { product_id: pid }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then(resp => {
+                setWishlist(resp.data.success == "1" ? true : false);
+            });
+        } else {
+            alert("Please Login to add to wishlist")
+        }
+    }
+
     const getproductincart = async () => {
         await axios.get(base_url + 'cart/product/' + product?._id, {
             headers: {
@@ -80,13 +109,15 @@ const SingleProduct: React.FC = () => {
     }
     useEffect(() => {
         if (product) {
-            getproductincart()
+            getproductincart();
+            checkwishlist();
         }
+
     }, [product])
     useEffect(() => {
         getProduct();
     }, [location.pathname]);
-    const [open, setOpen] = useState(false);
+
     const settingsFor = {
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -99,7 +130,6 @@ const SingleProduct: React.FC = () => {
             <img src={base_url_img + product?.images[index]} alt="" className="w-[50px] h-[50px] object-contain border rounded-lg border-blue-gray-400 shadow-lg shadow-blue-gray-300 inline-block " />
         ),
     };
-
 
     const handleqty = (action: string, id: string, bid: string) => {
         if (token) {
@@ -157,6 +187,7 @@ const SingleProduct: React.FC = () => {
         }
 
     }
+
     const addtocart = async (obj: Quantity) => {
 
         await axios.post(base_url + 'cart', obj, {
@@ -167,7 +198,7 @@ const SingleProduct: React.FC = () => {
             }
         }).then(resp => {
             if (resp.data.succes == "1") {
-                setOpen(true);
+                setCopen(true);
             }
 
         })
@@ -224,8 +255,10 @@ const SingleProduct: React.FC = () => {
                                         <StarFilled />
                                         <StarFilled />
                                     </div>
-                                    <button title='Wishlist' className='text-primary absolute end-0 top-0 text-2xl'>
-                                        <HeartOutlined />
+                                    <button onClick={addtowishlist} title='Wishlist' className='text-primary absolute end-0 top-0 text-2xl'>
+                                        {
+                                            wishlist ? <HeartFilled /> : <HeartOutlined />
+                                        }
                                     </button>
                                 </div>
                                 <div className="w-full">
@@ -306,7 +339,14 @@ const SingleProduct: React.FC = () => {
                         {
                             s_section == "reviews" && (
                                 <>
-                                    <Reviews />
+                                    {
+                                        product && (
+                                            <>
+                                                <Reviews product={product?._id} />
+                                            </>
+                                        )
+                                    }
+
                                 </>
                             )
                         }

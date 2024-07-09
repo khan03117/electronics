@@ -16,10 +16,10 @@ interface Data {
 const Testimonialbox: React.FC<Data> = ({ data }) => {
     return (
         <>
-            <div className="py-2">
+            <div className="py-2 w-full h-full">
 
 
-                <div className="w-full rounded-xl bg-white lg:shadow-lg shadow-md shadow-blue-gray-300 lg:shadow-gray-700 lg:py-10 lg:px-6 px-2 ">
+                <div className="w-full h-full rounded-xl bg-white lg:shadow-lg shadow-md shadow-blue-gray-300 lg:shadow-gray-700 lg:py-10 lg:px-6 px-2 ">
                     <p className="lg:text-lg text-sm mb-2 font-bold">{data.subject}</p>
                     <div className="flex text-orange-600 lg:mb-10 mb-4 items-center gap-1">
                         {

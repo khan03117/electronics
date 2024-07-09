@@ -12,6 +12,7 @@ import Login from './pages/auth/Login'
 import About from './pages/about'
 import Testimonial from './pages/Testimonial'
 import Polcy from './Layout/Polcy'
+import Wishlist from './pages/Shop/Wishlist'
 
 function App() {
 
@@ -26,7 +27,7 @@ function App() {
           <Route path='/single-product/:id' element={<SingleProduct />} />
           <Route path='/checkout' element={<Checkout />} />
           <Route path='/cart' element={<Cart />} />
-          <Route path='/wishlist' element={<Cart />} />
+          <Route path='/wishlist' element={<Wishlist />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/orders' element={<Orders />} />
           <Route path='/login' element={<Login />} />
