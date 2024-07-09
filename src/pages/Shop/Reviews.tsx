@@ -136,8 +136,6 @@ const Reviews: React.FC<Prop> = ({ product }) => {
                                 <Testimonialbox data={itm} />
                             ))
                         }
-
-
                     </div>
                 </div>
             </section>
