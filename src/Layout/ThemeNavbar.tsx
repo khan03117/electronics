@@ -11,10 +11,10 @@ import {
 // @ts-ignore
 import logoimg from './../assets/logo.png';
 import React, { useEffect, useState } from 'react'
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import MobileSidebar from "./MobileSidebar";
 import axios from "axios";
-import { base_url } from "../utils";
+import { base_url, base_url_img } from "../utils";
 // import axios from "axios";
 // import { base_url, base_url_img } from "../utils";
 interface Media {
@@ -22,9 +22,16 @@ interface Media {
     type: string;
     media_value: string;
 }
+interface Product {
+    _id: string;
+    title: string;
+    url: string;
+    images: string[]
+}
 const ThemeNavbar = () => {
     const [sopen, setSopen] = useState<boolean>(false);
     const [medias, setMedias] = useState<Media[]>([]);
+    const [products, setProucts] = useState<Product[]>([]);
     const searchhandle = () => {
         setSopen(!sopen);
     }
@@ -38,9 +45,23 @@ const ThemeNavbar = () => {
         const resp = await axios.get(base_url + 'social/contact-media?type=Contact');
         setMedias(resp.data.data);
     }
+    const searachproduct = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const val = e.target.value;
+        if (val.length > 3) {
+            const resp = await axios.post(base_url + 'product/search/' + val);
+            setProucts(resp.data.data)
+        } else {
+            setProucts([])
+        }
+    }
     useEffect(() => {
         getdata2();
     }, []);
+    const { pathname } = useLocation();
+    useEffect(() => {
+        setProucts([])
+        setSopen(false);
+    }, [pathname])
 
 
     function NavList() {
@@ -78,11 +99,41 @@ const ThemeNavbar = () => {
                             <button onClick={searchhandle} title="Close" className="absolute top-2 start-2 size-4 text-xs rounded-full bg-primary text-white">
                                 <CloseOutlined />
                             </button>
-                            <div className="flex border border-blue-gray-200">
-                                <input type="text" name="" id="" className="w-full p-2 outline-none   border-none" />
+                            <div className="flex border border-blue-gray-200 relative">
+                                <input type="text" onChange={searachproduct} className="w-full p-2 outline-none   border-none" />
                                 <button title="Search" className="bg-primary text-white px-3 text-sm">
                                     <SearchOutlined />
                                 </button>
+                                {
+                                    products.length > 0 && (
+                                        <>
+                                            <div className="absolute p-2 rounded-lg max-h-64 overflow-y-auto overflow-x-hidden top-full start-0 w-full bg-white">
+                                                <ul>
+                                                    {
+                                                        products.map(pdt => (
+                                                            <>
+                                                                <li className="*:py-1 *:ps-1 last:border-none *:border-b *:border-blue-gray-300">
+                                                                    <Link className="w-full block" to={"/single-product/" + pdt.url}>
+                                                                        <div className="flex ">
+                                                                            <img src={base_url_img + pdt.images[0]} alt="" className="size-10 rounded-full" />
+                                                                            <div className="inline">
+                                                                                <h4 className="text-xs">
+                                                                                    {pdt.title}
+                                                                                </h4>
+                                                                            </div>
+                                                                        </div>
+                                                                    </Link>
+                                                                </li>
+                                                            </>
+                                                        ))
+                                                    }
+
+                                                </ul>
+                                            </div>
+                                        </>
+                                    )
+                                }
+
                             </div>
 
                         </div>
