@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 import categoryimg from '../../assets/application.png'
 //@ts-ignore
 import offerimg from '../../assets/gift.png';
+//@ts-ignore
+import brandimg from '../../assets/brand-image.png';
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -86,47 +88,57 @@ const CategoriesSlider = () => {
         <>
 
             <MobileSidebar open={open} setOpen={setOpen} />
-            <div className="container">
-                <div className="w-full">
-                    <Slider {...settings}>
-                        <div className=' block'>
-                            <div onClick={handleCategory} className="w-full text-center lg:p-10 p-0">
-                                <figure className='lg:size-16 block lg:mb-5 mb-1 text-center mx-auto size-10 overflow-hidden rounded-full'>
-                                    <img src={categoryimg} alt="" className="max-w-full mx-auto" />
-                                </figure>
-                                <div className="w-full">
-                                    <h2 className='text-black font-bold  lg:text-md text-xs'>Categories</h2>
-                                </div>
+
+            <div className="w-full">
+                <Slider {...settings}>
+                    <div className=' block'>
+                        <div onClick={handleCategory} className="w-full text-center lg:p-10 p-0">
+                            <figure className='lg:size-16 block lg:mb-5 mb-1 text-center mx-auto size-10 overflow-hidden rounded-full'>
+                                <img src={categoryimg} alt="" className="max-w-full mx-auto" />
+                            </figure>
+                            <div className="w-full">
+                                <h2 className='text-black font-bold  lg:text-md text-xs'>Categories</h2>
                             </div>
                         </div>
-                        <Link to={'/offers'} className=' block'>
-                            <div className="w-full text-center lg:p-10 p-0">
-                                <figure className='lg:size-16 block lg:mb-5 mb-1 text-center mx-auto size-10 overflow-hidden rounded-full'>
-                                    <img src={offerimg} alt="" className="max-w-full mx-auto" />
-                                </figure>
-                                <div className="w-full">
-                                    <h2 className='text-black font-bold  lg:text-md text-xs'>Offer zone</h2>
-                                </div>
+                    </div>
+                    <Link to={'/offers'} className=' block'>
+                        <div className="w-full text-center lg:p-10 p-0">
+                            <figure className='lg:size-16 block lg:mb-5 mb-1 text-center mx-auto size-10 overflow-hidden rounded-full'>
+                                <img src={offerimg} alt="" className="max-w-full mx-auto" />
+                            </figure>
+                            <div className="w-full">
+                                <h2 className='text-black font-bold  lg:text-md text-xs'>Offer zone</h2>
                             </div>
-                        </Link>
-                        {
-                            category.map((crr) => (
-                                <Link to={'/shop/category/' + crr.url} className="block">
-                                    <div className="w-full text-center lg:p-10 p-0">
-                                        <figure className='lg:size-16 block lg:mb-5 mb-1 text-center mx-auto size-10 overflow-hidden rounded-full'>
-                                            <img src={base_url_img + crr.image} alt='image' className='  object-contain' />
-                                        </figure>
-                                        <div className="w-full">
-                                            <h2 className='text-black font-bold  lg:text-md text-xs'>{crr.title}</h2>
+                        </div>
+                    </Link>
+                    <Link to={'/brands'} className=' block'>
+                        <div className="w-full text-center lg:p-10 p-0">
+                            <figure className='lg:size-16 block lg:mb-5 mb-1 text-center mx-auto size-10 overflow-hidden rounded-full'>
+                                <img src={brandimg} alt="" className="max-w-full mx-auto" />
+                            </figure>
+                            <div className="w-full">
+                                <h2 className='text-black font-bold  lg:text-md text-xs'>Brands</h2>
+                            </div>
+                        </div>
+                    </Link>
+                    {
+                        category.map((crr) => (
+                            <Link to={'/shop/category/' + crr.url} className="block">
+                                <div className="w-full text-center lg:p-10 p-0">
+                                    <figure className='lg:size-16 block lg:mb-5 mb-1 text-center mx-auto size-10 overflow-hidden rounded-full'>
+                                        <img src={base_url_img + crr.image} alt='image' className='  object-contain' />
+                                    </figure>
+                                    <div className="w-full">
+                                        <h2 className='text-black font-bold  lg:text-md text-xs'>{crr.title}</h2>
 
-                                        </div>
                                     </div>
-                                </Link>
-                            ))
-                        }
-                    </Slider>
-                </div>
+                                </div>
+                            </Link>
+                        ))
+                    }
+                </Slider>
             </div>
+
 
 
         </>

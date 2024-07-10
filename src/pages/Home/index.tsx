@@ -86,8 +86,9 @@ const Home = () => {
               <h2 className="sectiontitle">Shop By Category</h2>
             </div>
           </div>
+          <CategoriesSlider />
         </div>
-        <CategoriesSlider />
+
       </section>
       <SectionDevider />
       {

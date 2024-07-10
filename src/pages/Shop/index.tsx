@@ -5,8 +5,15 @@ import { CloseOutlined, DownOutlined, FilterOutlined, PlusOutlined } from "@ant-
 // import Shorting from "./Shorting";
 import { base_url, base_url_img } from "../../utils";
 import axios from "axios";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Banner from "../Home/Banner";
+import CategoriesSlider from "../Home/CategoriesSlider";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { NextArrow, PrevArrow } from "../../component/Arrows";
+import SectionTitle from "../../component/SectionTitle";
+import SectionDevider from "../../component/SectionDevider";
 
 const Shop = () => {
     const location = useLocation();
@@ -67,6 +74,7 @@ const Shop = () => {
         _id: string;
         title: string;
         url: string;
+        image: string;
     }
     const [catproducts, setProduct] = useState<CategoryWithProducts[]>([]);
     const [sellers, setSellers] = useState<Seller[]>([]);
@@ -74,7 +82,51 @@ const Shop = () => {
     const [categories, setCategory] = useState<MCategory[]>([]);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
     const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
-    const [subcategory_id, setSubcategoryId] = useState<string>(suburl ?? 'null')
+    const [subcategory_id, setSubcategoryId] = useState<string>(suburl ?? 'null');
+    const settings = {
+        dots: false,
+        navs: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 8,
+        slidesToScroll: 2,
+        nextArrow: <NextArrow className={'btn'} />, // Use custom next arrow
+        prevArrow: <PrevArrow className={'btn'} />,  // Use custom prev arrow,
+        responsive: [
+            {
+                breakpoint: 1200, // At or below 1200px
+                settings: {
+                    slidesToShow: 8,
+                    slidesToScroll: 2,
+                    infinite: false,
+                    dots: false,
+                    navs: true,
+                }
+            },
+            {
+                breakpoint: 992, // At or below 992px
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    infinite: false,
+                    dots: false,
+                    navs: true,
+                }
+            },
+            {
+                breakpoint: 768, // At or below 768px
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 4,
+                    infinite: true,
+                    dots: false,
+                    navs: false,
+                    arrows: false
+                }
+            }
+        ]
+
+    };
     useEffect(() => {
         setScategory(url ? url : scategory)
     }, [location.pathname, categories])
@@ -420,12 +472,8 @@ const Shop = () => {
             <section id="productitem" className="md:py-10 py-5">
                 <div className="container mx-auto">
                     <div className="grid lg:grid-cols-5 grid-cols-1">
-                        <div className="lg:hidden block col-span-1 ">
-
-                            <div className="w-full px-4 py-2 lg:block hidden sticky top-0">
-                                {filterdiv}
-                            </div>
-                            <div className="md:hidden block mb-5">
+                        <div className="hidden col-span-1 ">
+                            <div className="md:hidden hidden mb-5">
                                 <div className="grid grid-cols-4">
                                     <div className="col-span-1">
                                         <button>
@@ -455,30 +503,58 @@ const Shop = () => {
                                             Brand <DownOutlined className="text-xs" />
                                         </button>
                                     </div>
-
-
-
-
                                 </div>
                             </div>
                         </div>
-                        <div className="col-span-5 lg:block hidden">
-                            <div className="w-full flex justify-between flex-wrap ">
-                                <div className="filterby">
-                                    <FilterOutlined />Filter
-                                </div>
-                                <div className="filtercat flex gap-2 flex-wrap">
+                        <div className="col-span-5">
+                            <div className="w-full ">
+                                <CategoriesSlider />
+                            </div>
+                            <SectionDevider />
+                            {
+                                subcategories.length > 0 && (
+                                    <>
+                                        <div className="w-full">
+                                            <Slider {...settings} >
+                                                {
+                                                    subcategories.map((mdl) => (
+                                                        <div onClick={() => handleSubcategoryid(mdl._id)} className="w-full p-1">
+                                                            <div className="w-full">
+                                                                <figure className="w-full">
+                                                                    <img src={base_url_img + mdl.image} alt="" className="size-10 mx-auto  rounded-full" />
+                                                                </figure>
+                                                                <div className="w-full  mt-4 text-center text-xs">
+                                                                    {mdl.title}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))
+                                                }
+                                            </Slider>
+                                            <SectionDevider />
+                                        </div>
+                                    </>
+                                )
+                            }
+
+
+                            <div className="pb-5">
+                                <Slider {...settings} >
                                     {
-                                        categories.map(cat => (
-                                            <>
-                                                <Link to={'/shop/category/' + cat.url} className={`${scategory != cat.url ? 'bg-blue-gray-100 text-blue-gray-700' : 'bg-primary text-white'} px-5 py-2 border`}>
-                                                    {cat.title}
-                                                </Link>
-                                            </>
+                                        sellers.map((modl) => (
+                                            <div className="p-1">
+                                                <button onClick={() => handleSellerId(modl.url)} className="w-full block">
+                                                    <div className="w-full h-full  bg-white">
+                                                        <img src={base_url_img + modl.image} alt="" className=" w-full lg:h-10 h-5 lg:object-contain object-contain  mx-auto block" />
+                                                        <div className="w-full  mt-4 text-center text-xs">
+                                                            {modl.title}
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </div>
                                         ))
                                     }
-                                </div>
-
+                                </Slider>
                             </div>
                         </div>
                         <div className="lg:col-span-5 col-span-4">

@@ -10,14 +10,21 @@ import {
 // import suportimg from '../assets/support.png';
 // @ts-ignore
 import logoimg from './../assets/logo.png';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
 import MobileSidebar from "./MobileSidebar";
+import axios from "axios";
+import { base_url } from "../utils";
 // import axios from "axios";
 // import { base_url, base_url_img } from "../utils";
-
+interface Media {
+    title: string;
+    type: string;
+    media_value: string;
+}
 const ThemeNavbar = () => {
     const [sopen, setSopen] = useState<boolean>(false);
+    const [medias, setMedias] = useState<Media[]>([]);
     const searchhandle = () => {
         setSopen(!sopen);
     }
@@ -27,6 +34,13 @@ const ThemeNavbar = () => {
         localStorage.clear();
         window.location.reload();
     }
+    const getdata2 = async () => {
+        const resp = await axios.get(base_url + 'social/contact-media?type=Contact');
+        setMedias(resp.data.data);
+    }
+    useEffect(() => {
+        getdata2();
+    }, []);
 
 
     function NavList() {
@@ -97,10 +111,17 @@ const ThemeNavbar = () => {
                         <NavList />
                     </div>
                     <div className="call_us ms-auto  ">
-                        <Link className="lg:inline-flex hidden items-center gap-4" to={'tel:+91-9090909090'}>
-                            <PhoneOutlined className="inline-block rotate-[100deg]" />
-                            +91-909090090
-                        </Link>
+                        {
+
+                            <>
+                                <Link className="lg:inline-flex hidden items-center gap-4" to={`tel:${medias.find(obj => obj.title == "Mobile")?.media_value}`}>
+                                    <PhoneOutlined className="inline-block rotate-[100deg]" />
+                                    {medias.find(obj => obj.title == "Mobile")?.media_value}
+                                </Link>
+                            </>
+
+                        }
+
                         <div className="lg:hidden inline-block text-black">
                             {/* <Link to={'/cart'} className='text-[1.2rem] text-primary'> <HeartFilled /></Link> */}
                             {/* <Link to={'/cart'} className='text-[1.2rem] ps-1'> <ShoppingCartOutlined /></Link> */}
