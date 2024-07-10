@@ -31,7 +31,7 @@ const Reviews: React.FC<Prop> = ({ product }) => {
     }
     const [reviews, setReviews] = useState<item[]>([]);
     const getdata = async () => {
-        await axios.get(base_url + 'testimonial?product' + product).then((resp) => {
+        await axios.get(base_url + 'testimonial?product=' + product).then((resp) => {
             setReviews(resp.data.data);
         })
     }
@@ -46,7 +46,7 @@ const Reviews: React.FC<Prop> = ({ product }) => {
         axios.post(base_url + 'testimonial', data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                }
+            }
         }).then((resp) => {
             setMessage(resp.data.message);
         })
@@ -84,7 +84,7 @@ const Reviews: React.FC<Prop> = ({ product }) => {
                                             onChange={(e) => setName(e.target.value)}
                                         />
                                     </div>
-                                  
+
                                     <div className="mb-8 block pt-5">
                                         <label htmlFor="subject" >Subject</label>
                                         <input
@@ -101,9 +101,9 @@ const Reviews: React.FC<Prop> = ({ product }) => {
                                     <div className="py-5">
                                         <div className="w-full">
                                             <label htmlFor="rating" >Rating</label>
-                                           <div className="w-full">
-                                           <Rating className='lg:w-1/4 w-1/2' value={rating} onChange={setRating} />
-                                           </div>
+                                            <div className="w-full">
+                                                <Rating className='lg:w-1/4 w-1/2' value={rating} onChange={setRating} />
+                                            </div>
                                         </div>
 
                                     </div>

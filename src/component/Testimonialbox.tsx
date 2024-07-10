@@ -46,7 +46,9 @@ const Testimonialbox: React.FC<Data> = ({ data }) => {
                     <div className="w-full">
                         <div className="flex ">
                             <div className="lg:size-16 size-8 lg:mx-0 mx-auto rounded-full overflow-hidden">
-                                <img src={base_url_img + data.image} alt="" className="w-full h-full rounded-full border" />
+                                <img src={base_url_img + data.image} onError={(e) => {
+                                    (e.target as HTMLImageElement).src = "https://t4.ftcdn.net/jpg/00/97/00/09/360_F_97000908_wwH2goIihwrMoeV9QF3BW6HtpsVFaNVM.jpg";
+                                }} alt="" className="w-full h-full rounded-full border" />
                             </div>
                             <div className="lg:w-[calc(100%-2rem)]">
                                 <div className="w-full lg:ps-5 ps-2">
