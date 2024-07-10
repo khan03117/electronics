@@ -16,6 +16,7 @@ import Wishlist from './pages/Shop/Wishlist'
 import Faq from './pages/contact/Faq'
 import Offers from './pages/Shop/Offers'
 import Brands from './pages/Shop/Brands'
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 function App() {
 
@@ -36,7 +37,6 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/shop/category/:url?/:suburl?/:burl?' element={<Shop />} />
           <Route path='/shop/brand/:burl' element={<Shop />} />
-
           <Route path='/policy/:url' element={<Polcy />} />
           <Route path='/faq' element={<Faq />} />
           <Route path='/offers' element={<Offers />} />
@@ -47,6 +47,12 @@ function App() {
   )
   return (
     <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Electronics Whole Sale Online Shop </title>
+          <link rel="canonical" href="https://www.tacobell.com/" />
+        </Helmet>
+      </HelmetProvider>
       <RouterProvider router={ThemeRoute} />
     </>
 
