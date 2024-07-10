@@ -48,7 +48,7 @@ const Header = () => {
         setOpen(!open);
     }
     useEffect(() => {
-        let timer: number | undefined;
+        let timer: ReturnType<typeof setInterval> | undefined;
         if (time > 0) {
             timer = setInterval(() => {
                 setTimeLeft((prev) => prev - 1);
@@ -56,7 +56,6 @@ const Header = () => {
         } else {
             clearInterval(timer);
         }
-
         return () => clearInterval(timer);
     }, [time]);
 
