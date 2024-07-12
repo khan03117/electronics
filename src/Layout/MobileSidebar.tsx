@@ -5,6 +5,8 @@ import axios from 'axios';
 import { CloseOutlined } from '@ant-design/icons';
 // @ts-ignore
 import logoimg from './../assets/logo.png';
+// @ts-ignore
+import brandimg from "../assets/brand-image.png";
 
 interface Prop {
     open: boolean;
@@ -94,6 +96,14 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
                     </div>
                     <div className="col-span-4">
                         <div className="w-full h-full flex flex-col">
+                            <Link to={'/brands'}>
+                                <button className=' w-full text-xs  text-start border px-2 border-blue-gray-200 py-6'>
+                                    <div className='inline-flex gap-2'>
+                                        <img src={brandimg} alt='image' className="size-4"></img>
+                                        <p>Top Brand</p>
+                                    </div>
+                                </button>
+                            </Link>
                             {
                                 category.map(cat =>
                                 (

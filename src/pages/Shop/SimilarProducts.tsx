@@ -13,6 +13,7 @@ const SimilarProducts: React.FC<Prop> = ({ category_url }) => {
         category: {
             _id: string;
             title: string;
+            url : string;
             products: Product[];
         };
     }
@@ -46,22 +47,28 @@ const SimilarProducts: React.FC<Prop> = ({ category_url }) => {
         })
     }
     useEffect(() => {
-        getproducts();
-    }, []);
+        if(category_url){
+            getproducts();
+        }
+     
+    }, [category_url]);
     return (
         <>
             {
                 catproducts.map(itm => (
+
                     <>
-                        <section className="md:py-10 py-3">
+                   
+                             <section className="md:py-10 py-3">
                             <div className="container">
-
-
                                 <div className="w-full">
                                     <SliderComponent products={itm.category.products} />
                                 </div>
                             </div>
                         </section>
+                            
+                        
+                       
                     </>
                 ))
             }

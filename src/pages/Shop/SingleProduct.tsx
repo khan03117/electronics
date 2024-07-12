@@ -11,6 +11,7 @@ import { base_url, base_url_img } from '../../utils';
 import Swal from 'sweetalert2';
 import SimilarProducts from './SimilarProducts';
 import SectionTitle from '../../component/SectionTitle';
+import SectionDevider from '../../component/SectionDevider';
 
 
 const SingleProduct: React.FC = () => {
@@ -75,6 +76,7 @@ const SingleProduct: React.FC = () => {
             setDiscount(resp.data.offer)
         })
     }
+   
     const checkwishlist = async () => {
         await axios.get(base_url + 'cart/wishlist/' + product?._id, {
             headers: {
@@ -123,7 +125,7 @@ const SingleProduct: React.FC = () => {
         })
     }
     useEffect(() => {
-        if (product) {
+        if (product && token) {
             getproductincart();
             checkwishlist();
         }
@@ -239,7 +241,7 @@ const SingleProduct: React.FC = () => {
                                                 product?.images.map((itm) => (
                                                     <>
                                                         <figure className="w-full border border-blue-gray-200  rounded-2xl overflow-hidden ">
-                                                            <img src={base_url_img + itm} alt="" className="w-full lg:h-[500px] h-[300px] object-contain" />
+                                                            <img src={base_url_img + itm} alt="" className="w-full lg:h-[500px] h-[430px] object-contain" />
                                                         </figure>
                                                     </>
                                                 ))
@@ -381,6 +383,9 @@ const SingleProduct: React.FC = () => {
                         {
                             (
                                 <>
+                                    <div className="w-full my-3">
+                                        <SectionDevider/>
+                                    </div>
                                     <SectionTitle title='Related Products' />
                                     <SimilarProducts category_url={product?.category.url} />
                                 </>

@@ -44,10 +44,8 @@ const CategoriesSlider = () => {
         infinite: true,
         slidesToShow: 8,
         slidesToScroll: 2,
-        autoplay: true,
-        speed: 2000,
-        autoplaySpeed: 2000,
-        cssEase: "linear",
+         speed: 2000,
+       
 
         nextArrow: <NextArrow className={'btn'} />, // Use custom next arrow
         prevArrow: <PrevArrow className={'btn'} />,  // Use custom prev arrow,
