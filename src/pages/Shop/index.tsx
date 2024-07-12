@@ -507,14 +507,27 @@ const Shop = () => {
                             </div>
                         </div>
                         <div className="col-span-5">
-                            <div className="w-full ">
-                                <CategoriesSlider />
-                            </div>
-                            <SectionDevider />
+                            {
+                                subcategories.length == 0 && (
+                                    <>
+                                        <div className="w-full ">
+                                            <CategoriesSlider />
+                                        </div>
+                                        <div className="w-full mb-4">
+                                            <SectionDevider />
+                                        </div>
+                                    </>
+                                )
+                            }
+
+
                             {
                                 subcategories.length > 0 && (
                                     <>
+                                        
+
                                         <div className="w-full">
+
                                             <Slider {...settings} >
                                                 {
                                                     subcategories.map((mdl) => (
@@ -538,7 +551,7 @@ const Shop = () => {
                             }
 
 
-                            <div className="pb-5">
+                            <div className="pb-5 hidden">
                                 <Slider {...settings} >
                                     {
                                         sellers.map((modl) => (

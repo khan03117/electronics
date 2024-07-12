@@ -26,18 +26,18 @@ const Banner: React.FC<Prop> = ({ type }) => {
         getcategories();
     }, [])
     var settings = {
+        autoplay: true,
+        speed: 400,
+        autoplaySpeed: 2000,
+        cssEase: "linear",
         dots: true,
         arrows: false,
         navs: true,
         customPaging: (index: number) => (
             <span className='inline-block border border-blue-gray-100 bannerdot size-2 bg-gray-100 rounded-full  '></span>
         ),
-        // autoplay: true,
-        // autoplaySpeed: 1000,
         infinite: true,
-        speed: 500,
         loop: true,
-
         slidesToShow: 1,
         slidesToScroll: 1,
     };

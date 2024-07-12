@@ -26,9 +26,9 @@ const Testimonials = () => {
         getdata();
     }, [])
     const settings = {
+        cssEase: "linear",
         dots: false,
         infinite: true,
-        speed: 500,
         slidesToShow: 3,
         slidesToScroll: 3,
         nextArrow: <NextArrow className={'btn'} />, // Use custom next arrow

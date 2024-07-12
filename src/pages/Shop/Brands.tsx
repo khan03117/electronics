@@ -27,7 +27,7 @@ const Brands: React.FC = () => {
                     <div className="w-full mb-5">
                         <SectionTitle title='Top Brands' />
                     </div>
-                    <div className="grid lg:grid-cols-5 grid-cols-2 gap-4">
+                    <div className="grid lg:grid-cols-5 grid-cols-3 gap-4">
                         {
                             sellers.map(sellr => (
                                 <>
