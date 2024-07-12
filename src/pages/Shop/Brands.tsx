@@ -36,7 +36,7 @@ const Brands: React.FC = () => {
 
                                             <img src={base_url_img + sellr.image} alt="" className="size-20 mx-auto object-contain" />
                                             <div className="w-full mt-4 text-center">
-                                                <h4 className="text-lg font-bold">
+                                                <h4 className="lg:text-lg text-xs font-bold">
                                                     {sellr.title}
                                                 </h4>
                                             </div>
