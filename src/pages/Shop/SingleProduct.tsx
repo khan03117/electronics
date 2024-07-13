@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -133,7 +133,8 @@ const SingleProduct: React.FC = () => {
             checkwishlist();
         }
 
-    }, [product])
+    }, [product]);
+    const location = useLocation();
     useEffect(() => {
         getProduct();
     }, [location.pathname]);
@@ -235,9 +236,16 @@ const SingleProduct: React.FC = () => {
                                             {
                                                 product?.images.map((itm) => (
                                                     <>
-                                                        <figure className="w-full border border-blue-gray-200  rounded-2xl overflow-hidden ">
-                                                            <img src={base_url_img + itm} alt="" className="w-full lg:h-[500px] h-[430px] object-contain" />
-                                                        </figure>
+                                                        {
+                                                            ['jpg', 'jpeg', 'png', 'avif', 'webp'].includes(itm.split('.')[itm.split('.').length - 1].toLocaleLowerCase()) && (
+                                                                <>
+                                                                    <figure className="w-full border border-blue-gray-200  rounded-2xl overflow-hidden ">
+                                                                        <img src={base_url_img + itm} alt="" className="w-full lg:h-[500px] h-[430px] object-contain" />
+                                                                    </figure>
+                                                                </>
+                                                            )
+                                                        }
+
                                                     </>
                                                 ))
                                             }
