@@ -15,9 +15,9 @@ import LoginpopUP from './LoginpopUP';
 const Header = () => {
     const location = useLocation();
     const [open, setOpen] = useState(false);
-    const token : string | undefined | null= localStorage.getItem('_token'); 
-    const signuphandle = () => {
-        setOpen(true);
+    const token: string | undefined | null = localStorage.getItem('_token');
+    const signuphandle = (val : boolean) => {
+        setOpen(val);
     }
     const logout = () => {
         localStorage.clear();
@@ -26,14 +26,6 @@ const Header = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [location.pathname])
-
-
-
-
-
-
-
-
     return (
         <>
             <LoginpopUP isopen={open} setOpen={signuphandle} />
@@ -59,7 +51,6 @@ const Header = () => {
                                         </span>
                                         <input type='text' placeholder='Search our store' className=' outline-none rounded-none  border-none w-full py-2 px-4 lg:text-sm text-xs'></input>
                                     </div>
-                                    {/* <button className='bg-primary py-2 lg:px-7 px-2  rounded-e-lg text-white border border-1 border-primary lg:text-lg text-xs uppercase tracking-widest font-dark'>Search</button> */}
                                 </div>
                             </div>
                         </div>
@@ -67,9 +58,9 @@ const Header = () => {
                             <div className="w-full text-end">
                                 <Link to={'/cart'} className='lg:text-[1.5rem] text-[1.2rem] pl-4'> <ShoppingCartOutlined /></Link>
                                 {
-                                   !token ? (
+                                    !token ? (
                                         <>
-                                            <button type='button' title='login button' onClick={signuphandle} className='lg:text-[1.5rem] text-[1.2rem] pl-4'> <UserOutlined /></button>
+                                            <button type='button' title='login button' onClick={() => signuphandle(true)} className='lg:text-[1.5rem] text-[1.2rem] pl-4'> <UserOutlined /></button>
                                         </>
                                     ) : (
                                         <>

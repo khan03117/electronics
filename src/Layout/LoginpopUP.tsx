@@ -3,10 +3,11 @@ import React, { useEffect, useRef } from 'react'
 import { base_url } from '../utils'
 import Swal from 'sweetalert2';
 import { Dialog, DialogBody, DialogHeader, Input } from '@material-tailwind/react';
+import { CloseOutlined } from '@ant-design/icons';
 
 interface Prop {
     isopen: boolean,
-    setOpen: () => void;
+    setOpen: (open: boolean) => void;
 }
 const LoginpopUP: React.FC<Prop> = ({ isopen, setOpen }) => {
     const initialstep = localStorage.getItem('_token') ? '3' : '1';
@@ -29,7 +30,7 @@ const LoginpopUP: React.FC<Prop> = ({ isopen, setOpen }) => {
     }
     const signuphandle = () => {
         setOpen(!isopen);
-    
+
     }
     const handlerequestlogin = async () => {
         if (step == "1") {
@@ -97,7 +98,7 @@ const LoginpopUP: React.FC<Prop> = ({ isopen, setOpen }) => {
                 setOpen(false);
             }
         }
-        if (open) {
+        if (isopen) {
             document.addEventListener("mousedown", handleClickOutside);
         } else {
             document.removeEventListener("mousedown", handleClickOutside);
@@ -109,46 +110,56 @@ const LoginpopUP: React.FC<Prop> = ({ isopen, setOpen }) => {
 
     return (
         <>
-            <Dialog open={open} className='z-[1059]' size='xs' handler={signuphandle} ref={ref}  placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                <DialogHeader placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                    <div className="w-full flex justify-between">
-                        <h4 className="text-black text-md">Login</h4>
-                        {time < 20 && time > 0 && (
-                            <span>{time}</span>
-                        )}
-                        {rotp}
-                    </div>
-                </DialogHeader>
-                <DialogBody  placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                    <div className="w-full">
-                        {msg && (
-                            <div className="alertbox mb-4 p-2 bg-deep-orange-100 text-white rounded-md">
-                                <p className="text-deep-orange-500 text-sm">
-                                    {msg}
-                                </p>
-                            </div>
-                        )}
-                        <div className="form-group mb-4">
-                            <div className="flex border border-blue-gray-200 rounded-lg overflow-hidden">
-                                <span className="p-2">+91</span>
-                                <input type="text" value={mobile} onChange={mobilehandle} placeholder='Enter 10 digit mobile number' className="w-full p-2 focus-within:outline-none outline-none" />
-                            </div>
-                        </div>
-                        {step == "2" && (
-                            <div className="form-group mb-4">
-                                <div className="flex w-full">
-                                    <Input label='Enter OTP' max={4} onChange={otphandle} crossOrigin={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+            {
+                isopen && (
+                    <>
+
+                        <Dialog open={isopen} className='z-[1059]' size='xs' handler={signuphandle} ref={ref} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                            <DialogHeader placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                                <div className="w-full flex justify-between">
+                                    <h4 className="text-black text-md">Login</h4>
+                                    {time < 20 && time > 0 && (
+                                        <span>{time}</span>
+                                    )}
+                                    {rotp}
                                 </div>
-                            </div>
-                        )}
-                        <div className="form-group">
-                            <button type="button" onClick={handlerequestlogin} className='w-full rounded-lg p-2 bg-primary text-white'>
-                                {step == "1" ? "Send OTP" : "Verify OTP"}
-                            </button>
-                        </div>
-                    </div>
-                </DialogBody>
-            </Dialog>
+                                <button onClick={signuphandle}>
+                                    <CloseOutlined />
+                                </button>
+                            </DialogHeader>
+                            <DialogBody placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                                <div className="w-full">
+                                    {msg && (
+                                        <div className="alertbox mb-4 p-2 bg-deep-orange-100 text-white rounded-md">
+                                            <p className="text-deep-orange-500 text-sm">
+                                                {msg}
+                                            </p>
+                                        </div>
+                                    )}
+                                    <div className="form-group mb-4">
+                                        <div className="flex border border-blue-gray-200 rounded-lg overflow-hidden">
+                                            <span className="p-2">+91</span>
+                                            <input type="text" value={mobile} onChange={mobilehandle} placeholder='Enter 10 digit mobile number' className="w-full p-2 focus-within:outline-none outline-none" />
+                                        </div>
+                                    </div>
+                                    {step == "2" && (
+                                        <div className="form-group mb-4">
+                                            <div className="flex w-full">
+                                                <Input label='Enter OTP' max={4} onChange={otphandle} crossOrigin={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+                                            </div>
+                                        </div>
+                                    )}
+                                    <div className="form-group">
+                                        <button type="button" onClick={handlerequestlogin} className='w-full rounded-lg p-2 bg-primary text-white'>
+                                            {step == "1" ? "Send OTP" : "Verify OTP"}
+                                        </button>
+                                    </div>
+                                </div>
+                            </DialogBody>
+                        </Dialog>
+                    </>
+                )
+            }
         </>
     )
 }

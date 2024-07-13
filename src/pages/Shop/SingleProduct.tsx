@@ -12,9 +12,11 @@ import Swal from 'sweetalert2';
 import SimilarProducts from './SimilarProducts';
 import SectionTitle from '../../component/SectionTitle';
 import SectionDevider from '../../component/SectionDevider';
+import LoginpopUP from '../../Layout/LoginpopUP';
 
 
 const SingleProduct: React.FC = () => {
+
     interface Brand {
         _id: string;
         title: string;
@@ -69,6 +71,7 @@ const SingleProduct: React.FC = () => {
     const [product, setProduct] = useState<Product>();
     const [copen, setCopen] = useState<boolean>(false);
     const [wishlist, setWishlist] = useState<boolean>(false);
+    const [lopen, setLopen] = useState(false);
     const [discount, setDiscount] = useState<ProductDiscount>()
     const getProduct = async () => {
         await axios.get(base_url + 'product/show/' + id).then(resp => {
@@ -76,7 +79,7 @@ const SingleProduct: React.FC = () => {
             setDiscount(resp.data.offer)
         })
     }
-   
+
     const checkwishlist = async () => {
         await axios.get(base_url + 'cart/wishlist/' + product?._id, {
             headers: {
@@ -101,7 +104,7 @@ const SingleProduct: React.FC = () => {
                 setWishlist(resp.data.success == "1" ? true : false);
             });
         } else {
-            alert("Please Login to add to wishlist")
+            setLopen(true)
         }
     }
 
@@ -147,6 +150,9 @@ const SingleProduct: React.FC = () => {
             <img src={base_url_img + product?.images[index]} alt="" className="w-[50px] h-[50px] object-contain border rounded-lg border-blue-gray-400 shadow-lg shadow-blue-gray-300 inline-block " />
         ),
     };
+    const handlelopen = (val: boolean) => {
+        setLopen(val);
+    }
 
     const handleqty = (action: string, id: string, bid: string) => {
         if (token) {
@@ -179,8 +185,6 @@ const SingleProduct: React.FC = () => {
                             const currentQuantity = arr[idx].quantity ?? 0;
                             const moq = modal?.moq ?? 0; // Default moq to 0 if modal is undefined
                             const newQuantity = Math.max(currentQuantity - moq, 0); // Ensure new quantity is non-negative
-
-                            // Update arr[idx] with new quantity
                             arr[idx].quantity = newQuantity;
                             addtocart(arr[idx]);
                             setQty(arr);
@@ -189,18 +193,9 @@ const SingleProduct: React.FC = () => {
 
                 }
                 setCopen(true);
-                // setTimeout(() => {
-                //     setCopen(false);
-                // }, 2000)
             }
         } else {
-
-            Swal.fire({
-                title: 'Error',
-                text: 'Please login to add to cart' + token,
-                icon: 'error',
-
-            })
+            setLopen(true);
         }
 
     }
@@ -227,7 +222,7 @@ const SingleProduct: React.FC = () => {
     return (
         <>
 
-
+            <LoginpopUP isopen={lopen} setOpen={handlelopen} />
             <section className="lg:py-10 py-4" id="singleproduct">
                 <div className="container mx-auto">
                     <div className="grid lg:grid-cols-8 grid-cols-1 lg:gap-5 gap-6">
@@ -384,7 +379,7 @@ const SingleProduct: React.FC = () => {
                             (
                                 <>
                                     <div className="w-full my-3">
-                                        <SectionDevider/>
+                                        <SectionDevider />
                                     </div>
                                     <SectionTitle title='Related Products' />
                                     <SimilarProducts category_url={product?.category.url} />

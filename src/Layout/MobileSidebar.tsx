@@ -45,7 +45,6 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
         updatedAt: string;
         __v: number;
     }
-
     interface CategoryWithProducts {
         category: {
             _id: string;
@@ -71,7 +70,6 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
         setOpen(!open)
     }
     React.useEffect(() => {
-
         getcategories();
     }, []);
     React.useEffect(() => {
@@ -80,7 +78,6 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
     return (
         <>
             <div className={`w-full transition-all py-3 z-[9999999] duration-500 fixed top-0 start-0 h-screen bg-white ${!open ? 'translate-x-[-100%]' : 'translate-x-[0]'}`}>
-
                 <div className="grid grid-cols-12 gap-2">
                     <div className="col-span-12">
                         <div className="w-full p-3">
