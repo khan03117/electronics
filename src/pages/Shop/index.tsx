@@ -460,7 +460,7 @@ const Shop = () => {
 
             }
             <section >
-                <div className="container mx-auto">
+                <div className="w-full mx-auto">
                     <Banner type="Product" />
                 </div>
             </section>
@@ -524,7 +524,7 @@ const Shop = () => {
                             {
                                 subcategories.length > 0 && (
                                     <>
-                                        
+
 
                                         <div className="w-full">
 

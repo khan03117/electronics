@@ -44,7 +44,7 @@ const Banner: React.FC<Prop> = ({ type }) => {
     return (
         <>
             <div className='w-full' id='banner'>
-                <Slider {...settings} className="" >
+                <Slider {...settings} className="w-full" >
                     {
                         banner.map((bnnr) => (
                             <Link to={'/'} className='lg:rounded-lg block rounded-none lg:px-3 p-0  w-full '>
@@ -73,9 +73,6 @@ const Banner: React.FC<Prop> = ({ type }) => {
                             </Link>
                         ))
                     }
-
-
-
                 </Slider>
             </div>
         </>
