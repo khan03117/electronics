@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { base_url, base_url_img } from '../../utils';
 import SectionTitle from '../../component/SectionTitle';
 import { Link } from 'react-router-dom';
+import Banner from '../Home/Banner';
 
 const Brands: React.FC = () => {
     interface Seller {
@@ -22,7 +23,10 @@ const Brands: React.FC = () => {
     }, []);
     return (
         <>
-            <section className="py-10">
+            <section>
+                <Banner type='Product' />
+            </section>
+            <section className="lg:py-10 py-5">
                 <div className="container">
                     <div className="w-full mb-5">
                         <SectionTitle title='Top Brands' />
