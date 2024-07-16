@@ -314,11 +314,11 @@ const SingleProduct: React.FC = () => {
                                                         <div className="col-span-1">
                                                             <div className="w-full flex justify-end">
                                                                 <div className="inline-flex">
-                                                                    <button type="button" aria-label="Click Me" title='Click Me' onClick={() => handleqty('minus', mdl.modal._id, mdl.brand._id)} className="size-10  border border-blue-gray-600">
+                                                                    <button type="button" aria-label="Click Me" title='Click Me' onClick={() => handleqty('minus', mdl?.modal?._id, mdl.brand?._id)} className="size-10  border border-blue-gray-600">
                                                                         <MinusOutlined />
                                                                     </button>
-                                                                    <input type="text" value={qty.find(obj => obj.modal == mdl.modal._id)?.quantity ?? 0} readOnly name="" id="" className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
-                                                                    <button type='button' title='Increase button' onClick={() => handleqty('plus', mdl.modal._id, mdl.brand._id)} className="size-10 border border-blue-gray-600">
+                                                                    <input type="text" value={qty.find(obj => obj.modal == mdl?.modal?._id)?.quantity ?? 0} readOnly className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
+                                                                    <button type='button' title='Increase button' onClick={() => handleqty('plus', mdl?.modal?._id, mdl?.brand?._id)} className="size-10 border border-blue-gray-600">
                                                                         <PlusOutlined />
                                                                     </button>
                                                                 </div>
@@ -390,7 +390,7 @@ const SingleProduct: React.FC = () => {
                                         <SectionDevider />
                                     </div>
                                     <SectionTitle title='Related Products' />
-                                    <SimilarProducts category_url={product?.category.url} />
+                                    <SimilarProducts category_url={product?.category?.url} />
                                 </>
                             )
                         }
