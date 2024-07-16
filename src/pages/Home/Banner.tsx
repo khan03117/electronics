@@ -48,7 +48,7 @@ const Banner: React.FC<Prop> = ({ type }) => {
                     {
                         banner.map((bnnr) => (
                             <Link to={'/'} className='lg:rounded-lg block rounded-none  p-0  w-full '>
-                                <div className="w-full max-h-[375px] relative lg:rounded-lg rounded-none overflow-hidden ">
+                                <div className="w-full h-full relative lg:rounded-lg rounded-none overflow-hidden ">
                                     <img src={base_url_img + bnnr.image} alt="" className="w-full h-full" />
                                     <div className="absolute top-[50%] translate-y-[-50%] start-5 z-10 lg:w-1/2 w-3/4 ">
                                         {
