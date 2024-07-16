@@ -65,7 +65,7 @@ const ProductSlider: React.FC<Prop> = ({ product, offer }) => {
             </>
           )
         }
-        <figure className="w-full lg:h-80 h-52 overflow-hidden">
+        <figure className="w-full lg:h-80 h-52 flex justify-center items-center overflow-hidden">
           <img src={base_url_img + image} alt="" className="h-auto object-contain max-w-full mx-auto" />
         </figure>
         <div className="w-full lg:px-5 px-1 py-4 text-center">
