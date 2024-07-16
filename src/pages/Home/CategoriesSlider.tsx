@@ -70,8 +70,8 @@ const CategoriesSlider = () => {
             {
                 breakpoint: 768, // At or below 768px
                 settings: {
-                    slidesToShow: 10,
-                    slidesToScroll: 4,
+                    slidesToShow: 4,
+                    slidesToScroll: 10,
                     infinite: true,
                     dots: false,
                     navs: false,
