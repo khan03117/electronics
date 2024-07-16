@@ -63,7 +63,6 @@ const SingleProduct: React.FC = () => {
     }
     const { id } = useParams();
     const token: string | null = localStorage.getItem('_token') ?? null;
-
     interface Quantity { product: string | undefined; modal: string | undefined; brand: string | undefined; quantity: number | undefined; price: number | undefined; }
     const [qty, setQty] = useState<Quantity[]>([]);
     // const [mobj, setMobj] = useState<Quantity>();
@@ -157,7 +156,7 @@ const SingleProduct: React.FC = () => {
 
     const handleqty = (action: string, id: string, bid: string) => {
         if (token) {
-            const modal = product?.modals.find(obj => obj.modal._id == id && obj.brand._id == bid);
+            const modal = product?.modals.find(obj => obj?.modal?._id == id && obj?.brand?._id == bid);
             if (modal) {
                 const arr = [...qty];
                 const idx = arr.findIndex(obj => obj.modal == modal?.modal._id && obj.brand == modal.brand._id);
@@ -328,7 +327,6 @@ const SingleProduct: React.FC = () => {
                                                                             </div>
                                                                         </div>
                                                                     </div>
-
                                                                 </div>
                                                             </div>
                                                         </>
