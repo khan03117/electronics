@@ -307,7 +307,7 @@ const SingleProduct: React.FC = () => {
                                                     <div className="grid grid-cols-2 gap-4">
                                                         <div className="col-span-1">
                                                             <label htmlFor="" className=''>
-                                                                {mdl.brand.title}  /  {mdl.modal.title}
+                                                                {mdl?.brand?.title}  /  {mdl?.modal?.title}
                                                             </label>
 
                                                         </div>
