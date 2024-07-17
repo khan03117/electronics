@@ -43,7 +43,7 @@ const Offers: React.FC = () => {
     }
     const [items, setItem] = useState<Itm[]>([]);
     const getdata = async () => {
-        await axios.get(base_url + 'offer').then(rsp => {
+        await axios.get(base_url + 'offer/active').then(rsp => {
             setItem(rsp.data.data)
         })
     }
