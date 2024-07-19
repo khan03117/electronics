@@ -297,7 +297,7 @@ const SingleProduct: React.FC = () => {
                                 </div>
                                 <div className="w-full">
                                     <p className='text-sm font-bold'>
-                                        Availabel modal list {product?.modals.filter(obj => obj._id).length}
+                                        Availabel modal list {product?.modals.filter(obj => obj.modal?.title).length}
                                     </p>
                                     {
                                         product?.modals.map(mdl => (
