@@ -219,7 +219,7 @@ const Footer = () => {
       <section className="bg-black">
         <div className="w-full">
           <div className="w-full text-white p-3 text-center text-xs">
-            <p>Copyright {new Date().getFullYear()}, All Rights Reserved  <Link className='text-white/80 underline' to={'/'}>Krishna Botique</Link> </p>
+            <p>Copyright {new Date().getFullYear()}, All Rights Reserved  <Link className='text-white/80 underline' to={'/'}>Electronics Mobile Shop</Link> </p>
           </div>
         </div>
       </section>
