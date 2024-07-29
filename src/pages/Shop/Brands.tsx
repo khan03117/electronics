@@ -24,7 +24,7 @@ const Brands: React.FC = () => {
     return (
         <>
             <section>
-                <Banner type='Product' />
+                <Banner type='CTA' />
             </section>
             <section className="lg:py-10 py-5">
                 <div className="container">
