@@ -36,7 +36,7 @@ const Banner: React.FC<Prop> = ({ type }) => {
         customPaging: (index: number) => (
             <span className='inline-block border border-blue-gray-100 bannerdot size-2 bg-gray-100 rounded-full  '></span>
         ),
-        infinite: true,
+        infinite: banner.length > 1 ? true : false,
         loop: true,
         slidesToShow: 1,
         slidesToScroll: 1,
