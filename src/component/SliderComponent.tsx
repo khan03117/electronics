@@ -29,10 +29,10 @@ const SliderComponent: React.FC<{ products: Product[] }> = ({ products }) => {
     const settings = {
         dots: false,
         navs: true,
-        infinite: true,
+        infinite: products.length > 1 ? true : false,
         speed: 500,
         slidesToShow: 4,
-        slidesToScroll: 2,
+        slidesToScroll: 1,
         nextArrow: <NextArrow className={'btn'} />, // Use custom next arrow
         prevArrow: <PrevArrow className={'btn'} />,  // Use custom prev arrow,
         responsive: [
@@ -40,10 +40,11 @@ const SliderComponent: React.FC<{ products: Product[] }> = ({ products }) => {
                 breakpoint: 1200, // At or below 1200px
                 settings: {
                     slidesToShow: 4,
-                    slidesToScroll: 2,
-                    infinite: true,
+                    slidesToScroll: 1,
+                
                     dots: false,
                     navs: true,
+                    infinite: products.length > 1 ? true : false,
                 }
             },
             {
@@ -51,7 +52,7 @@ const SliderComponent: React.FC<{ products: Product[] }> = ({ products }) => {
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 1,
-                    infinite: true,
+                    infinite: products.length > 1 ? true : false,
                     dots: false,
                     navs: true,
                 }
@@ -60,8 +61,8 @@ const SliderComponent: React.FC<{ products: Product[] }> = ({ products }) => {
                 breakpoint: 768, // At or below 768px
                 settings: {
                     slidesToShow: 2,
-                    slidesToScroll: 4,
-                    infinite: true,
+                    slidesToScroll: 1,
+                    infinite: products.length > 1 ? true : false,
                     dots: false,
                     navs: true,
                 }
