@@ -5,6 +5,7 @@ import { base_url, base_url_img } from '../../utils';
 import CartProduct from './CartProduct';
 //@ts-ignore
 import empty from '../../assets/cart.png'
+import { CloseOutlined } from '@ant-design/icons';
 
 
 const Cart: React.FC = () => {
@@ -107,18 +108,56 @@ const Cart: React.FC = () => {
                                 <div className="grid lg:grid-cols-6 grid-cols-1 gap-5">
                                     <div className="lg:col-span-4 col-span-12 overflow-hidden">
                                         <div className="w-full  overflow-x-auto">
-                                            <div className="grid lg:grid-cols-4 grid-cols-2 gap-3">
-                                                {
+                                            <div className="grid lg:grid-cols-1 grid-cols-1">
+                                                <div className="w-full overflow-x-auto overflow-y-hidden">
+                                                    <table className="w-full">
+                                                        <thead>
+                                                            <tr className='*:border *:border-blue-gray-200 *:text-xs *:p-2'>
+                                                                <th>Sr No</th>
+                                                                <th>Product</th>
 
-                                                    CartItems.length > 0 && CartItems.map(cr => (
-                                                        <>
-                                                            <div className="col-span-1">
-                                                                <CartProduct deleteitem={() => deleteCart(cr._id)} item={cr} />
-                                                            </div>
+                                                                <th>Modal</th>
+                                                                <th>Qty</th>
+                                                                <th>Price</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {
 
-                                                        </>
-                                                    ))
-                                                }
+                                                                CartItems.length > 0 && CartItems.map((cr, idx) => (
+                                                                    <>
+                                                                        <tr className='*:border *:truncate *:overflow-hidden *:text-nowrap *:border-blue-gray-200 *:text-xs *:p-2'>
+                                                                            <td>
+                                                                                {idx + 1}
+                                                                            </td>
+                                                                            <td>
+                                                                                {cr.product.title}
+                                                                            </td>
+
+                                                                            <td>
+                                                                                {cr?.brand?.title}  {cr?.modal?.title}
+                                                                            </td>
+                                                                            <td>
+                                                                                {cr.quantity}
+                                                                            </td>
+                                                                            <td>
+                                                                                {cr.quantity * cr.price}
+                                                                            </td>
+                                                                            <td>
+                                                                                <button onClick={() => deleteCart(cr._id)} title="remove" className='text-gray-600 size-6 rounded-full bg-gray-200'>
+                                                                                    <CloseOutlined />
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    </>
+                                                                ))
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
 
 
                                             </div>

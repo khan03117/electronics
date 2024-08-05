@@ -13,10 +13,12 @@ import SimilarProducts from './SimilarProducts';
 import SectionTitle from '../../component/SectionTitle';
 import SectionDevider from '../../component/SectionDevider';
 import LoginpopUP from '../../Layout/LoginpopUP';
+import { useCart } from '../../Layout/CartContext';
+import { Collapse } from '@material-tailwind/react';
 
 
 const SingleProduct: React.FC = () => {
-
+    const { setCartCount } = useCart();
     interface Brand {
         _id: string;
         title: string;
@@ -73,7 +75,16 @@ const SingleProduct: React.FC = () => {
     const [copen, setCopen] = useState<boolean>(false);
     const [wishlist, setWishlist] = useState<boolean>(false);
     const [lopen, setLopen] = useState(false);
-    const [discount, setDiscount] = useState<ProductDiscount>()
+    const [discount, setDiscount] = useState<ProductDiscount>();
+    const [fbrand, setFbrand] = useState('');
+    const handleFilter = (id: string) => {
+        if (fbrand == id) {
+            setFbrand('')
+        } else {
+            setFbrand(id);
+        }
+
+    }
     const getProduct = async () => {
         await axios.get(base_url + 'product/show/' + id).then(resp => {
             setProduct(resp.data.data);
@@ -128,6 +139,15 @@ const SingleProduct: React.FC = () => {
             setQty(transformedData);
         })
     }
+    const getcartcount = async () => {
+        await axios.get(base_url + 'cart/cart_count', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((resp) => {
+            setCartCount(resp.data.data);
+        })
+    }
     useEffect(() => {
         if (product && token) {
             getproductincart();
@@ -138,6 +158,7 @@ const SingleProduct: React.FC = () => {
     const location = useLocation();
     useEffect(() => {
         getProduct();
+        getcartcount();
     }, [location.pathname]);
 
     const settingsFor = {
@@ -155,6 +176,7 @@ const SingleProduct: React.FC = () => {
     const handlelopen = (val: boolean) => {
         setLopen(val);
     }
+    const [collapse, setCollapse] = useState(false);
 
     const handleqty = (action: string, id: string, bid: string) => {
         if (token) {
@@ -256,11 +278,26 @@ const SingleProduct: React.FC = () => {
             }
         }).then(resp => {
             if (resp.data.succes == "1") {
+                getcartcount();
                 setCopen(true);
             }
 
         })
+        getcartcount();
     }
+    const getUniqueBrands = () => {
+        const modals = product?.modals.filter(brand => brand.brand.title); // Extract brands
+        interface UArr { _id: string, title: string }
+        const arr: UArr[] = [];
+        modals && modals?.forEach(itm => {
+            const check = arr.find(obj => obj._id == itm.brand._id);
+            if (!check) {
+                arr.push({ _id: itm.brand._id, title: itm.brand.title });
+            }
+        });
+        return arr;
+
+    };
     const discountvalue = discount ? discount.discount_percent * 0.01 : 0;
     const price = product?.price ?? 0;
     return (
@@ -347,42 +384,164 @@ const SingleProduct: React.FC = () => {
                                                 <p className='text-sm font-bold'>
                                                     Availabel modal list {product?.modals.filter(obj => obj.modal?.title).length}
                                                 </p>
+                                                <h4 className='text-sm font-bold mb-3'> Filter :</h4>
+                                                <div className="w-full overflow-x-auto pb-1 flex gap-3 items-center">
+
+                                                    {
+                                                        getUniqueBrands().map((itm) => (
+                                                            <>
+                                                                <button onClick={() => handleFilter(itm._id)} className={`p-2 ${fbrand == itm._id ? 'bg-primary text-white' : 'bg-gray-400 text-black'}  rounded text-nowrap text-xs`}>
+                                                                    {itm.title}
+                                                                </button>
+                                                            </>
+                                                        ))
+                                                    }
+                                                </div>
                                                 {
-                                                    product?.modals.map(mdl => (
+                                                    fbrand && (
                                                         <>
                                                             {
-                                                                mdl?.modal?._id && (
+                                                                product?.modals.filter(obj => obj.brand._id == fbrand).map((mdl) => (
                                                                     <>
+                                                                        {
+                                                                            mdl?.modal?._id && (
+                                                                                <>
 
-                                                                        <div className="w-full py-2">
-                                                                            <div className="grid grid-cols-2 gap-4">
-                                                                                <div className="col-span-1">
-                                                                                    <label htmlFor="" className=''>
-                                                                                        {mdl?.brand?.title}  &nbsp;  {mdl?.modal?.title}
-                                                                                    </label>
+                                                                                    <div className="w-full py-2">
+                                                                                        <div className="grid grid-cols-2 gap-4">
+                                                                                            <div className="col-span-1">
+                                                                                                <label htmlFor="" className=''>
+                                                                                                    {mdl?.brand?.title}  &nbsp;  {mdl?.modal?.title}
+                                                                                                </label>
 
-                                                                                </div>
-                                                                                <div className="col-span-1">
-                                                                                    <div className="w-full flex justify-end">
-                                                                                        <div className="inline-flex">
-                                                                                            <button type="button" aria-label="Click Me" title='Click Me' onClick={() => handleqty('minus', mdl?.modal?._id, mdl.brand?._id)} className="size-10  border border-blue-gray-600">
-                                                                                                <MinusOutlined />
-                                                                                            </button>
-                                                                                            <input type="text" value={qty.find(obj => obj.modal == mdl?.modal?._id)?.quantity ?? 0} readOnly className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
-                                                                                            <button type='button' title='Increase button' onClick={() => handleqty('plus', mdl?.modal?._id, mdl?.brand?._id)} className="size-10 border border-blue-gray-600">
-                                                                                                <PlusOutlined />
-                                                                                            </button>
+                                                                                            </div>
+                                                                                            <div className="col-span-1">
+                                                                                                <div className="w-full flex justify-end">
+                                                                                                    <div className="inline-flex">
+                                                                                                        <button type="button" aria-label="Click Me" title='Click Me' onClick={() => handleqty('minus', mdl?.modal?._id, mdl.brand?._id)} className="size-10  border border-blue-gray-600">
+                                                                                                            <MinusOutlined />
+                                                                                                        </button>
+                                                                                                        <input type="text" value={qty.find(obj => obj.modal == mdl?.modal?._id)?.quantity ?? 0} readOnly className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
+                                                                                                        <button type='button' title='Increase button' onClick={() => handleqty('plus', mdl?.modal?._id, mdl?.brand?._id)} className="size-10 border border-blue-gray-600">
+                                                                                                            <PlusOutlined />
+                                                                                                        </button>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                            </div>
+                                                                                </>
+                                                                            )
+                                                                        }
+                                                                    </>
+                                                                ))
+                                                            }
+                                                        </>
+                                                    )
+                                                }
+
+                                                {
+                                                    !fbrand && (
+                                                        <>
+                                                            {
+                                                                product?.modals.slice(0, 4).map((mdl) => (
+                                                                    <>
+                                                                        {
+                                                                            mdl?.modal?._id && (
+                                                                                <>
+
+                                                                                    <div className="w-full py-2">
+                                                                                        <div className="grid grid-cols-2 gap-4">
+                                                                                            <div className="col-span-1">
+                                                                                                <label htmlFor="" className=''>
+                                                                                                    {mdl?.brand?.title}  &nbsp;  {mdl?.modal?.title}
+                                                                                                </label>
+
+                                                                                            </div>
+                                                                                            <div className="col-span-1">
+                                                                                                <div className="w-full flex justify-end">
+                                                                                                    <div className="inline-flex">
+                                                                                                        <button type="button" aria-label="Click Me" title='Click Me' onClick={() => handleqty('minus', mdl?.modal?._id, mdl.brand?._id)} className="size-10  border border-blue-gray-600">
+                                                                                                            <MinusOutlined />
+                                                                                                        </button>
+                                                                                                        <input type="text" value={qty.find(obj => obj.modal == mdl?.modal?._id)?.quantity ?? 0} readOnly className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
+                                                                                                        <button type='button' title='Increase button' onClick={() => handleqty('plus', mdl?.modal?._id, mdl?.brand?._id)} className="size-10 border border-blue-gray-600">
+                                                                                                            <PlusOutlined />
+                                                                                                        </button>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </>
+                                                                            )
+                                                                        }
+                                                                    </>
+                                                                ))
+                                                            }
+                                                            {
+                                                                product?.modals && product?.modals.length > 4 && (
+                                                                    <>
+
+                                                                        <div className="w-full">
+                                                                            <button onClick={() => setCollapse(!collapse)} className="w-full bg-gray-200 p-2 text-sm flex justify-between border-b border-blue-gray-400">
+                                                                                <span>View All Modals</span>
+                                                                                <span>
+                                                                                    {
+                                                                                        collapse ? <MinusOutlined /> : <PlusOutlined />
+                                                                                    }
+
+                                                                                </span>
+                                                                            </button>
                                                                         </div>
+                                                                        <Collapse open={collapse}>
+
+                                                                            {
+                                                                                product?.modals.slice(4).map(mdl => (
+                                                                                    <>
+                                                                                        {
+                                                                                            mdl?.modal?._id && (
+                                                                                                <>
+
+                                                                                                    <div className="w-full py-2">
+                                                                                                        <div className="grid grid-cols-2 gap-4">
+                                                                                                            <div className="col-span-1">
+                                                                                                                <label htmlFor="" className=''>
+                                                                                                                    {mdl?.brand?.title}  &nbsp;  {mdl?.modal?.title}
+                                                                                                                </label>
+
+                                                                                                            </div>
+                                                                                                            <div className="col-span-1">
+                                                                                                                <div className="w-full flex justify-end">
+                                                                                                                    <div className="inline-flex">
+                                                                                                                        <button type="button" aria-label="Click Me" title='Click Me' onClick={() => handleqty('minus', mdl?.modal?._id, mdl.brand?._id)} className="size-10  border border-blue-gray-600">
+                                                                                                                            <MinusOutlined />
+                                                                                                                        </button>
+                                                                                                                        <input type="text" value={qty.find(obj => obj.modal == mdl?.modal?._id)?.quantity ?? 0} readOnly className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
+                                                                                                                        <button type='button' title='Increase button' onClick={() => handleqty('plus', mdl?.modal?._id, mdl?.brand?._id)} className="size-10 border border-blue-gray-600">
+                                                                                                                            <PlusOutlined />
+                                                                                                                        </button>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </>
+                                                                                            )
+                                                                                        }
+                                                                                    </>
+                                                                                ))
+                                                                            }
+                                                                        </Collapse>
                                                                     </>
                                                                 )
                                                             }
                                                         </>
-                                                    ))
+                                                    )
                                                 }
+
+
+
                                             </div>
                                         </>
                                     )

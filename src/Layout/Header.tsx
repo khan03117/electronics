@@ -11,12 +11,14 @@ import {
     MenuItem
 } from '@material-tailwind/react';
 import LoginpopUP from './LoginpopUP';
+import { useCart } from './CartContext';
 
 const Header = () => {
+    const { cartCount } = useCart();
     const location = useLocation();
     const [open, setOpen] = useState(false);
     const token: string | undefined | null = localStorage.getItem('_token');
-    const signuphandle = (val : boolean) => {
+    const signuphandle = (val: boolean) => {
         setOpen(val);
     }
     const logout = () => {
@@ -56,7 +58,9 @@ const Header = () => {
                         </div>
                         <div className="lg:col-span-2 col-span-6 lg:order-3 order-2 lg:block hidden">
                             <div className="w-full text-end">
-                                <Link to={'/cart'} className='lg:text-[1.5rem] text-[1.2rem] pl-4'> <ShoppingCartOutlined /></Link>
+                                <Link to={'/cart'} className='lg:text-[1.5rem] inline-block text-[1.2rem] pl-4 relative'>
+                                    <span className='absolute -top-1 -end-2 inline-block bg-red-600 text-white rounded-full size-5 text-xs text-center leading-5'>{cartCount}</span>
+                                    <ShoppingCartOutlined /></Link>
                                 {
                                     !token ? (
                                         <>
