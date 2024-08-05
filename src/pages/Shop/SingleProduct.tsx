@@ -36,6 +36,8 @@ const SingleProduct: React.FC = () => {
         title: string;
         price: number;
         mrp: number;
+        moq: number;
+        stock: number;
         images: string[];
         modals: {
             brand: Brand;
@@ -63,7 +65,7 @@ const SingleProduct: React.FC = () => {
     }
     const { id } = useParams();
     const token: string | null = localStorage.getItem('_token') ?? null;
-    interface Quantity { product: string | undefined; modal: string | undefined; brand: string | undefined; quantity: number | undefined; price: number | undefined; }
+    interface Quantity { product: string | undefined; modal?: string | undefined; brand?: string | undefined; quantity: number | undefined; price: number | undefined; }
     const [qty, setQty] = useState<Quantity[]>([]);
     // const [mobj, setMobj] = useState<Quantity>();
     const [s_section, setSection] = useState('specifications');
@@ -199,9 +201,53 @@ const SingleProduct: React.FC = () => {
         }
 
     }
+    const handleqtySingle = (action: string) => {
+
+        if (token) {
+
+            const arr = [...qty];
+
+            const idx = arr.findIndex(obj => obj.product == product?._id);
+            if (action == "plus") {
+
+                if (idx > -1) {
+                    const nqty = (arr[idx]?.quantity ?? 0 + (product?.moq ? product?.moq : 0))
+                    arr[idx].quantity = nqty;
+                    addtocart(arr[idx]);
+                    setQty(arr);
+
+                } else {
+                    const obj = {
+                        product: product?._id,
+                        quantity: product?.moq,
+                        price: product?.price
+                    }
+                    addtocart(obj)
+                    arr.push(obj);
+                    setQty(arr);
+                }
+            }
+            if (action == 'minus') {
+                if (arr[idx]) {
+                    if (idx > -1 && typeof arr[idx]?.quantity === 'number') {
+                        const currentQuantity = arr[idx].quantity ?? 0;
+                        const moq = product?.moq ?? 0; // Default moq to 0 if modal is undefined
+                        const newQuantity = Math.max(currentQuantity - moq, 0); // Ensure new quantity is non-negative
+                        arr[idx].quantity = newQuantity;
+                        addtocart(arr[idx]);
+                        setQty(arr);
+                    }
+                }
+
+            }
+            setCopen(true);
+        } else {
+            setLopen(true);
+        }
+
+    }
 
     const addtocart = async (obj: Quantity) => {
-
         await axios.post(base_url + 'cart', obj, {
             headers: {
                 'Accept': "application/json",
@@ -214,8 +260,6 @@ const SingleProduct: React.FC = () => {
             }
 
         })
-
-
     }
     const discountvalue = discount ? discount.discount_percent * 0.01 : 0;
     const price = product?.price ?? 0;
@@ -295,47 +339,76 @@ const SingleProduct: React.FC = () => {
                                         }
                                     </button>
                                 </div>
-                                <div className="w-full">
-                                    <p className='text-sm font-bold'>
-                                        Availabel modal list {product?.modals.filter(obj => obj.modal?.title).length}
-                                    </p>
-                                    {
-                                        product?.modals.map(mdl => (
-                                            <>
+                                {
+                                    product?.product_type != "single" && (
+                                        <>
+
+                                            <div className="w-full">
+                                                <p className='text-sm font-bold'>
+                                                    Availabel modal list {product?.modals.filter(obj => obj.modal?.title).length}
+                                                </p>
                                                 {
-                                                    mdl?.modal?._id && (
+                                                    product?.modals.map(mdl => (
                                                         <>
+                                                            {
+                                                                mdl?.modal?._id && (
+                                                                    <>
 
-                                                            <div className="w-full py-2">
-                                                                <div className="grid grid-cols-2 gap-4">
-                                                                    <div className="col-span-1">
-                                                                        <label htmlFor="" className=''>
-                                                                            {mdl?.brand?.title}  &nbsp;  {mdl?.modal?.title}
-                                                                        </label>
+                                                                        <div className="w-full py-2">
+                                                                            <div className="grid grid-cols-2 gap-4">
+                                                                                <div className="col-span-1">
+                                                                                    <label htmlFor="" className=''>
+                                                                                        {mdl?.brand?.title}  &nbsp;  {mdl?.modal?.title}
+                                                                                    </label>
 
-                                                                    </div>
-                                                                    <div className="col-span-1">
-                                                                        <div className="w-full flex justify-end">
-                                                                            <div className="inline-flex">
-                                                                                <button type="button" aria-label="Click Me" title='Click Me' onClick={() => handleqty('minus', mdl?.modal?._id, mdl.brand?._id)} className="size-10  border border-blue-gray-600">
-                                                                                    <MinusOutlined />
-                                                                                </button>
-                                                                                <input type="text" value={qty.find(obj => obj.modal == mdl?.modal?._id)?.quantity ?? 0} readOnly className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
-                                                                                <button type='button' title='Increase button' onClick={() => handleqty('plus', mdl?.modal?._id, mdl?.brand?._id)} className="size-10 border border-blue-gray-600">
-                                                                                    <PlusOutlined />
-                                                                                </button>
+                                                                                </div>
+                                                                                <div className="col-span-1">
+                                                                                    <div className="w-full flex justify-end">
+                                                                                        <div className="inline-flex">
+                                                                                            <button type="button" aria-label="Click Me" title='Click Me' onClick={() => handleqty('minus', mdl?.modal?._id, mdl.brand?._id)} className="size-10  border border-blue-gray-600">
+                                                                                                <MinusOutlined />
+                                                                                            </button>
+                                                                                            <input type="text" value={qty.find(obj => obj.modal == mdl?.modal?._id)?.quantity ?? 0} readOnly className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
+                                                                                            <button type='button' title='Increase button' onClick={() => handleqty('plus', mdl?.modal?._id, mdl?.brand?._id)} className="size-10 border border-blue-gray-600">
+                                                                                                <PlusOutlined />
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                                    </>
+                                                                )
+                                                            }
                                                         </>
-                                                    )
+                                                    ))
                                                 }
-                                            </>
-                                        ))
-                                    }
-                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                }
+                                {
+                                    product?.product_type == "single" && (
+                                        <>
+                                            <div className="grid grid-cols-2 mt-5">
+                                                <div className="col-span-1"></div>
+                                                <div className="col-span-1">
+                                                    <div className="w-full flex justify-end">
+                                                        <div className="inline-flex">
+                                                            <button type="button" aria-label="Click Me" title='Click Me' onClick={() => handleqtySingle('minus')} className="size-10  border border-blue-gray-600">
+                                                                <MinusOutlined />
+                                                            </button>
+                                                            <input type="text" value={'1'} readOnly className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
+                                                            <button type='button' title='Increase button' onClick={() => handleqtySingle('plus')} className="size-10 border border-blue-gray-600">
+                                                                <PlusOutlined />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                }
 
 
 
