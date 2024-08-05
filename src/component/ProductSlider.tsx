@@ -72,7 +72,7 @@ const ProductSlider: React.FC<Prop> = ({ product, offer }) => {
           <h4 className="md:text-[1.2rem] text-md md:mb-4 mb-1 font-bold truncate">{product.title}</h4>
 
           <p className="text-primary lg:text-lg text-sm md:mb-5 mb-2  productPrice">
-            <span className="text-gray-600 me-3 lg:text-sm text-xs line-through">₹ {(product.price * 1.18).toFixed(2)}</span>  <span >₹ {(product.price * (1 - discount)).toFixed(2)}</span>
+            <span className="text-gray-600 me-3 lg:text-sm text-xs line-through">₹ {(product.mrp ? product.mrp : product.price * 1.18).toFixed(2)}</span>  <span >₹ {(product.price * (1 - discount)).toFixed(2)}</span>
           </p>
           <div className="w-full md:mb-5 mb-0 text-center flex items-center justify-center">
             <button type='button' className="md:px-4 md:py-2 px-2 py-1 uppercase text-xs   rounded-full bg-gray-700/30 text-black ">Add to Cart</button>
