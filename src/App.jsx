@@ -35,8 +35,8 @@ function App() {
           <Route path='/contact' element={<Contact />} />
           <Route path='/orders' element={<Orders />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/shop/category/:url?/:suburl?/:burl?' element={<Shop />} />
-          <Route path='/shop/brand/:burl' element={<Shop />} />
+          <Route path='/shop/:type/:url?/:suburl?/:burl?' element={<Shop />} />
+          <Route path='/shop/:type/:burl' element={<Shop />} />
           <Route path='/policy/:url' element={<Polcy />} />
           <Route path='/faq' element={<Faq />} />
           <Route path='/offers' element={<Offers />} />

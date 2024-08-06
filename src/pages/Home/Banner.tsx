@@ -8,8 +8,9 @@ import { Link } from 'react-router-dom';
 
 interface Prop {
     type: string;
+    sub_type?: string | null | undefined;
 }
-const Banner: React.FC<Prop> = ({ type }) => {
+const Banner: React.FC<Prop> = ({ type, sub_type }) => {
     interface Banner {
         image: string;
         _id: string;
@@ -18,7 +19,7 @@ const Banner: React.FC<Prop> = ({ type }) => {
     }
     const [banner, setData] = React.useState<Banner[]>([]);
     const getcategories = async () => {
-        await axios.get(base_url + 'banner?type=' + type).then(resp => {
+        await axios.get(base_url + 'banner?type=' + type + '&sub_type=' + sub_type).then(resp => {
             setData(resp.data.data)
         })
     }

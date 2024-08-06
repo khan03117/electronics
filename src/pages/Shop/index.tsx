@@ -5,20 +5,20 @@ import { CloseOutlined, DownOutlined, FilterOutlined, PlusOutlined } from "@ant-
 // import Shorting from "./Shorting";
 import { base_url, base_url_img } from "../../utils";
 import axios from "axios";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Banner from "../Home/Banner";
 import CategoriesSlider from "../Home/CategoriesSlider";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { NextArrow, PrevArrow } from "../../component/Arrows";
-import SectionTitle from "../../component/SectionTitle";
+// import SectionTitle from "../../component/SectionTitle";
 import SectionDevider from "../../component/SectionDevider";
 
 const Shop = () => {
     const location = useLocation();
-    const { url, suburl, burl } = useParams();
-    const navigate = useNavigate();
+    const { url, suburl, burl, type } = useParams();
+
     const [open, setOpen] = useState('');
     const [filo, setFilO] = useState<boolean>(false);
     const [fshow, setFshow] = useState<boolean>(false);
@@ -83,6 +83,8 @@ const Shop = () => {
     const [allProducts, setAllProducts] = useState<Product[]>([]);
     const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
     const [subcategory_id, setSubcategoryId] = useState<string>(suburl ?? 'null');
+    const [sub_type, setSubType] = React.useState('');
+
     const settings = {
         dots: false,
         navs: true,
@@ -136,14 +138,12 @@ const Shop = () => {
         })
     }
     const getsubcategory = async () => {
-
         const foundcategory = categories.find(obj => obj.url == scategory);
         if (foundcategory) {
             await axios.get(base_url + 'subcategory?category=' + foundcategory._id).then(resp => {
                 setSubcategories(resp.data.data);
             })
         }
-
     }
     useEffect(() => {
         getsubcategory();
@@ -158,7 +158,6 @@ const Shop = () => {
         if (found) {
             setSubcategoryId(found._id)
         }
-
     }, [subcategories])
 
 
@@ -167,6 +166,23 @@ const Shop = () => {
             setSellers(resp.data.data)
         })
     }
+    useEffect(() => {
+        const findSid = () => {
+            if (type == "brand") {
+                const found = sellers.find(obj => obj.url == seller_id);
+                if (found) {
+                    setSubType(found._id)
+                }
+            }
+            if (type == "category") {
+                const found = categories.find(obj => obj.url == scategory);
+                if (found) {
+                    setSubType(found._id)
+                }
+            }
+        }
+        findSid();
+    }, [sellers])
     const getcategories = async () => {
         await axios.get(base_url + 'category').then((resp) => {
             setCategory(resp.data.data)
@@ -186,9 +202,6 @@ const Shop = () => {
             setSubcategoryId(found._id)
         }
         setFshow(false);
-
-
-
     }, [location.pathname]);
 
 
@@ -459,11 +472,24 @@ const Shop = () => {
                 </>
 
             }
-            <section >
-                <div className="w-full mx-auto">
-                    <Banner type="Product" />
-                </div>
-            </section>
+
+            <>
+                <section >
+                    <div className="w-full mx-auto">
+                        {
+                            type && (
+                                <>
+                                    <Banner type={type} sub_type={sub_type ?? false} />
+                                </>
+                            )
+                        }
+
+                    </div>
+                </section>
+            </>
+
+
+
 
 
 
