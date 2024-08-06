@@ -233,11 +233,12 @@ const SingleProduct: React.FC = () => {
             if (action == "plus") {
 
                 if (idx > -1) {
-                    const nqty = (arr[idx]?.quantity ?? 0 + (product?.moq ? product?.moq : 0))
+                    const p_moq = product?.moq ?? 0;
+                    const c_count = arr[idx]?.quantity ?? 0;
+                    const nqty = c_count + p_moq;
                     arr[idx].quantity = nqty;
                     addtocart(arr[idx]);
                     setQty(arr);
-
                 } else {
                     const obj = {
                         product: product?._id,
@@ -262,6 +263,10 @@ const SingleProduct: React.FC = () => {
                 }
 
             }
+            async () => {
+                await getproductincart();
+            }
+
             setCopen(true);
         } else {
             setLopen(true);
@@ -382,6 +387,7 @@ const SingleProduct: React.FC = () => {
 
                                             <div className="w-full">
                                                 <p className='text-sm font-bold'>
+
                                                     Availabel modal list {product?.modals.filter(obj => obj.modal?.title).length}
                                                 </p>
                                                 <h4 className='text-sm font-bold mb-3'> Filter :</h4>
@@ -557,7 +563,7 @@ const SingleProduct: React.FC = () => {
                                                             <button type="button" aria-label="Click Me" title='Click Me' onClick={() => handleqtySingle('minus')} className="size-10  border border-blue-gray-600">
                                                                 <MinusOutlined />
                                                             </button>
-                                                            <input type="text" value={'1'} readOnly className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
+                                                            <input type="text" value={qty.find(obj => obj.product == product._id)?.quantity ?? 1} readOnly className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
                                                             <button type='button' title='Increase button' onClick={() => handleqtySingle('plus')} className="size-10 border border-blue-gray-600">
                                                                 <PlusOutlined />
                                                             </button>
