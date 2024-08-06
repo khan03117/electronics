@@ -477,11 +477,11 @@ const Shop = () => {
                 <section >
                     <div className="w-full mx-auto">
                         {
-                            type && (
-                                <>
-                                    <Banner type={type} sub_type={sub_type ?? false} />
-                                </>
-                            )
+
+                            <>
+                                <Banner type={type ?? 'product'} sub_type={sub_type ?? false} />
+                            </>
+
                         }
 
                     </div>

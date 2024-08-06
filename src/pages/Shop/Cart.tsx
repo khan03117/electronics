@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { base_url, base_url_img } from '../../utils';
-import CartProduct from './CartProduct';
+import { base_url } from '../../utils';
+// import CartProduct from './CartProduct';
 //@ts-ignore
 import empty from '../../assets/cart.png'
 import { CloseOutlined } from '@ant-design/icons';
+import { useCart } from '../../Layout/CartContext';
 
 
 const Cart: React.FC = () => {
+    const { setCartCount } = useCart();
     const token: string | null = localStorage.getItem('_token') ?? null;
     interface Product {
         _id: string;
@@ -82,6 +84,15 @@ const Cart: React.FC = () => {
     useEffect(() => {
         findTotal()
     }, [CartItems]);
+    const get_cart_count = async () => {
+        await axios.get(base_url + 'cart/cart_count', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((resp) => {
+            setCartCount(resp.data.data);
+        })
+    }
     const deleteCart = async (id: string) => {
         const token = localStorage.getItem('_token');
         if (!token) {
@@ -94,6 +105,7 @@ const Cart: React.FC = () => {
             },
         });
         await getcart_items();
+        get_cart_count();
     }
 
 

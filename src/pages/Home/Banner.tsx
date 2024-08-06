@@ -25,7 +25,7 @@ const Banner: React.FC<Prop> = ({ type, sub_type }) => {
     }
     React.useEffect(() => {
         getcategories();
-    }, [])
+    }, [type, sub_type])
     var settings = {
         autoplay: true,
         speed: 400,
