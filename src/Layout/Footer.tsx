@@ -1,6 +1,6 @@
 import { FacebookFilled, HeartOutlined, HomeFilled, HomeOutlined, InstagramFilled, PhoneFilled, RedEnvelopeFilled, ShopOutlined, ShoppingCartOutlined, TwitterSquareFilled, WhatsAppOutlined } from '@ant-design/icons'
 //@ts-ignore
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.jpeg'
 import { Link, useLocation } from 'react-router-dom'
 import React, { useState } from 'react'
 import axios from 'axios'

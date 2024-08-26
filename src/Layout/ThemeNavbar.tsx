@@ -9,7 +9,7 @@ import {
 // @ts-ignore
 // import suportimg from '../assets/support.png';
 // @ts-ignore
-import logoimg from './../assets/logo.png';
+import logoimg from './../assets/logo.jpeg';
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from "react-router-dom";
 import MobileSidebar from "./MobileSidebar";

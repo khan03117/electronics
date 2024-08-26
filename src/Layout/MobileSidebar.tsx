@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { CloseOutlined } from '@ant-design/icons';
 // @ts-ignore
-import logoimg from './../assets/logo.png';
+import logoimg from './../assets/logo.jpeg';
 // @ts-ignore
 import brandimg from "../assets/brand-image.png";
 

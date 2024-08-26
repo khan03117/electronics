@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 // @ts-ignore
-import logoimg from './../assets/logo.png';
+import logoimg from './../assets/logo.jpeg';
 import { DashboardOutlined, HeartFilled, LogoutOutlined, OrderedListOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import ThemeNavbar from './ThemeNavbar';
 import {
