@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 // @ts-ignore
 import logoimg from './../assets/logo.jpeg';
-import { DashboardOutlined, HeartFilled, LogoutOutlined, OrderedListOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+import { HeartFilled, LogoutOutlined, OrderedListOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import ThemeNavbar from './ThemeNavbar';
 import {
     Menu,
@@ -71,7 +71,7 @@ const Header = () => {
                                             <Menu>
                                                 <MenuHandler>
                                                     <button title='menu icon' className='ms-4 lg:text-[1.5rem] text-[1.2rem]'>
-                                                        <DashboardOutlined />
+                                                        <UserOutlined />
                                                     </button>
                                                 </MenuHandler>
                                                 <MenuList placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>

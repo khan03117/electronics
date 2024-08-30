@@ -3,7 +3,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { HeartFilled, HeartOutlined, MinusOutlined, PlusOutlined, StarFilled } from '@ant-design/icons';
+import { CloseOutlined, HeartFilled, HeartOutlined, MinusOutlined, PlusOutlined, StarFilled } from '@ant-design/icons';
 import Specification from './Specification';
 import Reviews from './Reviews';
 import axios from 'axios';
@@ -14,11 +14,12 @@ import SectionTitle from '../../component/SectionTitle';
 import SectionDevider from '../../component/SectionDevider';
 import LoginpopUP from '../../Layout/LoginpopUP';
 import { useCart } from '../../Layout/CartContext';
-import { Collapse } from '@material-tailwind/react';
+import { Collapse, Dialog, DialogBody, DialogHeader } from '@material-tailwind/react';
 
 
 const SingleProduct: React.FC = () => {
     const { setCartCount } = useCart();
+
     interface Brand {
         _id: string;
         title: string;
@@ -77,6 +78,9 @@ const SingleProduct: React.FC = () => {
     const [lopen, setLopen] = useState(false);
     const [discount, setDiscount] = useState<ProductDiscount>();
     const [fbrand, setFbrand] = useState('');
+    const [zoom, setzoom] = React.useState(false)
+    const [zoomimg, setzoomimg] = React.useState("")
+
     const handleFilter = (id: string) => {
         if (fbrand == id) {
             setFbrand('')
@@ -305,9 +309,36 @@ const SingleProduct: React.FC = () => {
     };
     const discountvalue = discount ? discount.discount_percent * 0.01 : 0;
     const price = product?.price ?? 0;
+
+    const signuphandle = () => {
+        setzoom(!zoom);
+    }
+
     return (
         <>
+            {zoom && <>
+                <Dialog
+                    open={zoom} handler={(e) => ""} className="z-[1059] bg-[transparent] shadow-none " size='lg' placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}
+                >
+                    <div className="flex justify-center">
+                        <div className="relative w-full flex justify-center w-max ">
+                            <img
+                                src={base_url_img + zoomimg}
+                                alt=""
+                                className="w-full lg:h-[600px] h-auto rounded-lg object-contain"
+                            />
+                            <button
+                                onClick={signuphandle}
+                                className="absolute top-2 right-2 z-[4444] bg-white shadow p-2 rounded-md"
+                            >
+                                <CloseOutlined />
+                            </button>
+                        </div>
+                    </div>
+                </Dialog>
 
+
+            </>}
             <LoginpopUP isopen={lopen} setOpen={handlelopen} />
             <section className="lg:py-10 py-4" id="singleproduct">
                 <div className="container mx-auto">
@@ -325,7 +356,7 @@ const SingleProduct: React.FC = () => {
                                                             ['jpg', 'jpeg', 'png', 'avif', 'webp'].includes(itm.split('.')[itm.split('.').length - 1].toLocaleLowerCase()) && (
                                                                 <>
                                                                     <figure className="w-full border border-blue-gray-200  rounded-2xl overflow-hidden ">
-                                                                        <img src={base_url_img + itm} alt="" className="w-full lg:h-[500px] h-[430px] object-contain" />
+                                                                        <img src={base_url_img + itm} alt="" onClick={(e) => { setzoom(true); setzoomimg(itm) }} className="w-full lg:h-[500px] h-[430px] object-contain" />
                                                                     </figure>
                                                                 </>
                                                             )
