@@ -94,9 +94,11 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
                     <div className="col-span-4">
                         <div className="w-full h-full flex flex-col">
                             <Link to={'/brands'}>
-                                <button className=' w-full text-xs  text-start border px-2 border-blue-gray-200 py-6'>
-                                    <div className='inline-flex gap-2'>
-                                        <img src={brandimg} alt='image' className="size-4"></img>
+                                <button className=' w-full text-xs  bg-[#d9d9e3] text-start border px-2 border-blue-gray-200 py-6'>
+                                    <div className='text-center'>
+                                        <div className="flex justify-center">
+                                            <img src={brandimg} alt="" className={` size-10 p-[8px] rounded-full  bg-[#d9d9e3]`} />
+                                        </div>
                                         <p>Top Brand</p>
                                     </div>
                                 </button>
@@ -105,13 +107,17 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
                                 category.map(cat =>
                                 (
                                     <>
-                                        <button onClick={() => setScat(cat.url)} className={`w-full text-xs  text-start border px-2 border-blue-gray-200 py-6 ${scat == cat.url ? 'bg-blue-gray-100' : 'bg-white'}`}>
-                                            <div className="inline-flex gap-2">
-                                                <img src={base_url_img + cat.image} alt="" className="size-4" />  {cat.title}
+                                        <button onClick={() => setScat(cat.url)} className={`w-full text-xs text-start border px-2 border-blue-gray-200 py-6 ${scat == cat.url ? 'bg-white border-0 border-l-4 border-primary' : 'bg-[#ecedf1] '}`}>
+                                            <div className=" gap-2 text-center">
+                                                <div className="flex justify-center">
+                                                    <img src={base_url_img + cat.image} alt="" className={` size-10 p-[8px] rounded-full ${scat == cat.url ? ' bg-[#ffe5fb]' : 'bg-[#d9d9e3]'}`} />
+                                                </div>
+                                                <h5 className={`${scat == cat.url ? ' text-primary font-bold' : 'text-black'}`}> {cat.title}</h5>
                                             </div>
                                         </button>
                                     </>
                                 )
+
                                 )
                             }
                         </div>
@@ -127,7 +133,7 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
                                                     <>
                                                         <div className="col-span-1 ">
                                                             <Link to={'/single-product/' + prod.url}>
-                                                                <figure className="w-full p-4 border border-blue-gray-200">
+                                                                <figure className="w-full p-4  ">
                                                                     <img
                                                                         src={base_url_img + prod.images[0]}
                                                                         onError={(e) => {
@@ -137,6 +143,7 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
                                                                         alt=""
                                                                         className="size-10 mx-auto "
                                                                     />
+                                                                    {/* <h5 className='text-sm'>{prod.title}</h5> */}
                                                                 </figure>
                                                             </Link>
                                                         </div>
