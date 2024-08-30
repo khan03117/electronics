@@ -522,7 +522,7 @@ const SingleProduct: React.FC = () => {
 
                                                                         <div className="w-full">
                                                                             <button onClick={() => setCollapse(!collapse)} className="w-full bg-gray-200 p-2 text-sm flex justify-between border-b border-blue-gray-400">
-                                                                                <span>View All Modals</span>
+                                                                                <span>{collapse ? "Hide All Modals" : "View All Modals"}</span>
                                                                                 <span>
                                                                                     {
                                                                                         collapse ? <MinusOutlined /> : <PlusOutlined />
