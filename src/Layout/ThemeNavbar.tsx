@@ -47,7 +47,7 @@ const ThemeNavbar = () => {
     }
     const searachproduct = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const val = e.target.value;
-        if (val.length > 3) {
+        if (val.length > 2) {
             const resp = await axios.get(base_url + 'product/search/' + val);
             setProucts(resp.data.data)
         } else {
