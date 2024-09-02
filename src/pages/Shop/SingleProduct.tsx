@@ -317,7 +317,7 @@ const SingleProduct: React.FC = () => {
                     open={zoom} handler={(e) => ""} className="z-[1059] bg-[transparent] shadow-none " size='lg' placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}
                 >
                     <div className="flex justify-center">
-                        <div className="relative w-full flex justify-center w-max ">
+                        <div className="relative w-full flex justify-center ">
                             <img
                                 src={base_url_img + zoomimg}
                                 alt=""
@@ -414,12 +414,10 @@ const SingleProduct: React.FC = () => {
 
                                             <div className="w-full">
                                                 <p className='text-sm font-bold'>
-
                                                     Availabel modal list {product?.modals.filter(obj => obj.modal?.title).length}
                                                 </p>
                                                 <h4 className='text-sm font-bold mb-3'> Filter :</h4>
                                                 <div className="w-full overflow-x-auto pb-1 flex gap-3 items-center">
-
                                                     {
                                                         getUniqueBrands().map((itm) => (
                                                             <>
@@ -614,7 +612,7 @@ const SingleProduct: React.FC = () => {
                                                             <button type="button" aria-label="Click Me" title='Click Me' onClick={() => handleqtySingle('minus')} className="size-10  border border-blue-gray-600">
                                                                 <MinusOutlined />
                                                             </button>
-                                                            <input type="text" value={qty.find(obj => obj.product == product._id)?.quantity ?? 1} readOnly className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
+                                                            <input type="text" value={qty.find(obj => obj.product == product._id)?.quantity ?? product.moq ?? 1} readOnly className="size-10 text-center leading-12 border-t text-xs font-bold border-b border-blue-gray-600" />
                                                             <button type='button' title='Increase button' onClick={() => handleqtySingle('plus')} className="size-10 border border-blue-gray-600">
                                                                 <PlusOutlined />
                                                             </button>

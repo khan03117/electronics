@@ -24,6 +24,12 @@ const Shop = () => {
     const [scategory, setScategory] = useState<string>(url ? url : '');
     const [filterby, setFilterBy] = useState<string>('');
     const popupRef = useRef<HTMLDivElement | null>(null);
+    console.log({
+        url: url,
+        suburl: suburl,
+        burl: burl,
+        type: type
+    });
     interface MCategory {
         image: string;
         _id: string;
@@ -130,7 +136,14 @@ const Shop = () => {
         setScategory(url ? url : scategory)
     }, [location.pathname, categories])
     const getproducts = async () => {
-        await axios.get(base_url + 'product/shop?category_url=' + scategory + '&seller=' + seller_id + '&subcategory=' + subcategory_id).then((resp) => {
+        let url = `${base_url}product/shop?category_url=${scategory}&subcategory=${subcategory_id}`;
+        if (type == "brand") {
+            url = `${base_url}product/shop?seller=${scategory}&subcategory=${subcategory_id}`
+        }
+        if (type == "category") {
+            url = `${base_url}product/shop?category_url=${scategory}&subcategory=${subcategory_id}`
+        }
+        await axios.get(url).then((resp) => {
             setProduct(resp.data.data)
         })
     }
@@ -156,8 +169,6 @@ const Shop = () => {
             setSubcategoryId(found._id)
         }
     }, [subcategories])
-
-
     const getsellers = async () => {
         await axios.get(base_url + 'seller').then((resp) => {
             setSellers(resp.data.data)
@@ -194,6 +205,7 @@ const Shop = () => {
         } else {
             setSellerId('')
         }
+
         const found = subcategories.find(obj => obj.url == suburl);
         if (found) {
             setSubcategoryId(found._id)
@@ -234,6 +246,17 @@ const Shop = () => {
         }
 
     }
+    const handleBannerSubtype = () => {
+        if (type == "brand") {
+            const find = sellers.find(itm => itm.url == url);
+            if (find) {
+                return find._id;
+            }
+        }
+    }
+    useEffect(() => {
+        handleBannerSubtype()
+    }, [sellers])
     useEffect(() => {
         const products = catproducts.flatMap(categoryWithProducts => categoryWithProducts.category.products);
         setAllProducts(products);
@@ -469,20 +492,24 @@ const Shop = () => {
 
             }
 
-            <>
-                <section >
-                    <div className="w-full mx-auto">
-                        {
 
-                            <>
-                                <Banner type={type ?? 'product'} sub_type={sub_type ?? false} />
-                            </>
+            {
+                (sellers.length > 0 && categories.length > 0 && allProducts.length > 0) && (
+                    <>
+                        <section >
+                            <div className="w-full mx-auto">
+                                {
 
-                        }
+                                    <>
+                                        <Banner type={type ?? 'product'} sub_type={handleBannerSubtype()} />
+                                    </>
 
-                    </div>
-                </section>
-            </>
+                                }
+
+                            </div>
+                        </section>
+                    </>
+                )}
 
 
 

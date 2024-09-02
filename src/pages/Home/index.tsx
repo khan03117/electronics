@@ -118,11 +118,22 @@ const Home = () => {
             <h2 className="sectiontitle">Shop By Brand</h2>
           </div>
           <div className="w-full">
-            <Banner type='CTA' />
+            <Banner type='brand' />
           </div>
         </div>
       </section>
       <SectionDevider />
+      <section className="md:py-10 py-1">
+        <div className="w-full">
+          <div className="container mx-auto">
+            <div className="grid lg:grid-cols-4 grid-cols-2 gap-3">
+              <div className="col-span-1">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       {
         ['Recently Viewed'].map((itm) => (
           <>
