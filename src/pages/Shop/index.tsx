@@ -18,15 +18,12 @@ import SectionDevider from "../../component/SectionDevider";
 const Shop = () => {
     const location = useLocation();
     const { url, suburl, burl, type } = useParams();
-
     const [open, setOpen] = useState('');
     const [filo, setFilO] = useState<boolean>(false);
     const [fshow, setFshow] = useState<boolean>(false);
     const [scategory, setScategory] = useState<string>(url ? url : '');
-
     const [filterby, setFilterBy] = useState<string>('');
     const popupRef = useRef<HTMLDivElement | null>(null);
-
     interface MCategory {
         image: string;
         _id: string;
@@ -207,7 +204,6 @@ const Shop = () => {
 
     useEffect(() => {
         getproducts();
-        console.log(seller_id)
     }, [scategory, subcategory_id, location.pathname, sellers, seller_id,])
     const handlefilter = () => {
         setFilO(prev => !prev);
@@ -497,6 +493,34 @@ const Shop = () => {
 
             <section id="productitem" className="md:py-10 py-5">
                 <div className="container mx-auto">
+                    <div className="w-full">
+                        {
+                            type == "category" && (
+                                <>
+                                    {
+                                        categories.find(itm => itm.url == url) && (
+                                            <>
+                                                <h4 className="sectiontitle">
+                                                    {categories.find(itm => itm.url == url)?.title}
+                                                </h4>
+                                            </>
+                                        )
+                                    }
+
+                                </>
+                            )
+                        }
+                        {
+                            (!type && !url) && (
+                                <>
+                                    {
+                                        <h4 className="sectiontitle">Shop</h4>
+                                    }
+
+                                </>
+                            )
+                        }
+                    </div>
                     <div className="grid lg:grid-cols-5 grid-cols-1">
                         <div className="hidden col-span-1 ">
                             <div className="md:hidden hidden mb-5">

@@ -57,10 +57,24 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
     const [category, setCategories] = React.useState<Category[]>([]);
     const [scat, setScat] = React.useState<string>('');
     const [catproducts, setProduct] = React.useState<CategoryWithProducts[]>([]);
+    interface Brand { url: string, image: string, title: string }
+    const [brands, setBrands] = React.useState<Brand[]>([]);
     const getproducts = async () => {
-        const caturl = scat ? scat : category.length > 0 ? category[0].url : '';
-        await axios.get(base_url + 'product/shop?category_url=' + caturl).then((resp) => {
-            setProduct(resp.data.data)
+        if (scat) {
+            const caturl = scat ? scat : category.length > 0 ? category[0].url : '';
+            await axios.get(base_url + 'product/shop?category_url=' + caturl).then((resp) => {
+                setProduct(resp.data.data);
+                setBrands([])
+            })
+        }
+    }
+    const brandsShow = async () => {
+        setScat('')
+        await axios.get(base_url + 'seller').then((resp) => {
+            const itm = resp.data.data;
+            setBrands(itm);
+            setProduct([]);
+
         })
     }
     const getcategories = async () => {
@@ -76,7 +90,7 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
     }, []);
     React.useEffect(() => {
         getproducts();
-    }, [category, scat])
+    }, [scat])
     return (
         <>
             <div className={`w-full transition-all overflow-hidden py-3 z-[9999999] duration-500 fixed top-0 start-0 h-screen bg-white ${!open ? 'translate-x-[-100%]' : 'translate-x-[0]'}`}>
@@ -98,16 +112,16 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
 
 
                             <div className="w-full h-full flex flex-col">
-                                <Link to={'/brands'}>
-                                    <button className=' w-full text-xs  bg-[#d9d9e3] text-start border px-2 border-blue-gray-200 py-6'>
-                                        <div className='text-center'>
-                                            <div className="flex justify-center">
-                                                <img src={brandimg} alt="" className={` size-10 p-[8px] rounded-full  bg-[#d9d9e3]`} />
-                                            </div>
-                                            <p>Top Brand</p>
+
+                                <button onClick={brandsShow} className={`w-full text-xs text-start border px-2 border-blue-gray-200 py-6 ${brands.length > 0 ? 'bg-white border-0 border-l-4 border-primary' : 'bg-[#ecedf1] '}`}>
+                                    <div className='text-center'>
+                                        <div className="flex justify-center">
+                                            <img src={brandimg} alt="" className={` size-10 p-[8px] rounded-full  bg-[#d9d9e3]`} />
                                         </div>
-                                    </button>
-                                </Link>
+                                        <p>Top Brand</p>
+                                    </div>
+                                </button>
+
                                 {category.map(cat => (
                                     <>
                                         <button onClick={() => setScat(cat.url)} className={`w-full text-xs text-start border px-2 border-blue-gray-200 py-6 ${scat == cat.url ? 'bg-white border-0 border-l-4 border-primary' : 'bg-[#ecedf1] '}`}>
@@ -128,6 +142,38 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
                     <div className="col-span-9">
                         <PerfectScrollbar className='max-h-[85vh] overflow-x-hidden'>
                             <div className="w-full">
+                                {
+                                    brands.length > 0 && (
+                                        <>
+                                            <div className="grid grid-cols-3 gap-2">
+                                                {
+                                                    brands.map(prod => (
+                                                        <>
+                                                            <div className="col-span-1 ">
+                                                                <Link to={'/shop/brand/' + prod.url} className='w-full h-full flex items-center justify-center'>
+                                                                    <figure className="w-full p-2 h-full   border border-blue-gray-400 rounded-lg">
+                                                                        <img
+                                                                            src={base_url_img + prod.image}
+                                                                            onError={(e) => {
+                                                                                const target = e.target as HTMLImageElement;
+                                                                                target.src = "https://upciclo.com/media/catalog/product/cache/6005d9038b6e8ecaa962eaa7c92a6c42/d/e/desk.jpg";
+                                                                            }}
+                                                                            alt=""
+                                                                            className="max-w-full h-20  object-contain mx-auto "
+                                                                        />
+                                                                        <h5 className='text-sm'>{prod.title}</h5>
+                                                                    </figure>
+                                                                </Link>
+                                                            </div>
+
+
+                                                        </>
+                                                    ))
+                                                }
+                                            </div>
+                                        </>
+                                    )
+                                }
                                 <div className="grid grid-cols-3 gap-2">
                                     {
                                         catproducts.map(pdt => (
