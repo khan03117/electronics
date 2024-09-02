@@ -7,6 +7,8 @@ import { CloseOutlined } from '@ant-design/icons';
 import logoimg from './../assets/logo.jpeg';
 // @ts-ignore
 import brandimg from "../assets/brand-image.png";
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
 interface Prop {
     open: boolean;
@@ -77,7 +79,7 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
     }, [category, scat])
     return (
         <>
-            <div className={`w-full transition-all py-3 z-[9999999] duration-500 fixed top-0 start-0 h-screen bg-white ${!open ? 'translate-x-[-100%]' : 'translate-x-[0]'}`}>
+            <div className={`w-full transition-all overflow-hidden py-3 z-[9999999] duration-500 fixed top-0 start-0 h-screen bg-white ${!open ? 'translate-x-[-100%]' : 'translate-x-[0]'}`}>
                 <div className="grid grid-cols-12 gap-2">
                     <div className="col-span-12">
                         <div className="w-full p-3">
@@ -86,26 +88,27 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
                                     <CloseOutlined />
                                 </button>
                                 <Link className="inline-block" to={'/'}>
-                                    <img src={logoimg} className="w-20" alt="" />
+                                    <img src={logoimg} className="max-w-[160px]" alt="" />
                                 </Link>
                             </div>
                         </div>
                     </div>
-                    <div className="col-span-4">
-                        <div className="w-full h-full flex flex-col">
-                            <Link to={'/brands'}>
-                                <button className=' w-full text-xs  bg-[#d9d9e3] text-start border px-2 border-blue-gray-200 py-6'>
-                                    <div className='text-center'>
-                                        <div className="flex justify-center">
-                                            <img src={brandimg} alt="" className={` size-10 p-[8px] rounded-full  bg-[#d9d9e3]`} />
+                    <div className="col-span-3">
+                        <PerfectScrollbar className='max-h-[85vh] overflow-x-hidden'>
+
+
+                            <div className="w-full h-full flex flex-col">
+                                <Link to={'/brands'}>
+                                    <button className=' w-full text-xs  bg-[#d9d9e3] text-start border px-2 border-blue-gray-200 py-6'>
+                                        <div className='text-center'>
+                                            <div className="flex justify-center">
+                                                <img src={brandimg} alt="" className={` size-10 p-[8px] rounded-full  bg-[#d9d9e3]`} />
+                                            </div>
+                                            <p>Top Brand</p>
                                         </div>
-                                        <p>Top Brand</p>
-                                    </div>
-                                </button>
-                            </Link>
-                            {
-                                category.map(cat =>
-                                (
+                                    </button>
+                                </Link>
+                                {category.map(cat => (
                                     <>
                                         <button onClick={() => setScat(cat.url)} className={`w-full text-xs text-start border px-2 border-blue-gray-200 py-6 ${scat == cat.url ? 'bg-white border-0 border-l-4 border-primary' : 'bg-[#ecedf1] '}`}>
                                             <div className=" gap-2 text-center">
@@ -115,48 +118,50 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
                                                 <h5 className={`${scat == cat.url ? ' text-primary font-bold' : 'text-black'}`}> {cat.title}</h5>
                                             </div>
                                         </button>
-                                    </>
-                                )
+                                    </>)
 
-                                )
-                            }
-                        </div>
-                    </div>
-                    <div className="col-span-8">
-                        <div className="w-full">
-                            <div className="grid grid-cols-3 gap-2">
-                                {
-                                    catproducts.map(pdt => (
-                                        <>
-                                            {
-                                                pdt.category.products.map(prod => (
-                                                    <>
-                                                        <div className="col-span-1 ">
-                                                            <Link to={'/single-product/' + prod.url}>
-                                                                <figure className="w-full p-4  ">
-                                                                    <img
-                                                                        src={base_url_img + prod.images[0]}
-                                                                        onError={(e) => {
-                                                                            const target = e.target as HTMLImageElement;
-                                                                            target.src = "https://upciclo.com/media/catalog/product/cache/6005d9038b6e8ecaa962eaa7c92a6c42/d/e/desk.jpg";
-                                                                        }}
-                                                                        alt=""
-                                                                        className="size-10 mx-auto "
-                                                                    />
-                                                                    {/* <h5 className='text-sm'>{prod.title}</h5> */}
-                                                                </figure>
-                                                            </Link>
-                                                        </div>
-                                                    </>
-                                                ))
-                                            }
-
-
-                                        </>
-                                    ))
-                                }
+                                )}
                             </div>
-                        </div>
+
+                        </PerfectScrollbar>
+                    </div>
+                    <div className="col-span-9">
+                        <PerfectScrollbar className='max-h-[85vh] overflow-x-hidden'>
+                            <div className="w-full">
+                                <div className="grid grid-cols-3 gap-2">
+                                    {
+                                        catproducts.map(pdt => (
+                                            <>
+                                                {
+                                                    pdt.category.products.map(prod => (
+                                                        <>
+                                                            <div className="col-span-1 ">
+                                                                <Link to={'/single-product/' + prod.url} className='w-full h-full flex items-center justify-center'>
+                                                                    <figure className="w-full p-2 h-full   border border-blue-gray-400 rounded-lg">
+                                                                        <img
+                                                                            src={base_url_img + prod.images[0]}
+                                                                            onError={(e) => {
+                                                                                const target = e.target as HTMLImageElement;
+                                                                                target.src = "https://upciclo.com/media/catalog/product/cache/6005d9038b6e8ecaa962eaa7c92a6c42/d/e/desk.jpg";
+                                                                            }}
+                                                                            alt=""
+                                                                            className="max-w-full h-20  object-contain mx-auto "
+                                                                        />
+                                                                        {/* <h5 className='text-sm'>{prod.title}</h5> */}
+                                                                    </figure>
+                                                                </Link>
+                                                            </div>
+                                                        </>
+                                                    ))
+                                                }
+
+
+                                            </>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                        </PerfectScrollbar>
                     </div>
                 </div>
             </div>

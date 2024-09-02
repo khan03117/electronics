@@ -143,7 +143,7 @@ const ThemeNavbar = () => {
 
             <Navbar className="mx-auto rounded-none lg:bg-opacity-100 lg:bg-transparent lg:border-none max-w-full w-full px-3 py-0  shadow-none" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
                 <div className="flex w-full items-center justify-between ">
-                    <div className="lg:hidden block text-black">
+                    <div className="lg:hidden inline-flex items-center gap-3 text-black">
                         <button className="  inline-block text-black h-6 w-6 relative -top-1 me-2 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
 
                             onClick={() => setOpenNav(!openNav)}
@@ -155,7 +155,7 @@ const ThemeNavbar = () => {
                             )}
                         </button>
                         <Link className="inline-block" to={'/'}>
-                            <img src={logoimg} className="w-20" alt="" />
+                            <img src={logoimg} className="max-w-[160px]" alt="" />
                         </Link>
                     </div>
                     <div className="hidden lg:block">
@@ -185,7 +185,7 @@ const ThemeNavbar = () => {
                                         <Menu>
                                             <MenuHandler>
                                                 <button title='menu icon' className='ms-4 lg:text-[1.5rem] text-[1.2rem]'>
-                                                    <DashboardOutlined />
+                                                    <UserOutlined />
                                                 </button>
                                             </MenuHandler>
                                             <MenuList placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>

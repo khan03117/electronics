@@ -3,23 +3,22 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { CloseOutlined, HeartFilled, HeartOutlined, MinusOutlined, PlusOutlined, StarFilled } from '@ant-design/icons';
+import { ArrowDownOutlined, CloseOutlined, HeartFilled, HeartOutlined, MinusOutlined, PlusOutlined, StarFilled } from '@ant-design/icons';
 import Specification from './Specification';
 import Reviews from './Reviews';
 import axios from 'axios';
 import { base_url, base_url_img } from '../../utils';
-import Swal from 'sweetalert2';
+import { IoChevronDownSharp, IoChevronUpOutline } from "react-icons/io5";
 import SimilarProducts from './SimilarProducts';
 import SectionTitle from '../../component/SectionTitle';
 import SectionDevider from '../../component/SectionDevider';
 import LoginpopUP from '../../Layout/LoginpopUP';
 import { useCart } from '../../Layout/CartContext';
-import { Collapse, Dialog, DialogBody, DialogHeader } from '@material-tailwind/react';
+import { Collapse, Dialog } from '@material-tailwind/react';
 
 
 const SingleProduct: React.FC = () => {
     const { setCartCount } = useCart();
-
     interface Brand {
         _id: string;
         title: string;
@@ -70,7 +69,6 @@ const SingleProduct: React.FC = () => {
     const token: string | null = localStorage.getItem('_token') ?? null;
     interface Quantity { product: string | undefined; modal?: string | undefined; brand?: string | undefined; quantity: number | undefined; price: number | undefined; }
     const [qty, setQty] = useState<Quantity[]>([]);
-    // const [mobj, setMobj] = useState<Quantity>();
     const [s_section, setSection] = useState('specifications');
     const [product, setProduct] = useState<Product>();
     const [copen, setCopen] = useState<boolean>(false);
@@ -80,14 +78,12 @@ const SingleProduct: React.FC = () => {
     const [fbrand, setFbrand] = useState('');
     const [zoom, setzoom] = React.useState(false)
     const [zoomimg, setzoomimg] = React.useState("")
-
     const handleFilter = (id: string) => {
         if (fbrand == id) {
             setFbrand('')
         } else {
             setFbrand(id);
         }
-
     }
     const getProduct = async () => {
         await axios.get(base_url + 'product/show/' + id).then(resp => {
@@ -519,18 +515,24 @@ const SingleProduct: React.FC = () => {
                                                             {
                                                                 product?.modals && product?.modals.length > 4 && (
                                                                     <>
+                                                                        {
+                                                                            !collapse && (
+                                                                                <>
 
-                                                                        <div className="w-full">
-                                                                            <button onClick={() => setCollapse(!collapse)} className="w-full bg-gray-200 p-2 text-sm flex justify-between border-b border-blue-gray-400">
-                                                                                <span>{collapse ? "Hide All Modals" : "View All Modals"}</span>
-                                                                                <span>
-                                                                                    {
-                                                                                        collapse ? <MinusOutlined /> : <PlusOutlined />
-                                                                                    }
+                                                                                    <div className="w-full text-center">
+                                                                                        <button onClick={() => setCollapse(!collapse)} className="mx-auto bg-primary/85 text-white py-2  px-5 text-sm inline-flex justify-between border-b rounded-full border-blue-gray-400">
+                                                                                            <span>{collapse ? "Hide All Modals" : "View All Modals"}</span>
+                                                                                            <span className='ms-4'>
+                                                                                                {
+                                                                                                    collapse ? <MinusOutlined /> : <IoChevronDownSharp />
+                                                                                                }
 
-                                                                                </span>
-                                                                            </button>
-                                                                        </div>
+                                                                                            </span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </>
+                                                                            )
+                                                                        }
                                                                         <Collapse open={collapse}>
 
                                                                             {
@@ -570,6 +572,24 @@ const SingleProduct: React.FC = () => {
                                                                                 ))
                                                                             }
                                                                         </Collapse>
+                                                                        {
+                                                                            collapse && (
+                                                                                <>
+
+                                                                                    <div className="w-full text-center">
+                                                                                        <button onClick={() => setCollapse(!collapse)} className=" bg-gray-900/80 rounded-full px-4 text-white mx-auto py-2 text-sm inline-flex justify-between border-b border-blue-gray-400">
+                                                                                            <span>{collapse ? "Hide All Modals" : "View All Modals"}</span>
+                                                                                            <span className='ms-4'>
+                                                                                                {
+                                                                                                    collapse ? <IoChevronUpOutline /> : <ArrowDownOutlined />
+                                                                                                }
+
+                                                                                            </span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </>
+                                                                            )
+                                                                        }
                                                                     </>
                                                                 )
                                                             }

@@ -77,14 +77,14 @@ const Header = () => {
                                     </div>
                                 </div>
                                 {
-                                    products.length > 0 && (
+                                    (products.length > 0 && keyword.length > 0) && (
                                         <>
-                                            <div className="absolute p-2 rounded-lg z-[1000] border border-blue-gray-200 h-[300px] overflow-y-auto overflow-x-hidden top-full start-0 w-full bg-white">
+                                            <div className="absolute p-2 rounded-lg z-[1000] border border-blue-gray-200 max-h-[300px] overflow-y-auto overflow-x-hidden top-full start-0 w-full bg-white">
                                                 <ul>
                                                     {
                                                         products.map(pdt => (
                                                             <>
-                                                                <li className="*:py-1 *:ps-1 last:border-none *:border-b *:border-blue-gray-300">
+                                                                <li className="*:py-1 *:ps-1  *:border-b *:border-blue-gray-300 last:border-none ">
                                                                     <Link className="w-full block" to={"/single-product/" + pdt.url}>
                                                                         <div className="flex ">
                                                                             <img src={base_url_img + pdt.images[0]} alt="" className="size-10 rounded-full" />

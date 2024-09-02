@@ -31,16 +31,16 @@ const Brands: React.FC = () => {
                     <div className="w-full mb-5">
                         <SectionTitle title='Top Brands' />
                     </div>
-                    <div className="grid lg:grid-cols-5 grid-cols-3 gap-4">
+                    <div className="grid lg:grid-cols-5 grid-cols-2 gap-4">
                         {
                             sellers.map(sellr => (
                                 <>
                                     <div className="col-span-1">
-                                        <Link to={'/shop/brand/' + sellr.url} className="w-full block border border-blue-gray-300 shadow-sm shadow-blue-gray-500 rounded-lg p-4 ">
+                                        <Link to={'/shop/brand/' + sellr.url} className="w-full h-full relative block border border-blue-gray-300 shadow-sm shadow-blue-gray-500 rounded-lg p-4 ">
 
-                                            <img src={base_url_img + sellr.image} alt="" className="size-20 mx-auto object-contain" />
-                                            <div className="w-full mt-4 text-center">
-                                                <h4 className="lg:text-lg text-xs font-bold">
+                                            <img src={base_url_img + sellr.image} alt="" className="max-w-full mx-auto object-contain" />
+                                            <div className="w-full mt-4 text-center ">
+                                                <h4 className="lg:text-lg uppercase  text-md  font-bold">
                                                     {sellr.title}
                                                 </h4>
                                             </div>
