@@ -87,7 +87,14 @@ body {
   padding-bottom: 0.5rem;
   margin-bottom: 0.7rem;
 }
-
+#cta {
+  /* background: #fffbfb; */
+    background: linear-gradient(#fdfdfddc, #fdfdfddc), url('./assets/ctabg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: top;
+}
 .sectiontitle::before {
   content: "";
   position: absolute;

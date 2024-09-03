@@ -8,7 +8,7 @@ import Testimonials from './Testimonials'
 import SectionDevider from '../../component/SectionDevider'
 import { useState } from 'react';
 import axios from 'axios'
-import { base_url } from '../../utils'
+import { base_url, base_url_img } from '../../utils'
 import ViewAll from './ViewAll'
 
 const Home = () => {
@@ -50,6 +50,14 @@ const Home = () => {
   }
   const [catproducts, setProduct] = useState<CategoryWithProducts[]>([]);
   const [rproducts, setRecommended] = useState<Product[]>([]);
+  interface Mycta { _id: string, icon: string, name: string, digit: string }
+  const [ctas, setCtas] = React.useState<Mycta[]>([]);
+  const getCtas = async () => {
+    await axios.get(base_url + "social/cta").then((resp) => {
+      setCtas(resp.data.data);
+    })
+
+  }
   const getproducts = async () => {
     await axios.get(base_url + 'product/shop').then((resp) => {
       setProduct(resp.data.data)
@@ -63,6 +71,7 @@ const Home = () => {
   useEffect(() => {
     recommended();
     getproducts();
+    getCtas();
   }, [])
   return (
     <>
@@ -122,14 +131,30 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <SectionDevider />
-      <section className="md:py-10 py-1">
+
+      <section className="md:py-10 py-5  " id="cta">
         <div className="w-full">
           <div className="container mx-auto">
             <div className="grid lg:grid-cols-4 grid-cols-2 gap-3">
-              <div className="col-span-1">
+              {
+                ctas.map((itm) => (
+                  <>
+                    <div className="col-span-1">
+                      <div className="w-full h-full  p-5 text-center">
+                        <figure className=" mx-auto mb-3 size-16 text-center leading-16 border border-dashed border-primary bg-primary/15 rounded-full p-2">
+                          <img src={base_url_img + itm.icon} className='mx-auto w-full' alt="" />
+                        </figure>
+                        <div className="w-full">
+                          <h4 className='font-bold text-md text-primary'>{itm.name}</h4>
+                          <h2 className='text-2xl font-bold text-blue-gray-600'>{itm.digit}</h2>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ))
+              }
 
-              </div>
+
             </div>
           </div>
         </div>
