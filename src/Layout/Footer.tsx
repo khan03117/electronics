@@ -1,6 +1,6 @@
 import { FacebookFilled, HeartOutlined, HomeFilled, HomeOutlined, InstagramFilled, PhoneFilled, RedEnvelopeFilled, ShopOutlined, ShoppingCartOutlined, TwitterSquareFilled, WhatsAppOutlined } from '@ant-design/icons'
 //@ts-ignore
-import logo from '../assets/logo.jpeg'
+import logo from '../assets/footer_logo.jpeg'
 import { Link, useLocation } from 'react-router-dom'
 import React, { useState } from 'react'
 import axios from 'axios'
@@ -90,7 +90,7 @@ const Footer = () => {
           <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2">
             <div className="lg:col-span-1 col-span-2">
               <figure className="w-full mb-5">
-                <img src={logo} alt="" className="max-w-full invert" />
+                <img src={logo} alt="" className="max-w-[80%]" />
               </figure>
               <ul className='*:py-2 *:text-sm'>
                 <li>
