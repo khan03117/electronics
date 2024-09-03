@@ -104,10 +104,10 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
     const visibleProducts = allProducts.slice(0, step);
     return (
         <>
-            <div className={`w-full transition-all overflow-hidden z-[9999999] duration-500 fixed top-0 start-0 h-screen bg-white ${!open ? 'translate-x-[-100%]' : 'translate-x-[0]'}`}>
+            <div className={`w-full transition-all overflow-hidden z-[9999999] duration-500 fixed top-0 start-0 h-lvh bg-white ${!open ? 'translate-x-[-100%]' : 'translate-x-[0]'}`}>
                 <div className="grid grid-cols-12 gap-2">
                     <div className="col-span-12">
-                        <div className="w-full p-3">
+                        <div className="w-full h-5">
                             <div className="flex gap-1">
                                 <button onClick={handlesidebar} type='button' className='me-4' title='Close button'>
                                     <CloseOutlined />
@@ -119,7 +119,7 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
                         </div>
                     </div>
                     <div className="col-span-3">
-                        <PerfectScrollbar className='max-h-[80vh] overflow-x-hidden'>
+                        <PerfectScrollbar className='max-h-[83vh] overflow-x-hidden'>
 
 
                             <div className="w-full h-full flex flex-col">
@@ -151,7 +151,7 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
                         </PerfectScrollbar>
                     </div>
                     <div className="col-span-9">
-                        <PerfectScrollbar className='max-h-[80vh] pe-3 overflow-x-hidden'>
+                        <PerfectScrollbar className='max-h-[83vh] pe-3 overflow-x-hidden'>
                             <div className="w-full">
                                 {
                                     brands.length > 0 && (
