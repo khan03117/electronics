@@ -10,6 +10,7 @@ import { useState } from 'react';
 import axios from 'axios'
 import { base_url, base_url_img } from '../../utils'
 import ViewAll from './ViewAll'
+import CategoriesScroll from './CategoriesScroll'
 
 const Home = () => {
   interface Product {
@@ -95,7 +96,13 @@ const Home = () => {
               <h2 className="sectiontitle">Shop By Category</h2>
             </div>
           </div>
-          <CategoriesSlider />
+          <div className="w-full md:hidden block">
+            <CategoriesScroll />
+          </div>
+          <div className="w-full md:block hidden">
+            <CategoriesSlider />
+          </div>
+
         </div>
 
       </section>

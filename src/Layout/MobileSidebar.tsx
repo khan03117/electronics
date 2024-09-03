@@ -93,7 +93,7 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
     }, [scat])
     return (
         <>
-            <div className={`w-full transition-all overflow-hidden py-3 z-[9999999] duration-500 fixed top-0 start-0 h-screen bg-white ${!open ? 'translate-x-[-100%]' : 'translate-x-[0]'}`}>
+            <div className={`w-full transition-all overflow-hidden z-[9999999] duration-500 fixed top-0 start-0 h-screen bg-white ${!open ? 'translate-x-[-100%]' : 'translate-x-[0]'}`}>
                 <div className="grid grid-cols-12 gap-2">
                     <div className="col-span-12">
                         <div className="w-full p-3">
@@ -140,7 +140,7 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
                         </PerfectScrollbar>
                     </div>
                     <div className="col-span-9">
-                        <PerfectScrollbar className='max-h-[85vh] overflow-x-hidden'>
+                        <PerfectScrollbar className='max-h-[85vh] pe-3 overflow-x-hidden'>
                             <div className="w-full">
                                 {
                                     brands.length > 0 && (
@@ -159,6 +159,7 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
                                                                                 target.src = "https://upciclo.com/media/catalog/product/cache/6005d9038b6e8ecaa962eaa7c92a6c42/d/e/desk.jpg";
                                                                             }}
                                                                             alt=""
+                                                                            loading='lazy'
                                                                             className="max-w-full h-20  object-contain mx-auto "
                                                                         />
                                                                         <h5 className='text-sm'>{prod.title}</h5>
@@ -191,6 +192,7 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
                                                                                 target.src = "https://upciclo.com/media/catalog/product/cache/6005d9038b6e8ecaa962eaa7c92a6c42/d/e/desk.jpg";
                                                                             }}
                                                                             alt=""
+                                                                            loading='lazy'
                                                                             className="max-w-full h-20  object-contain mx-auto "
                                                                         />
                                                                         {/* <h5 className='text-sm'>{prod.title}</h5> */}

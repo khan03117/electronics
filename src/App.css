@@ -95,6 +95,9 @@ body {
     background-attachment: fixed;
     background-position: top;
 }
+.slick-slide {
+  transform: translate3d(0, 0, 0);
+}
 .sectiontitle::before {
   content: "";
   position: absolute;
