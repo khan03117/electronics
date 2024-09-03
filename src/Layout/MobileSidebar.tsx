@@ -119,7 +119,7 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
                         </div>
                     </div>
                     <div className="col-span-3">
-                        <PerfectScrollbar className='max-h-[85vh] overflow-x-hidden'>
+                        <PerfectScrollbar className='max-h-[80vh] overflow-x-hidden'>
 
 
                             <div className="w-full h-full flex flex-col">
@@ -151,7 +151,7 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
                         </PerfectScrollbar>
                     </div>
                     <div className="col-span-9">
-                        <PerfectScrollbar className='max-h-[85vh] pe-3 overflow-x-hidden'>
+                        <PerfectScrollbar className='max-h-[80vh] pe-3 overflow-x-hidden'>
                             <div className="w-full">
                                 {
                                     brands.length > 0 && (

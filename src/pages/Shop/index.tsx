@@ -14,7 +14,6 @@ import "slick-carousel/slick/slick-theme.css";
 import { NextArrow, PrevArrow } from "../../component/Arrows";
 // import SectionTitle from "../../component/SectionTitle";
 import SectionDevider from "../../component/SectionDevider";
-import CategoriesScroll from "../Home/CategoriesScroll";
 
 const Shop = () => {
     const location = useLocation();
@@ -588,10 +587,8 @@ const Shop = () => {
                             {
                                 subcategories.length == 0 && (
                                     <>
-                                        <div className="w-full md:hidden block">
-                                            <CategoriesScroll />
-                                        </div>
-                                        <div className="w-full md:block hidden">
+
+                                        <div className="w-full">
                                             <CategoriesSlider />
                                         </div>
                                         <div className="w-full mb-4">
