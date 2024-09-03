@@ -107,6 +107,7 @@ body {
   border-top: 1px solid red;
 }
 
+
 .sectiontitle::after {
   content: "";
   position: absolute;

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import ProductSlider from "../../component/ProductSlider"
 import { Checkbox, Collapse } from "@material-tailwind/react";
-import { CloseOutlined, DownOutlined, FilterOutlined, PlusOutlined } from "@ant-design/icons";
+import { CloseOutlined, DownOutlined, PlusOutlined } from "@ant-design/icons";
 // import Shorting from "./Shorting";
 import { base_url, base_url_img } from "../../utils";
 import axios from "axios";
@@ -14,6 +14,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { NextArrow, PrevArrow } from "../../component/Arrows";
 // import SectionTitle from "../../component/SectionTitle";
 import SectionDevider from "../../component/SectionDevider";
+import CategoriesScroll from "../Home/CategoriesScroll";
 
 const Shop = () => {
     const location = useLocation();
@@ -587,7 +588,10 @@ const Shop = () => {
                             {
                                 subcategories.length == 0 && (
                                     <>
-                                        <div className="w-full ">
+                                        <div className="w-full md:hidden block">
+                                            <CategoriesScroll />
+                                        </div>
+                                        <div className="w-full md:block hidden">
                                             <CategoriesSlider />
                                         </div>
                                         <div className="w-full mb-4">
