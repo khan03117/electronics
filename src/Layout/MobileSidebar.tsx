@@ -107,7 +107,7 @@ const MobileSidebar: React.FC<Prop> = ({ open, setOpen }) => {
             <div className={`w-full transition-all overflow-hidden z-[9999999] duration-500 fixed top-0 start-0 h-lvh bg-white ${!open ? 'translate-x-[-100%]' : 'translate-x-[0]'}`}>
                 <div className="grid grid-cols-12 gap-2">
                     <div className="col-span-12">
-                        <div className="w-full h-5">
+                        <div className="w-full p-3">
                             <div className="flex gap-1">
                                 <button onClick={handlesidebar} type='button' className='me-4' title='Close button'>
                                     <CloseOutlined />
