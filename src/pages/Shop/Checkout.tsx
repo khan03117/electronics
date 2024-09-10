@@ -57,7 +57,7 @@ const Checkout = () => {
     const [location, setLocation] = useState<PostOffice[]>();
     const [user, setUser] = useState<User>();
     const [address_id, setAddressId] = useState<string>('')
-
+    const [loading, setLoading] = React.useState(false);
     const [alladd, setAlladd] = useState<UserAddress[]>([]);
     const getaddress = async () => {
         const resp = await axios.get(base_url + 'user/address', {
@@ -143,14 +143,16 @@ const Checkout = () => {
     const checkoutnow = async (action: string) => {
         if (validation()) {
             try {
+                setLoading(true)
                 const data = { ...fdata };
                 data['pincode'] = pincode;
                 data['address_id'] = address_id;
                 const resp = await axios.post(base_url + 'cart/checkout', data, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
+                setLoading(false);
                 if (resp.data.success == "1") {
-                    window.open(resp.data.data.payment_links?.web);
+                    window.location.href = resp.data.data.payment_links?.web;
                 }
 
 
@@ -202,150 +204,173 @@ const Checkout = () => {
     }, [success])
     return (
         <>
-            <section className="py-10">
-                <div className="container">
-                    <div className="grid lg:grid-cols-6 grid-cols-1">
-                        <div className="col-span-4">
-                            <div className="w-full">
-                                <div className="grid lg:grid-cols-3 grid-cols-1 gap-3">
-                                    <div className="lg:col-span-1 col-span-12 mb-5">
-                                        <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block' >Enter Name</label>
-                                        <div className="flex w-full">
-                                            <input type="text" onChange={handlefdata} name="name" id="name" value={fdata?.name ?? user?.name} className="p-2 w-full border border-blue-gray-300" />
-                                        </div>
-                                    </div>
-                                    <div className="lg:col-span-1 col-span-12 mb-5">
-                                        <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block' >Enter Email</label>
-                                        <div className="flex w-full">
-                                            <input type="text" onChange={handlefdata} name="email" id="email" value={fdata?.email ?? user?.email} className="p-2 w-full border border-blue-gray-300" />
-                                        </div>
-                                    </div>
-                                    <div className="col-span-4">
-                                        <div className="w-full mb-10">
-                                            <h4 className="py-2 sectiontitle">
-                                                Shipping Details
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <div className="lg:col-span-1 col-span-12 mb-5">
-                                        <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block' >Enter Pincode</label>
-                                        <div className="flex w-full">
-                                            <input type="tel" maxLength={6} value={pincode} onChange={handlePincodeChange} name="pincode" id="pincode" className="p-2 w-full border border-blue-gray-300" />
-                                        </div>
-                                    </div>
-                                    <div className="lg:col-span-3 col-span-12 mb-5">
-
-                                        <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Enter Address</label>
-                                        <input type="text" name="address" value={fdata?.address} onChange={handlefdata} className="px-4 py-2 w-full border border-blue-gray-300" />
-                                        <span className="text-deep-orange-500">
-                                            {errors.find(obj => obj.path == "address")?.msg}
-                                        </span>
-                                    </div>
-                                    <div className="lg:col-span-1 col-span-12 mb-5">
-                                        <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Enter city </label>
-                                        <input type="text" value={fdata?.city} readOnly name="city" onChange={handlefdata} className="px-4 py-2 w-full border border-blue-gray-300" />
-                                        <span className="text-deep-orange-500">
-                                            {errors.find(obj => obj.path == "city")?.msg}
-                                        </span>
-                                    </div>
-                                    <div className="lg:col-span-1 col-span-12 mb-5">
-                                        <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Enter State </label>
-                                        <input type="text" value={fdata?.state} readOnly name="state" onChange={handlefdata} className="px-4 py-2 w-full border border-blue-gray-300" />
-                                        <span className="text-deep-orange-500">
-                                            {errors.find(obj => obj.path == "state_id")?.msg}
-                                        </span>
-                                    </div>
-                                    <div className="lg:col-span-1 col-span-12 mb-5 hidden">
-                                        <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Select Mode</label>
-                                        <select title='payment_mode' name="payment_mode" onChange={handlefdata} id="payment_mode" className="py-2 px-2 w-full outline-none border border-blue-gray-500">
-                                            <option value="">---Select---</option>
-                                            <option value="Online">Online</option>
-                                            <option value="COD">COD</option>
-                                        </select>
-                                    </div>
-                                    <div className="lg:col-span-4 col-span-12 mb-5">
+            {
+                loading ? (
+                    <>
+                        <section>
+                            <div className="container">
+                                <div className="grid grid-cols-5">
+                                    <div className="col-span-1"></div>
+                                    <div className="col-span-1"></div>
+                                    <div className="col-span-1">
                                         <div className="w-full">
-                                            <button title='online' onClick={() => checkoutnow('online')} className="px-3 py-2   bg-primary  text-white shadow-md shadow-blue-gray-400">Place Order</button>
-
+                                            <img src="https://wpamelia.com/wp-content/uploads/2018/11/ezgif-2-6d0b072c3d3f.gif" alt="" className="mx-auto max-w-full" />
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-span-2">
-                            <div className="w-full px-4">
-                                <div className="w-full p-4 rounded-lg hidden shadow-md shadow-blue-gray-100 bg-deep-orange-50">
-                                    <table className="w-full hidden">
-                                        <tbody >
-                                            <tr className='*:p-2 *:text-sm'>
-                                                <td>
-                                                    Cart Items
-                                                </td>
-                                                <td>
-                                                    2
-                                                </td>
-                                            </tr>
-                                            <tr className='*:p-2 *:text-sm'>
-                                                <td>
-                                                    Cart total
-                                                </td>
-                                                <td>
-                                                    ₹ 2999.99
-                                                </td>
-                                            </tr>
-                                            <tr className='*:p-2 *:text-sm'>
-                                                <td>
-                                                    Delivery Charge
-                                                </td>
-                                                <td>
-                                                    ₹ 180.99
-                                                </td>
-                                            </tr>
-                                            <tr className='*:p-2 *:text-sm'>
-                                                <td>
-                                                    Discount
-                                                </td>
-                                                <td>
-                                                    ₹ 0.00
-                                                </td>
-                                            </tr>
-                                            <tr className='*:p-2 *:text-sm border-t border-blue-gray-200'>
-                                                <td>
-                                                    Net Amount
-                                                </td>
-                                                <td>
-                                                    ₹ 2999.99
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                        </section>
+                    </>
+                ) : (
+                    <>
 
-                                </div>
-                                <div className="w-full mt-5">
-                                    <h4 className="text-xl mb-3">Use Saved Address</h4>
-                                    <ul className='*:mb-3'>
-                                        {
-                                            alladd.map((add) => (
-                                                <>
-                                                    <li>
-                                                        <div className="w-full rounded-lg text-sm tracking-wider  ">
-                                                            <Checkbox checked={add._id == address_id} value={add._id} onChange={handleaddressid} className='border border-blue-gray-600' color='red' crossOrigin={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
-                                                            {add.address} {add.city} {add.state} {add.pincode}
-                                                        </div>
-                                                    </li>
-                                                </>
-                                            ))
-                                        }
+                        <section className="py-10">
+                            <div className="container">
+                                <div className="grid lg:grid-cols-6 grid-cols-1">
+                                    <div className="col-span-4">
+                                        <div className="w-full">
+                                            <div className="grid lg:grid-cols-3 grid-cols-1 gap-3">
+                                                <div className="lg:col-span-1 col-span-12 mb-5">
+                                                    <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block' >Enter Name</label>
+                                                    <div className="flex w-full">
+                                                        <input type="text" onChange={handlefdata} name="name" id="name" value={fdata?.name ?? user?.name} className="p-2 w-full border border-blue-gray-300" />
+                                                    </div>
+                                                </div>
+                                                <div className="lg:col-span-1 col-span-12 mb-5">
+                                                    <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block' >Enter Email</label>
+                                                    <div className="flex w-full">
+                                                        <input type="text" onChange={handlefdata} name="email" id="email" value={fdata?.email ?? user?.email} className="p-2 w-full border border-blue-gray-300" />
+                                                    </div>
+                                                </div>
+                                                <div className="col-span-4">
+                                                    <div className="w-full mb-10">
+                                                        <h4 className="py-2 sectiontitle">
+                                                            Shipping Details
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                                <div className="lg:col-span-1 col-span-12 mb-5">
+                                                    <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block' >Enter Pincode</label>
+                                                    <div className="flex w-full">
+                                                        <input type="tel" maxLength={6} value={pincode} onChange={handlePincodeChange} name="pincode" id="pincode" className="p-2 w-full border border-blue-gray-300" />
+                                                    </div>
+                                                </div>
+                                                <div className="lg:col-span-3 col-span-12 mb-5">
+
+                                                    <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Enter Address</label>
+                                                    <input type="text" name="address" value={fdata?.address} onChange={handlefdata} className="px-4 py-2 w-full border border-blue-gray-300" />
+                                                    <span className="text-deep-orange-500">
+                                                        {errors.find(obj => obj.path == "address")?.msg}
+                                                    </span>
+                                                </div>
+                                                <div className="lg:col-span-1 col-span-12 mb-5">
+                                                    <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Enter city </label>
+                                                    <input type="text" value={fdata?.city} readOnly name="city" onChange={handlefdata} className="px-4 py-2 w-full border border-blue-gray-300" />
+                                                    <span className="text-deep-orange-500">
+                                                        {errors.find(obj => obj.path == "city")?.msg}
+                                                    </span>
+                                                </div>
+                                                <div className="lg:col-span-1 col-span-12 mb-5">
+                                                    <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Enter State </label>
+                                                    <input type="text" value={fdata?.state} readOnly name="state" onChange={handlefdata} className="px-4 py-2 w-full border border-blue-gray-300" />
+                                                    <span className="text-deep-orange-500">
+                                                        {errors.find(obj => obj.path == "state_id")?.msg}
+                                                    </span>
+                                                </div>
+                                                <div className="lg:col-span-1 col-span-12 mb-5 hidden">
+                                                    <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Select Mode</label>
+                                                    <select title='payment_mode' name="payment_mode" onChange={handlefdata} id="payment_mode" className="py-2 px-2 w-full outline-none border border-blue-gray-500">
+                                                        <option value="">---Select---</option>
+                                                        <option value="Online">Online</option>
+                                                        <option value="COD">COD</option>
+                                                    </select>
+                                                </div>
+                                                <div className="lg:col-span-4 col-span-12 mb-5">
+                                                    <div className="w-full">
+                                                        <button title='online' onClick={() => checkoutnow('online')} className="px-3 py-2   bg-primary  text-white shadow-md shadow-blue-gray-400">Place Order</button>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-span-2">
+                                        <div className="w-full px-4">
+                                            <div className="w-full p-4 rounded-lg hidden shadow-md shadow-blue-gray-100 bg-deep-orange-50">
+                                                <table className="w-full hidden">
+                                                    <tbody >
+                                                        <tr className='*:p-2 *:text-sm'>
+                                                            <td>
+                                                                Cart Items
+                                                            </td>
+                                                            <td>
+                                                                2
+                                                            </td>
+                                                        </tr>
+                                                        <tr className='*:p-2 *:text-sm'>
+                                                            <td>
+                                                                Cart total
+                                                            </td>
+                                                            <td>
+                                                                ₹ 2999.99
+                                                            </td>
+                                                        </tr>
+                                                        <tr className='*:p-2 *:text-sm'>
+                                                            <td>
+                                                                Delivery Charge
+                                                            </td>
+                                                            <td>
+                                                                ₹ 180.99
+                                                            </td>
+                                                        </tr>
+                                                        <tr className='*:p-2 *:text-sm'>
+                                                            <td>
+                                                                Discount
+                                                            </td>
+                                                            <td>
+                                                                ₹ 0.00
+                                                            </td>
+                                                        </tr>
+                                                        <tr className='*:p-2 *:text-sm border-t border-blue-gray-200'>
+                                                            <td>
+                                                                Net Amount
+                                                            </td>
+                                                            <td>
+                                                                ₹ 2999.99
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                            <div className="w-full mt-5">
+                                                <h4 className="text-xl mb-3">Use Saved Address</h4>
+                                                <ul className='*:mb-3'>
+                                                    {
+                                                        alladd.map((add) => (
+                                                            <>
+                                                                <li>
+                                                                    <div className="w-full rounded-lg text-sm tracking-wider  ">
+                                                                        <Checkbox checked={add._id == address_id} value={add._id} onChange={handleaddressid} className='border border-blue-gray-600' color='red' crossOrigin={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+                                                                        {add.address} {add.city} {add.state} {add.pincode}
+                                                                    </div>
+                                                                </li>
+                                                            </>
+                                                        ))
+                                                    }
 
 
-                                    </ul>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                        </section>
+                    </>
+                )
+            }
         </>
     )
 }
