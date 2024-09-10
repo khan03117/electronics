@@ -47,16 +47,29 @@ const Cart: React.FC = () => {
     const [total, setTotal] = useState(0);
     const [code, setCode] = useState<string>('');
     const [discount, setDiscount] = useState<number>(0);
+    const [status, setStatus] = React.useState('');
 
+    const [message, setMessage] = React.useState('');
+    interface ApiResp { success: string, message: string, data: any }
     const apply_promo = async () => {
-        const data = await axios.post(base_url + 'cart/apply-promo', { promo_code: code }, {
+        const data: ApiResp = await axios.post(base_url + 'cart/apply-promo', { promo_code: code }, {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${token}`, // Ensure the token is set correctly
             },
         });
-        console.log(data);
-        setDiscount(data.data.discount);
+
+        if (data.data.success == "1") {
+            setDiscount(data.data.discount);
+        } else {
+            setStatus(data.data.success);
+            setMessage(data.data.message);
+            setTimeout(() => {
+                setStatus('');
+                setMessage('');
+            }, 2000)
+        }
+
     }
     const getcart_items = async () => {
         await axios.get(base_url + 'cart', {
@@ -178,6 +191,15 @@ const Cart: React.FC = () => {
                                     <div className="lg:col-span-2 col-span-12">
                                         <div className="w-full px-4">
                                             <div className="w-full p-4 rounded-lg shadow-md shadow-blue-gray-100 bg-deep-orange-50">
+                                                {
+                                                    message && (
+                                                        <>
+                                                            <div className={`w-full p-2 text-white rounded-lg ${status == "1" ? "bg-green-700" : "bg-primary"}`}>
+                                                                {message}
+                                                            </div>
+                                                        </>
+                                                    )
+                                                }
                                                 <table className="w-full">
                                                     <tbody >
                                                         <tr className='*:p-2 *:text-sm'>
@@ -208,7 +230,7 @@ const Cart: React.FC = () => {
                                                             </td>
                                                         </tr>
                                                         {
-                                                            discount && (
+                                                            discount ? (
                                                                 <>
                                                                     <tr className='*:p-2 *:text-sm'>
                                                                         <td colSpan={2}>
@@ -218,7 +240,7 @@ const Cart: React.FC = () => {
                                                                         </td>
                                                                     </tr>
                                                                 </>
-                                                            )
+                                                            ) : ('')
                                                         }
                                                         <tr className='*:p-2 *:text-sm'>
                                                             <td>
@@ -243,7 +265,7 @@ const Cart: React.FC = () => {
                                                     </tbody>
                                                 </table>
                                                 <div className="mt-4 w-full">
-                                                    <Link to={'/checkout'} className="w-full shadow-lg shadow-blue-gray-300 block text-center rounded-full py-2 bg-white text-black">Checkout</Link>
+                                                    <Link to={'/checkout'} className="w-full shadow-lg shadow-blue-gray-300 block text-center rounded-full py-2 bg-primary text-white uppercase tracking-widest">Checkout</Link>
                                                 </div>
                                             </div>
                                         </div>

@@ -44,6 +44,8 @@ const CategoriesSlider = () => {
         infinite: true,
         slidesToShow: 8,
         slidesToScroll: 2,
+        cssEase: 'linear',
+        swipeToSlide: true,
         nextArrow: <NextArrow className={'btn'} />, // Use custom next arrow
         prevArrow: <PrevArrow className={'btn'} />,  // Use custom prev arrow,
         responsive: [
@@ -70,6 +72,8 @@ const CategoriesSlider = () => {
             {
                 breakpoint: 768, // At or below 768px
                 settings: {
+                    cssEase: 'linear',
+                    swipeToSlide: true,
                     slidesToShow: 4,
                     slidesToScroll: 4,
                     infinite: true,

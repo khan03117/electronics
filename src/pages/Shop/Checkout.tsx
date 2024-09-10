@@ -146,13 +146,14 @@ const Checkout = () => {
                 const data = { ...fdata };
                 data['pincode'] = pincode;
                 data['address_id'] = address_id;
-                await axios.post(base_url + 'cart/checkout', data, {
+                const resp = await axios.post(base_url + 'cart/checkout', data, {
                     headers: { 'Authorization': `Bearer ${token}` }
-                }).then(resp => {
-                    if (resp.data.success == "1") {
-                        setSuccess('1');
-                    }
-                })
+                });
+                if (resp.data.success == "1") {
+                    window.open(resp.data.data.payment_links?.web);
+                }
+
+
             } catch (error) {
                 console.log(error)
             }
@@ -174,7 +175,6 @@ const Checkout = () => {
             const data = { ...fdata, ...obj };
             setFdata(data);
         }
-
     }
     const setUserdata = () => {
         if (user) {
@@ -186,7 +186,6 @@ const Checkout = () => {
             const data = { ...fdata, ...obj };
             setFdata(data);
         }
-
     }
     useEffect(() => {
         setAddressvalue();
@@ -207,10 +206,8 @@ const Checkout = () => {
                 <div className="container">
                     <div className="grid lg:grid-cols-6 grid-cols-1">
                         <div className="col-span-4">
-
                             <div className="w-full">
                                 <div className="grid lg:grid-cols-3 grid-cols-1 gap-3">
-
                                     <div className="lg:col-span-1 col-span-12 mb-5">
                                         <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block' >Enter Name</label>
                                         <div className="flex w-full">
@@ -244,8 +241,6 @@ const Checkout = () => {
                                             {errors.find(obj => obj.path == "address")?.msg}
                                         </span>
                                     </div>
-
-
                                     <div className="lg:col-span-1 col-span-12 mb-5">
                                         <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Enter city </label>
                                         <input type="text" value={fdata?.city} readOnly name="city" onChange={handlefdata} className="px-4 py-2 w-full border border-blue-gray-300" />
@@ -260,7 +255,7 @@ const Checkout = () => {
                                             {errors.find(obj => obj.path == "state_id")?.msg}
                                         </span>
                                     </div>
-                                    <div className="lg:col-span-1 col-span-12 mb-5">
+                                    <div className="lg:col-span-1 col-span-12 mb-5 hidden">
                                         <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block'>Select Mode</label>
                                         <select title='payment_mode' name="payment_mode" onChange={handlefdata} id="payment_mode" className="py-2 px-2 w-full outline-none border border-blue-gray-500">
                                             <option value="">---Select---</option>
