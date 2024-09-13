@@ -17,6 +17,7 @@ import Faq from './pages/contact/Faq'
 import Offers from './pages/Shop/Offers'
 import Brands from './pages/Shop/Brands'
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import PaymentResponse from './pages/Shop/PaymentResponse'
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
           <Route path='/faq' element={<Faq />} />
           <Route path='/offers' element={<Offers />} />
           <Route path='/brands' element={<Brands />} />
+          <Route path='/payment-response/:orderId' element={<PaymentResponse />} />
         </Route>
       </>
     )
@@ -50,7 +52,7 @@ function App() {
       <HelmetProvider>
         <Helmet>
           <title>Electronics Whole Sale Online Shop </title>
-          <link rel="canonical" href="https://www.tacobell.com/" />
+          <link rel="canonical" href="https://themobileindia.com/" />
         </Helmet>
       </HelmetProvider>
       <RouterProvider router={ThemeRoute} />
