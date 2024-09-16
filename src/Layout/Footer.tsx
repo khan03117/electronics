@@ -35,11 +35,6 @@ const Footer = () => {
   }, [])
   return (
     <>
-      {/* <div className="fixed inline-block max-w-28 bottom-16 start-2 z-50">
-        <Link to={'https://wa.me'} className='text-3xl text-green-900  rounded-full  inline-block'>
-          <WhatsAppOutlined />
-        </Link>
-      </div> */}
       <section className="fixed fixednavbar w-full pe-5  bg-gray-100 *:relative *:text-sm *:text-center  z-50 bottom-0 start-0 lg:hidden block pb-0 pt-0 *:mt-1 px-4 ">
 
         <div className="flex justify-between *:relative w-full relative">

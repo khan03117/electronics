@@ -1,8 +1,23 @@
-import { FacebookFilled, InstagramFilled, TwitterOutlined, YoutubeFilled } from "@ant-design/icons"
+import { FacebookFilled, InstagramFilled, TwitterSquareFilled, WhatsAppOutlined } from "@ant-design/icons"
 import React from "react"
 import { Link } from "react-router-dom"
+import { base_url } from "../../utils";
+import axios from "axios";
 
 const Contact = () => {
+    interface Media {
+        title: string;
+        type: string;
+        media_value: string;
+    }
+    const [medias, setMedias] = React.useState<Media[]>([]);
+    const getdata2 = async () => {
+        const resp = await axios.get(base_url + 'social/contact-media');
+        setMedias(resp.data.data);
+    }
+    React.useEffect(() => {
+        getdata2();
+    }, [])
     return (
         <>
             <section id='shopbanner' className='lg:py-20 py-5'>
@@ -23,25 +38,53 @@ const Contact = () => {
                         <div className="col-span-1">
                             <div className="w-full">
                                 <h3 className="sectiontitle text-md font-light tracking-wider relative pt-[5rem]">CONTACT INFORMATION</h3>
-                                <p className="lg:text-[1rem] pt-[2rem] leading-[1.9]">Tower Number -2 , Shree Kuberji Park -2 , Near Torrent Power Office,Cinema Road -Dehli Gate - Surat GUJARAT INDIA PINCODE - 395003 </p>
-                                <div className="w-full my-3">
-                                    <h3 className='lg:text-[2rem] inline border-b border-orange-700 pb-3 text-md font-light tracking-wider pt-[2rem]'>help@example.com</h3>
-                                </div>
+                                <p className="lg:text-[1rem] pt-[2rem] leading-[1.9]">
+                                    <strong>Address  : </strong>  {medias.find(obj => obj.title == "Address")?.media_value} </p>
+                                <p className="lg:text-[1rem] pt-[2rem] leading-[1.9]">
+                                    <strong>Mobile  : </strong>  {medias.find(obj => obj.title == "Mobile")?.media_value} </p>
+                                <p className="lg:text-[1rem] pt-[2rem] leading-[1.9]">
+                                    <strong>Email  : </strong>  {medias.find(obj => obj.title == "Email")?.media_value} </p>
+
                                 <p className='lg:text-[1.2rem] text-md pt-[2rem]'>Follow us</p>
                                 <div className="w-full">
-                                    <div className="flex gap-2 *:block *:size-12 *:border *:rounded-full *:text-orange-700 *:leading-[2] *:text-[1.5rem] *:border-orange-700 *:text-center items-center">
-                                        <Link to={"/"}>
-                                            <FacebookFilled />
-                                        </Link>
-                                        <Link to={"/"}>
-                                            <TwitterOutlined />
-                                        </Link>
-                                        <Link to={"/"}>
-                                            <InstagramFilled />
-                                        </Link>
-                                        <Link to={"/"}>
-                                            <YoutubeFilled />
-                                        </Link>
+                                    <div className="flex gap-2 *:block *:size-10  *:leading-10 *:rounded-full *:text-center items-center">
+                                        {
+                                            medias.find(obj => obj.title == "Facebook") && (
+                                                <>
+                                                    <Link className='bg-blue-800 text-white' to={'/'}>
+                                                        <FacebookFilled />
+                                                    </Link>
+                                                </>
+                                            )
+                                        }
+                                        {
+                                            medias.find(obj => obj.title == "Twitter") && (
+                                                <>
+                                                    <Link className='bg-blue-500 text-white' to={'/'}>
+                                                        <TwitterSquareFilled />
+                                                    </Link>
+                                                </>
+                                            )
+                                        }
+                                        {
+                                            medias.find(obj => obj.title == "Instagram") && (
+                                                <>
+                                                    <Link className='bg-pink-400 text-white' to={'/'}>
+                                                        <InstagramFilled />
+                                                    </Link>
+                                                </>
+                                            )
+                                        }
+                                        {
+                                            medias.find(obj => obj.title == "Whatsapp") && (
+                                                <>
+                                                    <Link className='bg-green-800 text-white' to={`https://wa.me/${medias.find(obj => obj.title == "Whatsapp")?.media_value}?text=I'm%20interested%20in%20your%20car%20for%20sale`}>
+                                                        <WhatsAppOutlined />
+                                                    </Link>
+                                                </>
+                                            )
+                                        }
+
                                     </div>
                                 </div>
                             </div>
