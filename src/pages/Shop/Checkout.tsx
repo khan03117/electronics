@@ -50,6 +50,8 @@ const Checkout = () => {
         state: string;
         pincode: string;
     }
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [success, setSuccess] = useState<string>('0');
     const [pincode, setPincode] = useState<string>('');
     const [fdata, setFdata] = useState<FormData>({});
@@ -91,10 +93,14 @@ const Checkout = () => {
     }
     const setfdata = () => {
         const data = { ...fdata };
+
         if (location) {
-            data['state'] = location[0].State;
-            data['city'] = location[0].District;
-            setFdata(data);
+            const arr = {};
+            arr['name'] = data?.name;
+            arr['email'] = data?.email;
+            arr['state'] = location[0].State;
+            arr['city'] = location[0].District;
+            setFdata(arr);
         }
     }
     useEffect(() => {
@@ -118,19 +124,25 @@ const Checkout = () => {
     }
     const validation = () => {
         const err: ValidationError[] = [];
-        if (!fdata?.name) {
+        if (!name) {
             err.push({ path: 'name', msg: "Name is required" });
         }
-        if (!fdata?.address) {
-            err.push({ path: 'address', msg: "Address is required" });
+        if (!email) {
+            err.push({ path: 'email', msg: "Email is required" });
         }
-        if (!fdata?.city) {
-            err.push({ path: 'city', msg: "city is required" })
+        if (!address_id) {
+            if (!fdata?.address) {
+                err.push({ path: 'address', msg: "Address is required" });
+            }
+            if (!fdata?.city) {
+                err.push({ path: 'city', msg: "city is required" })
+            }
+
+            if (!fdata?.state) {
+                err.push({ path: 'state_id', msg: "state is required" })
+            }
         }
 
-        if (!fdata?.state) {
-            err.push({ path: 'state_id', msg: "state is required" })
-        }
         if (err.length > 0) {
             setErrors(err);
             return false;
@@ -145,6 +157,8 @@ const Checkout = () => {
             try {
                 setLoading(true)
                 const data = { ...fdata };
+                data['name'] = name;
+                data['email'] = email;
                 data['pincode'] = pincode;
                 data['address_id'] = address_id;
                 const resp = await axios.post(base_url + 'cart/checkout', data, {
@@ -179,13 +193,14 @@ const Checkout = () => {
         }
     }
     const setUserdata = () => {
-        if (user) {
+        if (user && user?.name && user?.email) {
             const obj = {
                 name: user?.name,
                 email: user?.email
-
             }
             const data = { ...fdata, ...obj };
+            setName(user?.name);
+            setEmail(user?.email);
             setFdata(data);
         }
     }
@@ -233,13 +248,13 @@ const Checkout = () => {
                                                 <div className="lg:col-span-1 col-span-12 mb-5">
                                                     <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block' >Enter Name</label>
                                                     <div className="flex w-full">
-                                                        <input type="text" onChange={handlefdata} name="name" id="name" value={fdata?.name ?? user?.name} className="p-2 w-full border border-blue-gray-300" />
+                                                        <input type="text" onChange={(e) => setName(e.target.value)} name="name" id="name" value={name} className="p-2 w-full border border-blue-gray-300" />
                                                     </div>
                                                 </div>
                                                 <div className="lg:col-span-1 col-span-12 mb-5">
                                                     <label htmlFor="" className='text-sm uppercase mb-3  font-light tracking-widest block' >Enter Email</label>
                                                     <div className="flex w-full">
-                                                        <input type="text" onChange={handlefdata} name="email" id="email" value={fdata?.email ?? user?.email} className="p-2 w-full border border-blue-gray-300" />
+                                                        <input type="text" onChange={(e) => setEmail(e.target.value)} name="email" id="email" value={email} className="p-2 w-full border border-blue-gray-300" />
                                                     </div>
                                                 </div>
                                                 <div className="col-span-4">

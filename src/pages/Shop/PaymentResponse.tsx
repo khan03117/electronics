@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { base_url } from '../../utils';
 import moment from 'moment';
 import { IoCheckmarkOutline } from "react-icons/io5";
-
+import { TiInfo } from "react-icons/ti";
 const PaymentResponse = () => {
     const { orderId } = useParams();
     // Interfaces for the nested objects
@@ -253,12 +253,31 @@ const PaymentResponse = () => {
                                     <div className="col-span-4"></div>
                                     <div className="lg:col-span-4 col-span-12">
                                         <div className="w-full py-4 px-6 bg-blue-gray-50 shadow shadow-blue-gray-700 rounded-t-[2rem]">
-                                            <figure className="w-full mb-10 relative statusImage before:content-[''] before:absolute before:-bottom-6 before:start-0 before:w-full before:border before:border-dashed before:border-blue-gray-300 flex justify-center ">
-                                                <div className="inline-flex  justify-items-center items-center text-[5rem] text-green-700  border size-28 p-4 border-green-700 mx-auto rounded-full text-center ">
-                                                    <IoCheckmarkOutline />
-                                                </div>
+                                            {
+                                                order.status == "Success" && (
+                                                    <>
+                                                        <figure className="w-full mb-10 relative statusImage before:content-[''] before:absolute before:-bottom-6 before:start-0 before:w-full before:border before:border-dashed before:border-blue-gray-300 flex justify-center ">
+                                                            <div className="inline-flex  justify-items-center items-center text-[5rem] text-green-700  border size-28 p-4 border-green-700 mx-auto rounded-full text-center ">
+                                                                <IoCheckmarkOutline />
+                                                            </div>
 
-                                            </figure>
+                                                        </figure>
+                                                    </>
+                                                )
+                                            }
+                                            {
+                                                order.status != "Success" && (
+                                                    <>
+                                                        <figure className="w-full mb-10 relative statusImage before:content-[''] before:absolute before:-bottom-6 before:start-0 before:w-full before:border before:border-dashed before:border-blue-gray-300 flex justify-center ">
+                                                            <div className="inline-flex  justify-items-center items-center text-[5rem] text-red-700  border size-28 p-4 border-red-700 mx-auto rounded-full text-center ">
+                                                                <TiInfo />
+                                                            </div>
+
+                                                        </figure>
+                                                    </>
+                                                )
+                                            }
+
                                             <div className="over_cuts relative w-full"></div>
                                             <table className="w-full  table-fixed *:text-sm *:lg:text-md">
                                                 <tbody>
@@ -285,6 +304,13 @@ const PaymentResponse = () => {
                                                                 <>
                                                                     <span className="px-2 inline-block rounded text-sm bg-green-700 text-white">
                                                                         Success
+                                                                    </span>
+                                                                </>
+                                                            )}
+                                                            {order.status != "Success" && (
+                                                                <>
+                                                                    <span className="px-2 inline-block rounded text-sm bg-green-700 text-white">
+                                                                        Failed
                                                                     </span>
                                                                 </>
                                                             )}
